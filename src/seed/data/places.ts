@@ -1,0 +1,587 @@
+export interface PlaceSeed {
+  name: string;
+  slug: string;
+  description: string;
+  stateSlug: string;
+  citySlug: string;
+  location: { latitude: number; longitude: number };
+  category: string[];
+  bestTimeToVisit: string;
+  openingTime: string;
+  closingTime: string;
+  entryFee: string;
+  images: string[];
+  history: string;
+  highlights: string[];
+  thingsToKnow: string[];
+  photography: boolean;
+  weather: { summer: string; winter: string; monsoon: string };
+  safetyTips: string[];
+  transportation: {
+    byFlight: { nearestAirport: string; distance: string; cabCost: string };
+    byTrain: { nearestStation: string; distance: string; taxiFare: string };
+    byBus: { busStand: string; autoFare: string };
+    privateCab: string;
+    bikeRental: string;
+  };
+  estimatedCost: {
+    budget: { hotel: string; food: string; travel: string; tickets: string; shopping: string; total: string };
+    standard: { hotel: string; food: string; travel: string; tickets: string; shopping: string; total: string };
+    luxury: { hotel: string; food: string; travel: string; tickets: string; shopping: string; total: string };
+  };
+  bestMonths: { month: string; temperature: string; crowd: string; recommendation: string }[];
+  localFoods: string[];
+  travelTips: { dos: string[]; donts: string[]; safety: string[] };
+  localLanguage: string;
+  emergencyNumbers: { police: string; ambulance: string; fire: string };
+  faqs: { question: string; answer: string }[];
+  rating: number;
+  published: boolean;
+  seo: { title: string; metaDescription: string; keywords: string[] };
+  // resolver helpers
+  _hotelSlugs: string[];
+  _restaurantSlugs: string[];
+  _nearbyPlaceSlugs: string[];
+}
+
+export const placesData: PlaceSeed[] = [
+  // ── Rajasthan: Jaipur ──
+  {
+    name: 'Hawa Mahal',
+    slug: 'hawa-mahal',
+    description: 'The Palace of Winds — a stunning five-storey pink sandstone façade with 953 small windows designed to allow royal women to observe street life while remaining unseen.',
+    stateSlug: 'rajasthan',
+    citySlug: 'jaipur',
+    location: { latitude: 26.9239, longitude: 75.8267 },
+    category: ['Heritage'],
+    bestTimeToVisit: 'October to March',
+    openingTime: '09:00',
+    closingTime: '17:00',
+    entryFee: '₹50 (Indian), ₹200 (Foreign)',
+    images: [
+      'https://images.unsplash.com/photo-1599661046289-e31897846e41?w=800',
+      'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800',
+    ],
+    history: 'Built in 1799 by Maharaja Sawai Pratap Singh, Hawa Mahal was designed by architect Lal Chand Ustad. The five-storey façade resembles the crown of Lord Krishna.',
+    highlights: ['953 jharokha windows', 'Sunrise view from the top', 'Archaeological Museum inside', 'Pink sandstone architecture', 'Street photography spot'],
+    thingsToKnow: ['Photography is allowed inside', 'Best photographed at sunrise from Siredeori Bazaar opposite', 'Audio guides available in multiple languages', 'Combine with Johari Bazaar visit nearby'],
+    photography: true,
+    weather: { summer: 'Very hot (40–45°C). Visit at opening time only.', winter: 'Ideal (15–25°C). Comfortable for exploration.', monsoon: 'Warm and humid (30–35°C). Occasional showers add drama to photography.' },
+    safetyTips: ['Wear comfortable shoes for the narrow stairs', 'Keep your belongings secure in crowded areas', 'Carry water — no shops inside'],
+    transportation: {
+      byFlight: { nearestAirport: 'Jaipur International Airport', distance: '13 km', cabCost: '₹300–₹500' },
+      byTrain: { nearestStation: 'Jaipur Junction', distance: '4 km', taxiFare: '₹80–₹150' },
+      byBus: { busStand: 'Sindhi Camp Bus Stand', autoFare: '₹30–₹60' },
+      privateCab: '₹200–₹400 from city centre',
+      bikeRental: '₹300–₹500/day',
+    },
+    estimatedCost: {
+      budget: { hotel: '₹700', food: '₹300', travel: '₹200', tickets: '₹50', shopping: '₹500', total: '₹1750' },
+      standard: { hotel: '₹3000', food: '₹800', travel: '₹500', tickets: '₹200', shopping: '₹1500', total: '₹6000' },
+      luxury: { hotel: '₹15000', food: '₹2500', travel: '₹1500', tickets: '₹200', shopping: '₹5000', total: '₹24200' },
+    },
+    bestMonths: [
+      { month: 'October', temperature: '25–33°C', crowd: 'High', recommendation: 'Peak season — book in advance' },
+      { month: 'November', temperature: '15–27°C', crowd: 'High', recommendation: 'Ideal weather, vibrant festival season' },
+      { month: 'February', temperature: '12–25°C', crowd: 'Medium', recommendation: 'Great weather and fewer tourists' },
+    ],
+    localFoods: ['Pyaaz Kachori', 'Lassi', 'Ghewar', 'Mirchi Bada'],
+    travelTips: {
+      dos: ['Photograph from across the street for the best angle', 'Visit at sunrise for golden light', 'Combine with City Palace same day'],
+      donts: ["Don't buy overpriced tickets from touts", "Don't miss the museum on the ground floor", "Don't wear heels — narrow staircases"],
+      safety: ['Beware of pickpockets in adjacent bazaars', 'Stay hydrated in summer', 'Use licensed rickshaws only'],
+    },
+    localLanguage: 'Hindi, Rajasthani',
+    emergencyNumbers: { police: '100', ambulance: '108', fire: '101' },
+    faqs: [
+      { question: 'What are Hawa Mahal visiting hours?', answer: 'Open daily 9 AM to 5 PM, closed on national holidays.' },
+      { question: 'How much is the entry fee?', answer: '₹50 for Indians, ₹200 for foreign nationals.' },
+      { question: 'Can I go inside Hawa Mahal?', answer: 'Yes. The interior has five floors, a museum and a rooftop terrace with panoramic views.' },
+    ],
+    rating: 4.7,
+    published: true,
+    seo: { title: 'Hawa Mahal Jaipur — Palace of Winds Guide', metaDescription: 'Visit Hawa Mahal in Jaipur — the iconic Palace of Winds with 953 windows.', keywords: ['Hawa Mahal', 'Jaipur monuments', 'Palace of Winds', 'Rajasthan heritage'] },
+    _hotelSlugs: ['rambagh-palace-jaipur', 'hotel-pearl-palace-jaipur'],
+    _restaurantSlugs: ['lmb-jaipur', 'chokhi-dhani-jaipur'],
+    _nearbyPlaceSlugs: ['city-palace-jaipur', 'jantar-mantar-jaipur'],
+  },
+  {
+    name: 'Amber Fort',
+    slug: 'amber-fort',
+    description: 'A magnificent hilltop fort-palace blending Hindu and Mughal architecture, with stunning Sheesh Mahal (Mirror Palace) and panoramic views of Maota Lake.',
+    stateSlug: 'rajasthan',
+    citySlug: 'jaipur',
+    location: { latitude: 26.9855, longitude: 75.8513 },
+    category: ['Heritage', 'Family Trip'],
+    bestTimeToVisit: 'October to March',
+    openingTime: '08:00',
+    closingTime: '17:30',
+    entryFee: '₹100 (Indian), ₹500 (Foreign)',
+    images: [
+      'https://images.unsplash.com/photo-1567157577867-05ccb1388e66?w=800',
+      'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800',
+    ],
+    history: 'Built by Raja Man Singh I in 1592 and expanded by successive rulers, Amber Fort served as the main residence of Rajput Maharajas. The fort complex includes temples, halls and gardens.',
+    highlights: ['Sheesh Mahal (Mirror Palace)', 'Elephant ride to the entrance', 'Light and Sound show in evening', 'Maota Lake views', 'Diwan-i-Aam and Diwan-i-Khas'],
+    thingsToKnow: ['Elephant rides available from base (ethical concerns — consider jeep instead)', 'Light and Sound show at 7:30 PM (English) and 8 PM (Hindi)', 'Allow 3–4 hours for full exploration', 'Wear comfortable shoes — lots of stairs'],
+    photography: true,
+    weather: { summer: 'Extremely hot (40–45°C). Visit at opening time.', winter: 'Pleasant (10–25°C). Best season.', monsoon: 'Moderate rain. Fort looks dramatic against monsoon clouds.' },
+    safetyTips: ['Beware of touts offering elephant rides at inflated prices', 'Watch your step on uneven surfaces', 'Carry water — limited vendors inside'],
+    transportation: {
+      byFlight: { nearestAirport: 'Jaipur International Airport', distance: '18 km', cabCost: '₹400–₹600' },
+      byTrain: { nearestStation: 'Jaipur Junction', distance: '11 km', taxiFare: '₹200–₹350' },
+      byBus: { busStand: 'Sindhi Camp Bus Stand', autoFare: '₹50–₹100' },
+      privateCab: '₹300–₹500 from city centre',
+      bikeRental: '₹300–₹500/day',
+    },
+    estimatedCost: {
+      budget: { hotel: '₹700', food: '₹300', travel: '₹200', tickets: '₹100', shopping: '₹500', total: '₹1800' },
+      standard: { hotel: '₹3000', food: '₹800', travel: '₹500', tickets: '₹500', shopping: '₹1500', total: '₹6300' },
+      luxury: { hotel: '₹15000', food: '₹2500', travel: '₹1500', tickets: '₹500', shopping: '₹5000', total: '₹24500' },
+    },
+    bestMonths: [
+      { month: 'November', temperature: '15–27°C', crowd: 'High', recommendation: 'Ideal weather and festival season' },
+      { month: 'December', temperature: '8–23°C', crowd: 'High', recommendation: 'Cool mornings, perfect for exploration' },
+      { month: 'January', temperature: '5–22°C', crowd: 'Medium', recommendation: 'Fewer crowds, misty mornings add magic' },
+    ],
+    localFoods: ['Dal Baati Churma', 'Ghewar', 'Pyaaz Kachori', 'Laal Maas'],
+    travelTips: {
+      dos: ['Arrive early to beat the crowds', 'Take the jeep up instead of elephant', 'Stay for the evening light and sound show'],
+      donts: ["Don't skip the Sheesh Mahal — it's the highlight", "Don't accept unsolicited guides", "Don't visit in midday summer heat"],
+      safety: ['Wear rubber-soled shoes for marble surfaces', 'Keep valuables secure in crowded areas', 'Carry sunscreen and water'],
+    },
+    localLanguage: 'Hindi, Rajasthani',
+    emergencyNumbers: { police: '100', ambulance: '108', fire: '101' },
+    faqs: [
+      { question: 'How long does it take to visit Amber Fort?', answer: 'Allow 3–4 hours for full exploration including Sheesh Mahal and gardens.' },
+      { question: 'Is the elephant ride ethical?', answer: 'Many tourists now prefer jeep rides due to animal welfare concerns. Jeeps are available at the base.' },
+      { question: 'Can I visit Amber Fort and Jaigarh Fort together?', answer: 'Yes — they are connected by a walkway. Allow 5–6 hours for both.' },
+    ],
+    rating: 4.8,
+    published: true,
+    seo: { title: 'Amber Fort Jaipur — Guide, Timings & Tickets', metaDescription: 'Visit Amber Fort in Jaipur — hilltop palace with Sheesh Mahal, elephant rides and light show.', keywords: ['Amber Fort', 'Jaipur fort', 'Sheesh Mahal', 'Rajasthan heritage'] },
+    _hotelSlugs: ['rambagh-palace-jaipur', 'hotel-pearl-palace-jaipur'],
+    _restaurantSlugs: ['lmb-jaipur', 'chokhi-dhani-jaipur'],
+    _nearbyPlaceSlugs: ['hawa-mahal', 'jaigarh-fort'],
+  },
+  // ── Rajasthan: Jodhpur ──
+  {
+    name: 'Mehrangarh Fort',
+    slug: 'mehrangarh-fort',
+    description: "One of India's largest and most magnificent forts, rising 125 metres above Jodhpur on a rocky hill, housing exquisite palaces and a world-class museum.",
+    stateSlug: 'rajasthan',
+    citySlug: 'jodhpur',
+    location: { latitude: 26.2980, longitude: 73.0188 },
+    category: ['Heritage', 'Adventure'],
+    bestTimeToVisit: 'October to March',
+    openingTime: '09:00',
+    closingTime: '17:30',
+    entryFee: '₹100 (Indian), ₹600 (Foreign)',
+    images: [
+      'https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800',
+      'https://images.unsplash.com/photo-1590579491624-f98f36d4c763?w=800',
+    ],
+    history: 'Founded by Rao Jodha in 1459 when he shifted his capital from Mandore to Jodhpur. The fort expanded under successive Rathore rulers and its palaces reflect centuries of Rajput grandeur.',
+    highlights: ['Blue city panorama from battlements', 'World-class Fort Museum', 'Zip-lining over the ramparts', 'Sheesh Mahal (Glass Palace)', 'Sound & Light show at night'],
+    thingsToKnow: ['Audio guides included in foreign ticket', 'Zip-lining operated by Flying Fox', 'Allow at least 3–4 hours to explore fully', 'Photography inside museum costs extra'],
+    photography: true,
+    weather: { summer: 'Intense heat (38–45°C). Visit at opening time only.', winter: 'Comfortable (10–22°C). Best season.', monsoon: 'Occasional showers; fort looks dramatic against monsoon clouds.' },
+    safetyTips: ['Handrails are limited in older sections — watch your step', 'Strong winds on battlements', 'Carry water — limited vendors inside'],
+    transportation: {
+      byFlight: { nearestAirport: 'Jodhpur Airport', distance: '7 km', cabCost: '₹150–₹300' },
+      byTrain: { nearestStation: 'Jodhpur Junction', distance: '3 km', taxiFare: '₹60–₹120' },
+      byBus: { busStand: 'Central Bus Stand', autoFare: '₹30–₹60' },
+      privateCab: '₹150–₹300 from city centre',
+      bikeRental: '₹250–₹400/day',
+    },
+    estimatedCost: {
+      budget: { hotel: '₹600', food: '₹250', travel: '₹150', tickets: '₹100', shopping: '₹400', total: '₹1500' },
+      standard: { hotel: '₹2500', food: '₹700', travel: '₹400', tickets: '₹600', shopping: '₹1200', total: '₹5400' },
+      luxury: { hotel: '₹12000', food: '₹2000', travel: '₹1200', tickets: '₹600', shopping: '₹3000', total: '₹18800' },
+    },
+    bestMonths: [
+      { month: 'November', temperature: '12–27°C', crowd: 'High', recommendation: 'Perfect weather and vibrant markets' },
+      { month: 'December', temperature: '8–23°C', crowd: 'High', recommendation: 'Christmas events and cool weather' },
+      { month: 'February', temperature: '10–25°C', crowd: 'Medium', recommendation: 'Slightly fewer tourists, great light for photos' },
+    ],
+    localFoods: ['Makhaniya Lassi', 'Mawa Kachori', 'Mirchi Bada', 'Rajasthani Thali'],
+    travelTips: {
+      dos: ['Book zip-lining at least a day in advance', 'Attend the evening sound and light show', 'Buy a combo ticket with Jaswant Thada'],
+      donts: ["Don't skip the museum — it has rare artefacts", 'Avoid hiring unofficial guides', "Don't miss the cannonball marks on the gates"],
+      safety: ['Wear rubber-soled shoes for slippery ramps', 'Keep children supervised near battlements', 'Carry a hat and water in summer'],
+    },
+    localLanguage: 'Hindi, Rajasthani',
+    emergencyNumbers: { police: '100', ambulance: '108', fire: '101' },
+    faqs: [
+      { question: 'Is zip-lining at Mehrangarh worth it?', answer: 'Absolutely — Flying Fox offers six lines over the blue city with breathtaking views.' },
+      { question: 'How long does it take to see Mehrangarh Fort?', answer: 'Allow 3–4 hours for the full fort and museum. Add 1 hour for zip-lining.' },
+      { question: 'Are guides available at Mehrangarh?', answer: 'Yes — licensed guides are available at the gate. Audio guides in 6 languages are included in the foreign ticket.' },
+    ],
+    rating: 4.8,
+    published: true,
+    seo: { title: 'Mehrangarh Fort Jodhpur — Guide, Timings & Tips', metaDescription: 'Visit Mehrangarh Fort — one of India\'s largest forts with world-class museum and zip-lining.', keywords: ['Mehrangarh Fort', 'Jodhpur fort', 'Blue City', 'Rajasthan heritage'] },
+    _hotelSlugs: ['taj-hari-mahal-jodhpur'],
+    _restaurantSlugs: ['mishrilal-jodhpur'],
+    _nearbyPlaceSlugs: ['jaswant-thada', 'umaid-bhawan-palace'],
+  },
+  // ── Kerala: Kochi ──
+  {
+    name: 'Fort Kochi',
+    slug: 'fort-kochi',
+    description: 'A historic waterfront neighbourhood blending Portuguese, Dutch, British and Jewish heritage with Chinese fishing nets, spice markets and a thriving arts scene.',
+    stateSlug: 'kerala',
+    citySlug: 'kochi',
+    location: { latitude: 9.9641, longitude: 76.2427 },
+    category: ['Heritage', 'Family Trip'],
+    bestTimeToVisit: 'October to March',
+    openingTime: 'Open 24 hours',
+    closingTime: 'Open 24 hours',
+    entryFee: 'Free',
+    images: [
+      'https://images.unsplash.com/photo-1609340655213-cce5f8dc1ddb?w=800',
+      'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?w=800',
+    ],
+    history: 'Fort Kochi was the first European settlement in India, established by the Portuguese in 1503. It passed to the Dutch in 1663 and the British in 1795, leaving a rich colonial architectural legacy.',
+    highlights: ['Chinese Fishing Nets at sunset', 'St. Francis Church (Vasco da Gama burial site)', 'Jew Town and Paradesi Synagogue', 'Dutch Palace (Mattancherry)', 'Kochi-Muziris Biennale art festival'],
+    thingsToKnow: ['Take the ferry between Ernakulam and Fort Kochi for ₹8', 'Visit the Biennale art festival (December–March)', 'Book a Kathakali performance in advance', 'Jew Town is best for antique and spice shopping'],
+    photography: true,
+    weather: { summer: 'Hot and humid (28–35°C). Coastal breeze provides relief.', winter: 'Ideal (22–32°C). Clear skies and calm waters.', monsoon: 'Heavy rainfall. Dramatic scenery but some services restricted.' },
+    safetyTips: ['Use official taxi apps like Ola/Uber', 'Be cautious with street food during monsoon', 'Carry an umbrella year-round'],
+    transportation: {
+      byFlight: { nearestAirport: 'Cochin International Airport', distance: '30 km', cabCost: '₹700–₹1200' },
+      byTrain: { nearestStation: 'Ernakulam Junction', distance: '10 km', taxiFare: '₹200–₹350' },
+      byBus: { busStand: 'Ernakulam KSRTC Bus Stand', autoFare: '₹50–₹100' },
+      privateCab: '₹700–₹1200 from airport',
+      bikeRental: '₹300–₹500/day',
+    },
+    estimatedCost: {
+      budget: { hotel: '₹600', food: '₹300', travel: '₹200', tickets: '₹100', shopping: '₹500', total: '₹1700' },
+      standard: { hotel: '₹2500', food: '₹700', travel: '₹500', tickets: '₹300', shopping: '₹1000', total: '₹5000' },
+      luxury: { hotel: '₹8000', food: '₹2000', travel: '₹1500', tickets: '₹600', shopping: '₹3000', total: '₹15100' },
+    },
+    bestMonths: [
+      { month: 'November', temperature: '25–32°C', crowd: 'Medium', recommendation: 'Post-monsoon freshness with good weather' },
+      { month: 'December', temperature: '22–30°C', crowd: 'High', recommendation: 'Peak season — Biennale festival' },
+      { month: 'January', temperature: '22–29°C', crowd: 'High', recommendation: 'Perfect weather for walking tours' },
+    ],
+    localFoods: ['Kerala Fish Curry', 'Appam with Stew', 'Karimeen Pollichathu', 'Puttu and Kadala Curry', 'Kerala Parota'],
+    travelTips: {
+      dos: ['Take the ferry between Ernakulam and Fort Kochi', 'Visit the Biennale art festival (Dec–Mar)', 'Book a Kathakali performance in advance'],
+      donts: ["Don't skip Fort Kochi heritage walk", 'Avoid visiting during monsoon peak (June)', "Don't litter near the fishing nets"],
+      safety: ['Use official taxi apps like Ola/Uber', 'Be cautious with street food during monsoon', 'Carry an umbrella year-round'],
+    },
+    localLanguage: 'Malayalam',
+    emergencyNumbers: { police: '100', ambulance: '108', fire: '101' },
+    faqs: [
+      { question: 'How to reach Fort Kochi from Ernakulam?', answer: 'Take the government ferry from Ernakulam jetty (₹8, 20 minutes) or a taxi (₹200–₹350).' },
+      { question: 'What is the best time to see Chinese Fishing Nets?', answer: 'Early morning (6–8 AM) or sunset (5–6 PM) for the best views and photography.' },
+      { question: 'Is Fort Kochi walkable?', answer: 'Yes — the entire heritage area is very walkable. Allow 4–5 hours for a thorough exploration.' },
+    ],
+    rating: 4.6,
+    published: true,
+    seo: { title: 'Fort Kochi — Heritage Walk & Chinese Fishing Nets', metaDescription: 'Explore Fort Kochi — Chinese fishing nets, spice markets, Dutch Palace and vibrant art scene.', keywords: ['Fort Kochi', 'Kochi tourism', 'Chinese fishing nets', 'Kerala heritage'] },
+    _hotelSlugs: ['brunton-boatyard-kochi'],
+    _restaurantSlugs: ['kashi-art-cafe-kochi'],
+    _nearbyPlaceSlugs: ['jewish-synagogue-kochi', 'dutch-palace-kochi'],
+  },
+  // ── Goa: Panaji ──
+  {
+    name: 'Baga Beach',
+    slug: 'baga-beach',
+    description: "One of North Goa's most vibrant and popular beaches — a buzzing stretch of golden sand lined with beach shacks, water sports operators, nightclubs and the famous Saturday Night Market nearby.",
+    stateSlug: 'goa',
+    citySlug: 'panaji',
+    location: { latitude: 15.5524, longitude: 73.7544 },
+    category: ['Beach', 'Adventure', 'Honeymoon'],
+    bestTimeToVisit: 'November to February',
+    openingTime: 'Open 24 hours',
+    closingTime: 'Shacks close by 00:00',
+    entryFee: 'Free',
+    images: [
+      'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800',
+      'https://images.unsplash.com/photo-1614082242765-7c98ca0f3df3?w=800',
+    ],
+    history: 'Baga\'s transformation from a quiet fishing village into Goa\'s party capital began in the 1960s when hippies discovered the North Goa coast. The name "Baga" derives from a stream that marks its northern boundary.',
+    highlights: ['Water sports — parasailing, jet-ski, banana boat', 'Saturday Night Market at Arpora (Nov–Apr)', 'Sunset at Tito\'s Lane', 'Baga Creek kayaking', 'Casino cruise from Panaji', 'Night clubs and live music'],
+    thingsToKnow: ['Saturday Night Market 6 PM onwards (seasonal)', 'Water sports operators are government licensed — check ID', 'Baga–Calangute strip is walkable (2 km)', 'Peak season Dec–Jan is extremely crowded'],
+    photography: true,
+    weather: { summer: 'Very hot and humid (30–35°C). Beach is less crowded and rates are cheaper.', winter: 'Perfect (22–32°C). Busy with domestic and international tourists.', monsoon: 'Rough seas — swimming banned. Shacks close. Dramatic scenery.' },
+    safetyTips: ['Swim only in lifeguard zones — Baga has strong undercurrents', 'Never swim at night or after drinking alcohol', 'Keep valuables in your hotel safe'],
+    transportation: {
+      byFlight: { nearestAirport: 'Dabolim International Airport', distance: '46 km', cabCost: '₹900–₹1300' },
+      byTrain: { nearestStation: 'Thivim Railway Station', distance: '18 km', taxiFare: '₹400–₹600' },
+      byBus: { busStand: 'Calangute Bus Stand', autoFare: '₹30–₹60' },
+      privateCab: '₹900–₹1300 from Airport',
+      bikeRental: '₹300–₹500/day',
+    },
+    estimatedCost: {
+      budget: { hotel: '₹700', food: '₹500', travel: '₹200', tickets: '₹0', shopping: '₹500', total: '₹1900' },
+      standard: { hotel: '₹3500', food: '₹1200', travel: '₹500', tickets: '₹1000', shopping: '₹1500', total: '₹7700' },
+      luxury: { hotel: '₹12000', food: '₹3000', travel: '₹1500', tickets: '₹2000', shopping: '₹5000', total: '₹23500' },
+    },
+    bestMonths: [
+      { month: 'December', temperature: '22–32°C', crowd: 'Very High', recommendation: "New Year's Eve parties; book months ahead" },
+      { month: 'January', temperature: '20–30°C', crowd: 'High', recommendation: 'Excellent weather and full tourist season' },
+      { month: 'November', temperature: '24–33°C', crowd: 'Medium', recommendation: 'Start of season — good deals and pleasant weather' },
+    ],
+    localFoods: ['Goan Fish Curry', 'Prawn Recheado', 'Bebinca', 'Feni cocktails', 'Kingfish Steak'],
+    travelTips: {
+      dos: ['Rent a scooter to explore multiple beaches in one day', 'Visit Arpora Night Market on Saturdays', 'Book water sports through hotel for safety'],
+      donts: ["Don't swim beyond the flag zones", 'Avoid carrying valuables to the beach', "Don't buy drugs — severe legal penalties in India"],
+      safety: ['Always swim near lifeguard stations', 'Apply SPF 50+ sunscreen', 'Secure your rented scooter with a lock'],
+    },
+    localLanguage: 'Konkani, English',
+    emergencyNumbers: { police: '100', ambulance: '108', fire: '101' },
+    faqs: [
+      { question: 'Is Baga Beach safe for swimming?', answer: 'Yes, within the flagged safe zones where lifeguards are on duty (usually 9 AM to 6 PM).' },
+      { question: 'What water sports are available at Baga?', answer: 'Parasailing, jet-skiing, banana boat rides, windsurfing, kayaking and dolphin boat trips.' },
+      { question: 'When is the Arpora Night Market held?', answer: 'Every Saturday from November to April, 6 PM onwards — flea market, food stalls, and live music.' },
+    ],
+    rating: 4.5,
+    published: true,
+    seo: { title: 'Baga Beach Goa — Guide, Water Sports & Nightlife', metaDescription: 'Visit Baga Beach in Goa — water sports, beach shacks, Arpora Night Market and vibrant nightlife.', keywords: ['Baga Beach', 'Goa beach', 'North Goa', 'Baga nightlife', 'Goa water sports'] },
+    _hotelSlugs: ['taj-fort-aguada-goa', 'zostel-goa-panaji'],
+    _restaurantSlugs: ['fishermans-wharf-goa', 'brittos-baga-goa'],
+    _nearbyPlaceSlugs: ['calangute-beach', 'fort-aguada'],
+  },
+  // ── West Bengal: Kolkata ──
+  {
+    name: 'Victoria Memorial',
+    slug: 'victoria-memorial',
+    description: 'A stunning white marble monument built in memory of Queen Victoria, surrounded by lush gardens and housing a museum with rare paintings, manuscripts and artefacts.',
+    stateSlug: 'west-bengal',
+    citySlug: 'kolkata',
+    location: { latitude: 22.5448, longitude: 88.3426 },
+    category: ['Heritage', 'Family Trip'],
+    bestTimeToVisit: 'October to March',
+    openingTime: '10:00',
+    closingTime: '17:00',
+    entryFee: '₹30 (Indian), ₹500 (Foreign)',
+    images: [
+      'https://images.unsplash.com/photo-1558431460-98e7b2e29894?w=800',
+      'https://images.unsplash.com/photo-1536421469767-80559bb6f5e1?w=800',
+    ],
+    history: 'Built between 1906 and 1921 by Lord Curzon, the Victoria Memorial was designed by Sir William Emerson in Indo-Saracenic style. The white Makrana marble structure stands as a symbol of the British Raj.',
+    highlights: ['Angel of Victory statue on top', 'National Gallery of paintings', 'Royal Gallery with Queen Victoria portraits', 'Lush gardens and fountain', 'Sound and Light show in evening'],
+    thingsToKnow: ['Closed on Mondays', 'Photography allowed in gardens (not inside museum)', 'Sound and Light show at 6 PM (English) and 7:15 PM (Hindi)', 'Combine with nearby Indian Museum and St. Paul\'s Cathedral'],
+    photography: true,
+    weather: { summer: 'Hot and humid (32–42°C). Visit early morning.', winter: 'Pleasant (12–22°C). Best season.', monsoon: 'Warm and humid. Gardens are lush but rains can disrupt visits.' },
+    safetyTips: ['Beware of touts outside the memorial', 'Keep valuables secure in crowded areas', 'Carry water — limited vendors inside'],
+    transportation: {
+      byFlight: { nearestAirport: 'Netaji Subhas Chandra Bose Airport', distance: '17 km', cabCost: '₹300–₹500' },
+      byTrain: { nearestStation: 'Howrah Junction', distance: '5 km', taxiFare: '₹100–₹200' },
+      byBus: { busStand: 'Esplanade Bus Stand', autoFare: '₹30–₹60' },
+      privateCab: '₹300–₹500 from city centre',
+      bikeRental: '₹300–₹500/day',
+    },
+    estimatedCost: {
+      budget: { hotel: '₹500', food: '₹300', travel: '₹200', tickets: '₹30', shopping: '₹500', total: '₹1530' },
+      standard: { hotel: '₹2000', food: '₹600', travel: '₹400', tickets: '₹500', shopping: '₹1000', total: '₹4500' },
+      luxury: { hotel: '₹8000', food: '₹2000', travel: '₹1000', tickets: '₹500', shopping: '₹3000', total: '₹14500' },
+    },
+    bestMonths: [
+      { month: 'November', temperature: '15–25°C', crowd: 'High', recommendation: 'Ideal weather and Durga Puja aftermath' },
+      { month: 'December', temperature: '12–22°C', crowd: 'Medium', recommendation: 'Cool mornings, perfect for exploration' },
+      { month: 'January', temperature: '10–20°C', crowd: 'Medium', recommendation: 'Fewer crowds, misty mornings add magic' },
+    ],
+    localFoods: ['Kathi Roll', 'Rosogolla', 'Fish Curry', 'Chowmein', 'Phuchka'],
+    travelTips: {
+      dos: ['Visit early morning for best light and fewer crowds', 'Don\'t miss the Sound and Light show', 'Combine with nearby Indian Museum'],
+      donts: ["Don't visit on Mondays — it's closed", "Don't miss the Angel of Victory statue", "Don't skip the gardens — they're beautiful"],
+      safety: ['Beware of pickpockets in crowded areas', 'Use prepaid taxis from the airport', 'Carry water and sunscreen in summer'],
+    },
+    localLanguage: 'Bengali, Hindi, English',
+    emergencyNumbers: { police: '100', ambulance: '108', fire: '101' },
+    faqs: [
+      { question: 'Is Victoria Memorial open on Mondays?', answer: 'No, the Victoria Memorial is closed every Monday.' },
+      { question: 'How long does it take to visit?', answer: 'Allow 2–3 hours for the museum and gardens. Add 1 hour for the Sound and Light show.' },
+      { question: 'Can I take photos inside?', answer: 'Photography is allowed in the gardens but not inside the museum.' },
+    ],
+    rating: 4.7,
+    published: true,
+    seo: { title: 'Victoria Memorial Kolkata — Guide, Timings & Tickets', metaDescription: 'Visit Victoria Memorial in Kolkata — white marble monument with museum and gardens.', keywords: ['Victoria Memorial', 'Kolkata tourism', 'Kolkata monuments', 'West Bengal heritage'] },
+    _hotelSlugs: [],
+    _restaurantSlugs: [],
+    _nearbyPlaceSlugs: ['indian-museum-kolkata', 'howrah-bridge'],
+  },
+  // ── Uttar Pradesh: Agra ──
+  {
+    name: 'Taj Mahal',
+    slug: 'taj-mahal',
+    description: 'One of the Seven Wonders of the World — an ivory-white marble mausoleum commissioned by Mughal emperor Shah Jahan in memory of his beloved wife Mumtaz Mahal.',
+    stateSlug: 'uttar-pradesh',
+    citySlug: 'agra',
+    location: { latitude: 27.1751, longitude: 78.0421 },
+    category: ['Heritage', 'Family Trip', 'Honeymoon'],
+    bestTimeToVisit: 'October to March',
+    openingTime: '06:00',
+    closingTime: '18:30',
+    entryFee: '₹50 (Indian), ₹1100 (Foreign)',
+    images: [
+      'https://images.unsplash.com/photo-1564507592333-c60657eea523?w=800',
+      'https://images.unsplash.com/photo-1548013146-72479768bada?w=800',
+    ],
+    history: 'Commissioned in 1632 by Mughal emperor Shah Jahan, the Taj Mahal took approximately 22 years and 20,000 artisans to complete. It stands as the ultimate symbol of eternal love.',
+    highlights: ['One of the Seven Wonders of the World', 'UNESCO World Heritage Site', 'Exquisite marble inlay work', 'Beautiful gardens and reflecting pool', 'Sunrise and sunset views', 'Mehtab Bagh across the Yamuna'],
+    thingsToKnow: ['Closed on Fridays', 'Best visited at sunrise', 'Security checks are mandatory', 'Photography allowed (no tripods)', 'Shoe covers provided for main mausoleum'],
+    photography: true,
+    weather: { summer: 'Extremely hot (40–45°C). Visit at sunrise only.', winter: 'Cold mornings with mist (5–22°C). Magical atmosphere.', monsoon: 'Warm and humid. Yamuna river may flood.' },
+    safetyTips: ['Beware of touts and fake guides', 'Keep valuables secure', 'Drink only bottled water', 'Use authorized transport'],
+    transportation: {
+      byFlight: { nearestAirport: 'Pandit Deen Dayal Upadhyay Airport (AGR)', distance: '13 km', cabCost: '₹300–₹500' },
+      byTrain: { nearestStation: 'Agra Cantt', distance: '4 km', taxiFare: '₹100–₹200' },
+      byBus: { busStand: 'ISBT Agra', autoFare: '₹50–₹100' },
+      privateCab: '₹1500–₹2000/day',
+      bikeRental: '₹500–₹800/day',
+    },
+    estimatedCost: {
+      budget: { hotel: '₹800', food: '₹500', travel: '₹400', tickets: '₹50', shopping: '₹500', total: '₹2250' },
+      standard: { hotel: '₹2500', food: '₹1000', travel: '₹800', tickets: '₹1100', shopping: '₹1000', total: '₹6400' },
+      luxury: { hotel: '₹8000', food: '₹2500', travel: '₹2000', tickets: '₹1100', shopping: '₹3000', total: '₹16600' },
+    },
+    bestMonths: [
+      { month: 'November', temperature: '15–27°C', crowd: 'High', recommendation: 'Ideal weather and clear skies' },
+      { month: 'December', temperature: '5–22°C', crowd: 'High', recommendation: 'Misty mornings add magic to the monument' },
+      { month: 'February', temperature: '10–25°C', crowd: 'Medium', recommendation: 'Fewer crowds, pleasant weather' },
+    ],
+    localFoods: ['Petha', 'Mughlai Biryani', 'Dalmoth', 'Bedai and Kachori'],
+    travelTips: {
+      dos: ['Visit at sunrise for the best light and fewer crowds', 'Book tickets online to skip queues', 'Visit Mehtab Bagh for sunset views across the Yamuna'],
+      donts: ["Don't visit on Fridays — it's closed", "Don't accept unsolicited guides", "Don't miss the marble inlay work details"],
+      safety: ['Beware of touts and fake guides', 'Keep valuables secure in crowded areas', 'Use authorized transport only'],
+    },
+    localLanguage: 'Hindi, Urdu',
+    emergencyNumbers: { police: '100', ambulance: '108', fire: '101' },
+    faqs: [
+      { question: 'What is the best time to visit Taj Mahal?', answer: 'October to March is the best time. Sunrise visits are highly recommended for the best light and fewer crowds.' },
+      { question: 'Is Taj Mahal open on Fridays?', answer: 'No, the Taj Mahal is closed every Friday for prayers.' },
+      { question: 'How long does it take to visit?', answer: 'Allow 2–3 hours for the full complex including the gardens and museum.' },
+    ],
+    rating: 4.9,
+    published: true,
+    seo: { title: 'Taj Mahal Agra — Guide, Timings & Tickets', metaDescription: 'Visit the Taj Mahal — one of the Seven Wonders of the World in Agra, India.', keywords: ['Taj Mahal', 'Agra tourism', 'Seven Wonders', 'UP heritage', 'Taj Mahal timings'] },
+    _hotelSlugs: [],
+    _restaurantSlugs: [],
+    _nearbyPlaceSlugs: ['agra-fort', 'mehtab-bagh', 'fatehpur-sikri'],
+  },
+  // ── West Bengal: Darjeeling ──
+  {
+    name: 'Tiger Hill',
+    slug: 'tiger-hill',
+    description: 'A famous viewpoint offering breathtaking sunrise views over the Kanchenjunga range and the Himalayas, with Mount Everest visible on clear days.',
+    stateSlug: 'west-bengal',
+    citySlug: 'darjeeling',
+    location: { latitude: 27.0200, longitude: 88.2900 },
+    category: ['Hill Station', 'Adventure'],
+    bestTimeToVisit: 'October to March',
+    openingTime: '04:00',
+    closingTime: '07:00',
+    entryFee: '₹50',
+    images: [
+      'https://images.unsplash.com/photo-1593693411515-c20261bcad6e?w=800',
+      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800',
+    ],
+    history: 'Tiger Hill has been a popular sunrise viewpoint since the British colonial era. The name allegedly comes from the tiger that was spotted here in the early 1900s.',
+    highlights: ['Sunrise over Kanchenjunga', 'View of Mount Everest on clear days', 'Panoramic Himalayan panorama', 'Tea garden views', 'Toy Train route nearby'],
+    thingsToKnow: ['Leave Darjeeling by 3:30 AM for sunrise', 'Carry warm clothing — temperatures can be near freezing', 'Shared jeeps available from Chowrasta (₹200–₹300 per person)', 'Best visibility October to December'],
+    photography: true,
+    weather: { summer: 'Cool mornings (10–15°C). Clear views.', winter: 'Freezing (-2 to 5°C). Best visibility but very cold.', monsoon: 'Cloudy — sunrise views unlikely.' },
+    safetyTips: ['Carry warm clothing even in summer', 'Use registered taxis only', 'Stay on marked viewpoints'],
+    transportation: {
+      byFlight: { nearestAirport: 'Bagdogra Airport', distance: '70 km', cabCost: '₹2000–₹2500' },
+      byTrain: { nearestStation: 'New Jalpaiguri', distance: '68 km', taxiFare: '₹1500–₹2000' },
+      byBus: { busStand: 'Darjeeling Bus Stand', autoFare: '₹50–₹100' },
+      privateCab: '₹1500–₹2000 from Darjeeling',
+      bikeRental: '₹500–₹800/day',
+    },
+    estimatedCost: {
+      budget: { hotel: '₹800', food: '₹500', travel: '₹400', tickets: '₹50', shopping: '₹500', total: '₹2250' },
+      standard: { hotel: '₹2500', food: '₹1000', travel: '₹800', tickets: '₹50', shopping: '₹1000', total: '₹5350' },
+      luxury: { hotel: '₹8000', food: '₹2500', travel: '₹2000', tickets: '₹50', shopping: '₹3000', total: '₹15550' },
+    },
+    bestMonths: [
+      { month: 'October', temperature: '5–15°C', crowd: 'High', recommendation: 'Post-monsoon clarity — best views' },
+      { month: 'November', temperature: '2–12°C', crowd: 'Medium', recommendation: 'Excellent visibility, fewer crowds' },
+      { month: 'December', temperature: '-2–10°C', crowd: 'Medium', recommendation: 'Very cold but crystal clear views' },
+    ],
+    localFoods: ['Momos', 'Thukpa', 'Darjeeling Tea', 'Sel Roti'],
+    travelTips: {
+      dos: ['Leave by 3:30 AM for sunrise', 'Carry thermos with hot tea', 'Book a shared jeep in advance'],
+      donts: ["Don't skip warm clothing", "Don't expect views during monsoon", "Don't litter at the viewpoint"],
+      safety: ['Carry warm clothing even in summer', 'Use registered taxis only', 'Stay on marked viewpoints'],
+    },
+    localLanguage: 'Bengali, Nepali, Hindi',
+    emergencyNumbers: { police: '100', ambulance: '108', fire: '101' },
+    faqs: [
+      { question: 'What time should I leave for Tiger Hill sunrise?', answer: 'Leave Darjeeling by 3:30 AM. The sunrise is around 5:30–6:00 AM depending on the season.' },
+      { question: 'Can I see Mount Everest from Tiger Hill?', answer: 'Yes, on clear days (especially October–December) you can see Mount Everest along with Kanchenjunga.' },
+      { question: 'How do I get to Tiger Hill?', answer: 'Shared jeeps from Chowrasta (₹200–₹300/person) or private taxi (₹1500–₹2000). Leave by 3:30 AM.' },
+    ],
+    rating: 4.8,
+    published: true,
+    seo: { title: 'Tiger Hill Darjeeling — Sunrise & Kanchenjunga Views', metaDescription: 'Visit Tiger Hill in Darjeeling — sunrise views over Kanchenjunga and the Himalayas.', keywords: ['Tiger Hill', 'Darjeeling tourism', 'Kanchenjunga', 'West Bengal hill station'] },
+    _hotelSlugs: [],
+    _restaurantSlugs: [],
+    _nearbyPlaceSlugs: ['batasia-loop', 'peace-pagoda'],
+  },
+  // ── Kerala: Munnar ──
+  {
+    name: 'Munnar Tea Gardens',
+    slug: 'munnar-tea-gardens',
+    description: 'Sprawling emerald-green tea estates carpeting the rolling Western Ghats hills of Munnar — offering factory tours, tasting sessions and some of the most photogenic scenery in South India.',
+    stateSlug: 'kerala',
+    citySlug: 'munnar',
+    location: { latitude: 10.0767, longitude: 77.0600 },
+    category: ['Hill Station', 'Family Trip', 'Honeymoon'],
+    bestTimeToVisit: 'September to May',
+    openingTime: '09:00',
+    closingTime: '17:00',
+    entryFee: 'Free (Tea factory tours: ₹50–₹100)',
+    images: [
+      'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800',
+      'https://images.unsplash.com/photo-1570655652364-2632e47aff2f?w=800',
+    ],
+    history: 'Tea cultivation in Munnar began in the 1870s under British planters. The Kanan Devan Hills Plantations Company, once owned by Tata Tea, now manages vast swathes of the valley.',
+    highlights: ['TATA Tea Museum', 'Mattupetty Dam & Tea Estates', 'Echo Point viewpoint', 'Top Station — highest viewpoint', 'Tea tasting workshops', 'Neelakurinji blooms (every 12 years)'],
+    thingsToKnow: ['TATA Tea Museum is in Nallathanni — book factory tour on arrival', 'Top Station is 32 km from Munnar — allow half day', 'Best photography in early morning mist', 'Tea bought at factory is fresher and cheaper'],
+    photography: true,
+    weather: { summer: 'Cool and misty, 15–25°C. Ideal for walks.', winter: 'Cold mornings (8–15°C), warm afternoons (20–25°C).', monsoon: 'Lush green, 15–22°C but landslides possible on roads.' },
+    safetyTips: ['Drive carefully on mountain roads — sharp hairpin bends', 'Carry warm layers for evenings', 'Do not venture into plantations without permission'],
+    transportation: {
+      byFlight: { nearestAirport: 'Cochin International Airport', distance: '110 km', cabCost: '₹2500–₹3500' },
+      byTrain: { nearestStation: 'Aluva Railway Station', distance: '110 km', taxiFare: '₹2200–₹3000' },
+      byBus: { busStand: 'Munnar Bus Stand', autoFare: '₹20–₹50' },
+      privateCab: '₹2500–₹3500 from Kochi',
+      bikeRental: '₹300–₹500/day',
+    },
+    estimatedCost: {
+      budget: { hotel: '₹900', food: '₹300', travel: '₹400', tickets: '₹100', shopping: '₹600', total: '₹2300' },
+      standard: { hotel: '₹4000', food: '₹700', travel: '₹800', tickets: '₹200', shopping: '₹1500', total: '₹7200' },
+      luxury: { hotel: '₹12000', food: '₹2000', travel: '₹1500', tickets: '₹300', shopping: '₹4000', total: '₹19800' },
+    },
+    bestMonths: [
+      { month: 'September', temperature: '15–22°C', crowd: 'Low', recommendation: 'Post-monsoon freshness; green and misty' },
+      { month: 'October', temperature: '15–23°C', crowd: 'Medium', recommendation: 'Great weather and moderate crowds' },
+      { month: 'April', temperature: '18–26°C', crowd: 'Low', recommendation: 'Pleasant before summer, very few tourists' },
+    ],
+    localFoods: ['Cardamom Tea', 'Munnar Tea Chocolates', 'Puttu', 'Kerala Sadya'],
+    travelTips: {
+      dos: ['Start your day with a sunrise walk through the estates', 'Buy tea directly from factory outlets', 'Visit TATA Tea Museum for history and tastings'],
+      donts: ["Don't enter private plantation areas without permission", 'Avoid night driving on mountain roads', "Don't leave litter — the area is pristine"],
+      safety: ['Drive carefully on narrow mountain roads', 'Keep warm clothes handy — temperatures drop sharply at night', 'Carry a first-aid kit for long treks'],
+    },
+    localLanguage: 'Malayalam',
+    emergencyNumbers: { police: '100', ambulance: '108', fire: '101' },
+    faqs: [
+      { question: 'Can I tour a tea factory in Munnar?', answer: 'Yes — the TATA Tea Museum in Nallathanni offers factory tours and tasting sessions for ₹75.' },
+      { question: 'Is Munnar accessible by public bus?', answer: 'Yes — regular KSRTC buses from Ernakulam (Kochi) take 4–4.5 hours.' },
+      { question: 'When do Neelakurinji flowers bloom in Munnar?', answer: 'Neelakurinji blooms once every 12 years — the next bloom is expected around 2030.' },
+    ],
+    rating: 4.6,
+    published: true,
+    seo: { title: 'Munnar Tea Gardens — Kerala Hill Station Guide', metaDescription: 'Explore Munnar tea gardens — factory tours, Eravikulam National Park and Western Ghats scenery.', keywords: ['Munnar tea gardens', 'Munnar tourism', 'Kerala hill station', 'TATA Tea Museum'] },
+    _hotelSlugs: ['windermere-estate-munnar'],
+    _restaurantSlugs: ['saravana-bhavan-munnar'],
+    _nearbyPlaceSlugs: ['eravikulam-national-park', 'mattupetty-dam'],
+  },
+];
