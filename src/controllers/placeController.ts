@@ -1,5 +1,10 @@
 import { Request, Response } from 'express';
 import Place from '../models/Place';
+import { IUser } from '../models/User';
+
+interface AuthRequest extends Request {
+  user?: IUser;
+}
 
 export const getAllPlaces = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -48,7 +53,8 @@ export const getPlaceBySlug = async (req: Request, res: Response): Promise<void>
       .populate('city', 'name slug')
       .populate('hotels')
       .populate('restaurants')
-      .populate('nearbySpots.place', 'name slug images category');
+      .populate('nearbySpots.place', 'name slug images category')
+      .populate('reviews.user', 'name avatar');
 
     if (place) {
       res.json({ success: true, data: place });
@@ -100,23 +106,24 @@ export const deletePlace = async (req: Request, res: Response): Promise<void> =>
   }
 };
 
-export const addReview = async (req: Request, res: Response): Promise<void> => {
+export const addReview = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { rating, comment, photos } = req.body;
     const place = await Place.findById(req.params.id);
 
     if (place) {
       place.reviews.push({
-        user: req.body.user,
+        user: req.user!._id,
         rating,
         comment,
-        photos,
+        photos: photos || [],
       });
 
       const totalReviews = place.reviews.length;
       place.rating = place.reviews.reduce((acc, item) => acc + item.rating, 0) / totalReviews;
 
       await place.save();
+      await place.populate('reviews.user', 'name avatar');
       res.json({ success: true, data: place });
     } else {
       res.status(404).json({ success: false, message: 'Place not found' });

@@ -1,8 +1,8 @@
+import 'dotenv/config';
 import express, { Application } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import dotenv from 'dotenv';
 import connectDB from './config/database';
 import { connectRedis } from './config/redis';
 import { errorHandler, notFound } from './middleware/errorHandler';
@@ -16,8 +16,6 @@ import hotelRoutes from './routes/hotelRoutes';
 import restaurantRoutes from './routes/restaurantRoutes';
 import uploadRoutes from './routes/uploadRoutes';
 import adminRoutes from './routes/adminRoutes';
-
-dotenv.config();
 
 const app: Application = express();
 const PORT = process.env.PORT || 5000;

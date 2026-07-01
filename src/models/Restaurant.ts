@@ -12,6 +12,7 @@ export interface IRestaurant extends Document {
   };
   googleMapLink: string;
   phone: string;
+  website: string;
   averageCost: number;
   openingTime: string;
   closingTime: string;
@@ -37,6 +38,7 @@ const restaurantSchema = new Schema<IRestaurant>(
     },
     googleMapLink: { type: String },
     phone: { type: String },
+    website: { type: String },
     averageCost: { type: Number },
     openingTime: { type: String },
     closingTime: { type: String },

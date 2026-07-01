@@ -11,6 +11,12 @@ export interface ICity extends Document {
     latitude: number;
     longitude: number;
   };
+  weather: {
+    summer: string;
+    winter: string;
+    monsoon: string;
+  };
+  bestTimeToVisit: string;
   popularPlaces: mongoose.Types.ObjectId[];
   hotels: mongoose.Types.ObjectId[];
   restaurants: mongoose.Types.ObjectId[];
@@ -63,6 +69,12 @@ const citySchema = new Schema<ICity>(
       latitude: { type: Number },
       longitude: { type: Number },
     },
+    weather: {
+      summer: { type: String },
+      winter: { type: String },
+      monsoon: { type: String },
+    },
+    bestTimeToVisit: { type: String },
     popularPlaces: [{ type: Schema.Types.ObjectId, ref: 'Place' }],
     hotels: [{ type: Schema.Types.ObjectId, ref: 'Hotel' }],
     restaurants: [{ type: Schema.Types.ObjectId, ref: 'Restaurant' }],

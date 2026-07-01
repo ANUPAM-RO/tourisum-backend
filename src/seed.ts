@@ -5,11 +5,7 @@ import City from './models/City';
 import Place from './models/Place';
 import Hotel from './models/Hotel';
 import Restaurant from './models/Restaurant';
-import { statesData } from './seed/data/states';
-import { citiesData } from './seed/data/cities';
-import { placesData } from './seed/data/places';
-import { hotelsData } from './seed/data/hotels';
-import { restaurantsData } from './seed/data/restaurants';
+import { generateAllSeedData } from './seed/generateData';
 
 dotenv.config();
 
@@ -28,6 +24,8 @@ async function seed() {
     Restaurant.deleteMany({}),
   ]);
   console.log('Cleared existing data');
+
+  const { statesData, citiesData, placesData, hotelsData, restaurantsData } = generateAllSeedData();
 
   // ─── STATES ───────────────────────────────────────────────────────────────
   const stateMap = new Map<string, any>();
@@ -61,6 +59,8 @@ async function seed() {
       image: c.image,
       gallery: c.gallery,
       location: c.location,
+      weather: c.weather,
+      bestTimeToVisit: c.bestTimeToVisit,
       transportation: c.transportation,
       estimatedBudget: c.estimatedBudget,
       localFoods: c.localFoods,
@@ -108,6 +108,7 @@ async function seed() {
       location: r.location,
       googleMapLink: r.googleMapLink,
       phone: r.phone,
+      website: r.website,
       averageCost: r.averageCost,
       openingTime: r.openingTime,
       closingTime: r.closingTime,
@@ -165,10 +166,10 @@ async function seed() {
     if (!state) continue;
 
     const popularCityIds = stateData._popularCitySlugs
-      .map((slug) => cityMap.get(slug)?._id)
+      .map((slug: string) => cityMap.get(slug)?._id)
       .filter(Boolean);
     const popularPlaceIds = stateData._popularPlaceSlugs
-      .map((slug) => placeMap.get(slug)?._id)
+      .map((slug: string) => placeMap.get(slug)?._id)
       .filter(Boolean);
 
     await State.findByIdAndUpdate(state._id, {
@@ -183,13 +184,13 @@ async function seed() {
     if (!city) continue;
 
     const popularPlaceIds = cityData._popularPlaceSlugs
-      .map((slug) => placeMap.get(slug)?._id)
+      .map((slug: string) => placeMap.get(slug)?._id)
       .filter(Boolean);
     const hotelIds = cityData._hotelSlugs
-      .map((slug) => hotelMap.get(slug)?._id)
+      .map((slug: string) => hotelMap.get(slug)?._id)
       .filter(Boolean);
     const restaurantIds = cityData._restaurantSlugs
-      .map((slug) => restaurantMap.get(slug)?._id)
+      .map((slug: string) => restaurantMap.get(slug)?._id)
       .filter(Boolean);
 
     await City.findByIdAndUpdate(city._id, {
@@ -205,10 +206,10 @@ async function seed() {
     if (!place) continue;
 
     const hotelIds = placeData._hotelSlugs
-      .map((slug) => hotelMap.get(slug)?._id)
+      .map((slug: string) => hotelMap.get(slug)?._id)
       .filter(Boolean);
     const restaurantIds = placeData._restaurantSlugs
-      .map((slug) => restaurantMap.get(slug)?._id)
+      .map((slug: string) => restaurantMap.get(slug)?._id)
       .filter(Boolean);
 
     await Place.findByIdAndUpdate(place._id, {
