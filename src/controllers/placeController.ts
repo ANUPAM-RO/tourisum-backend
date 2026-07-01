@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import Place from '../models/Place';
+import State from '../models/State';
 import { IUser } from '../models/User';
 
 interface AuthRequest extends Request {
@@ -12,8 +13,12 @@ export const getAllPlaces = async (req: Request, res: Response): Promise<void> =
 
     const query: any = { published: true };
 
-    if (category) query.category = category;
-    if (state) query.state = state;
+    if (category) query.category = { $in: [category] };
+    if (state) {
+      const stateSlug = typeof state === 'string' ? state : String(state);
+      const stateDoc = await State.findOne({ slug: stateSlug }).select('_id');
+      query.state = stateDoc ? stateDoc._id : stateSlug;
+    }
     if (city) query.city = city;
     if (search) {
       query.$or = [
@@ -156,6 +161,27 @@ export const getSimilarPlaces = async (req: Request, res: Response): Promise<voi
   }
 };
 
+export const getCategoryStats = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const categoryStats = await Place.aggregate([
+      { $match: { published: true } },
+      { $unwind: '$category' },
+      { $group: { _id: '$category', count: { $sum: 1 } } },
+      { $sort: { count: -1 } },
+    ]);
+
+    res.json({
+      success: true,
+      data: categoryStats.map((item) => ({
+        name: item._id,
+        count: item.count,
+      })),
+    });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 export default {
   getAllPlaces,
   getPlaceBySlug,
@@ -164,4 +190,5 @@ export default {
   deletePlace,
   addReview,
   getSimilarPlaces,
+  getCategoryStats,
 };

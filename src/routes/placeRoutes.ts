@@ -7,12 +7,14 @@ import {
   deletePlace,
   addReview,
   getSimilarPlaces,
+  getCategoryStats,
 } from '../controllers/placeController';
 import { protect, admin } from '../middleware/auth';
 
 const router = express.Router();
 
 router.get('/', getAllPlaces);
+router.get('/categories', getCategoryStats);
 router.get('/similar/:id', getSimilarPlaces);
 router.get('/:slug', getPlaceBySlug);
 router.post('/:id/reviews', protect, addReview);

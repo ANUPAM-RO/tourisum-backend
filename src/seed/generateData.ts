@@ -1,5 +1,5 @@
 // Comprehensive seed data generator for all 28 Indian states
-// Each state: 5 cities, each city: 10 places, 5 hotels, 5 restaurants
+// Each state: 10 cities, each city: 50 places, 50 hotels, 50 restaurants
 
 const IMAGE_URLS = [
   'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800',
@@ -30,6 +30,18 @@ const IMAGE_URLS = [
   'https://images.unsplash.com/photo-1590579491624-f98f36d4c763?w=800',
   'https://images.unsplash.com/photo-1558431460-98e7b2e29894?w=800',
   'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=800',
+  'https://images.unsplash.com/photo-1569949381669-ecf31ae8e613?w=800',
+  'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800',
+  'https://images.unsplash.com/photo-1597074836924-8e13c0e81655?w=800',
+  'https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800',
+  'https://images.unsplash.com/photo-1561347619-9e3e9e3e3e3e?w=800',
+  'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800',
+  'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800',
+  'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800',
+  'https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800',
+  'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800',
+  'https://images.unsplash.com/photo-1504893524553-b855bce32c67?w=800',
+  'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800',
 ];
 
 const HOTEL_IMAGES = [
@@ -38,6 +50,11 @@ const HOTEL_IMAGES = [
   'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800',
   'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800',
   'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800',
+  'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800',
+  'https://images.unsplash.com/photo-1551918120-9739cb430c6d?w=800',
+  'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800',
+  'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800',
+  'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800',
 ];
 
 const RESTAURANT_IMAGES = [
@@ -46,10 +63,15 @@ const RESTAURANT_IMAGES = [
   'https://images.unsplash.com/photo-1559339352-11d035aa65f4?w=800',
   'https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=800',
   'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800',
+  'https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?w=800',
+  'https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=800',
+  'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800',
+  'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800',
+  'https://images.unsplash.com/photo-1552566626-52f8b828add9?w=800',
 ];
 
 const AMENITIES = ['Free WiFi', 'Parking', 'Breakfast', 'Swimming Pool', 'Gym', 'Spa', 'Restaurant', 'Room Service', 'Laundry', 'Airport Shuttle'];
-const CUISINES = ['Indian', 'Mughlai', 'Chinese', 'Tibetan', 'South Indian', 'Goan', 'Seafood', 'Continental', 'North Indian', 'Rajasthani', 'Kerala', 'Bengali', 'Punjabi', 'Gujarati', 'Maharashtrian'];
+const CUISINES = ['Indian', 'Mughlai', 'Chinese', 'Tibetan', 'South Indian', 'Goan', 'Seafood', 'Continental', 'North Indian', 'Rajasthani', 'Kerala', 'Bengali', 'Punjabi', 'Gujarati', 'Maharashtrian', 'Thai', 'Italian', 'Japanese', 'Mexican', 'French'];
 const CATEGORIES = ['Hill Station', 'Beach', 'Heritage', 'Wildlife', 'Religious', 'Adventure', 'Honeymoon', 'Family Trip'];
 
 const STATES_DATA = [
@@ -71,6 +93,16 @@ const STATES_DATA = [
       { name: 'Udaipur', slug: 'udaipur', lat: 24.5854, lng: 73.7125 },
       { name: 'Jaisalmer', slug: 'jaisalmer', lat: 26.9157, lng: 70.9083 },
       { name: 'Pushkar', slug: 'pushkar', lat: 26.4897, lng: 74.5511 },
+      { name: 'Ajmer', slug: 'ajmer', lat: 26.4499, lng: 74.6399 },
+      { name: 'Bikaner', slug: 'bikaner', lat: 28.0229, lng: 73.3119 },
+      { name: 'Mount Abu', slug: 'mount-abu', lat: 24.5924, lng: 72.7156 },
+      { name: 'Bharatpur', slug: 'bharatpur', lat: 27.2152, lng: 77.4904 },
+      { name: 'Alwar', slug: 'alwar', lat: 27.5530, lng: 76.6346 },
+      { name: 'Sikar', slug: 'sikar', lat: 27.6093, lng: 75.1397 },
+      { name: 'Pali', slug: 'pali', lat: 25.7711, lng: 73.3234 },
+      { name: 'Kota', slug: 'kota', lat: 25.2138, lng: 75.8648 },
+      { name: 'Chittorgarh', slug: 'chittorgarh', lat: 24.8887, lng: 74.6269 },
+      { name: 'Bundi', slug: 'bundi', lat: 25.4305, lng: 75.6483 },
     ],
   },
   {
@@ -91,6 +123,16 @@ const STATES_DATA = [
       { name: 'Alleppey', slug: 'alleppey', lat: 9.4981, lng: 76.3388 },
       { name: 'Kovalam', slug: 'kovalam', lat: 8.4004, lng: 76.9774 },
       { name: 'Wayanad', slug: 'wayanad', lat: 11.6854, lng: 76.1320 },
+      { name: 'Thiruvananthapuram', slug: 'thiruvananthapuram', lat: 8.5241, lng: 76.9366 },
+      { name: 'Thrissur', slug: 'thrissur', lat: 10.5276, lng: 76.2144 },
+      { name: 'Kozhikode', slug: 'kozhikode', lat: 11.2588, lng: 75.7804 },
+      { name: 'Kannur', slug: 'kannur', lat: 11.8745, lng: 75.3704 },
+      { name: 'Kumarakom', slug: 'kumarakom', lat: 9.6061, lng: 76.4217 },
+      { name: 'Thekkady', slug: 'thekkady', lat: 9.5981, lng: 77.1605 },
+      { name: 'Varkala', slug: 'varkala', lat: 8.7375, lng: 76.7167 },
+      { name: 'Malappuram', slug: 'malappuram', lat: 11.0509, lng: 76.0710 },
+      { name: 'Palakkad', slug: 'palakkad', lat: 10.7867, lng: 76.6558 },
+      { name: 'Kollam', slug: 'kollam', lat: 8.8932, lng: 76.6141 },
     ],
   },
   {
@@ -111,6 +153,16 @@ const STATES_DATA = [
       { name: 'Mapusa', slug: 'mapusa', lat: 15.5900, lng: 73.8100 },
       { name: 'Ponda', slug: 'ponda', lat: 15.4000, lng: 74.0000 },
       { name: 'Vasco', slug: 'vasco', lat: 15.3950, lng: 73.8200 },
+      { name: 'Calangute', slug: 'calangute', lat: 15.5430, lng: 73.7552 },
+      { name: 'Anjuna', slug: 'anjuna', lat: 15.5710, lng: 73.7400 },
+      { name: 'Candolim', slug: 'candolim', lat: 15.5180, lng: 73.7640 },
+      { name: 'Palolem', slug: 'palolem', lat: 15.0100, lng: 74.0230 },
+      { name: 'Arambol', slug: 'arambol', lat: 15.6850, lng: 73.7050 },
+      { name: 'Morjim', slug: 'morjim', lat: 15.6400, lng: 73.7350 },
+      { name: 'Agonda', slug: 'agonda', lat: 15.0400, lng: 74.0300 },
+      { name: 'Colva', slug: 'colva', lat: 15.2570, lng: 73.9270 },
+      { name: 'Benaulim', slug: 'benaulim', lat: 15.2400, lng: 73.9200 },
+      { name: 'Cavelossim', slug: 'cavelossim', lat: 15.1645, lng: 73.9485 },
     ],
   },
   {
@@ -131,6 +183,16 @@ const STATES_DATA = [
       { name: 'Siliguri', slug: 'siliguri', lat: 26.7271, lng: 88.3953 },
       { name: 'Durgapur', slug: 'durgapur', lat: 23.5204, lng: 87.3119 },
       { name: 'Asansol', slug: 'asansol', lat: 23.6739, lng: 86.9524 },
+      { name: 'Santiniketan', slug: 'santiniketan', lat: 23.6739, lng: 87.6787 },
+      { name: 'Kalimpong', slug: 'kalimpong', lat: 27.0650, lng: 88.4650 },
+      { name: 'Mandarmani', slug: 'mandarmani', lat: 21.6500, lng: 87.6500 },
+      { name: 'Shantiniketan', slug: 'shantiniketan', lat: 23.6700, lng: 87.6800 },
+      { name: 'Bishnupur', slug: 'bishnupur', lat: 23.0833, lng: 87.3167 },
+      { name: 'Digha', slug: 'digha', lat: 21.6167, lng: 87.5167 },
+      { name: 'Jalpaiguri', slug: 'jalpaiguri', lat: 26.5167, lng: 88.7333 },
+      { name: 'Cooch Behar', slug: 'cooch-behar', lat: 26.3333, lng: 89.4500 },
+      { name: 'Mayapur', slug: 'mayapur', lat: 23.2333, lng: 88.3833 },
+      { name: 'Bankura', slug: 'bankura', lat: 23.2500, lng: 87.0667 },
     ],
   },
   {
@@ -151,6 +213,17 @@ const STATES_DATA = [
       { name: 'Lucknow', slug: 'lucknow', lat: 26.8467, lng: 80.9462 },
       { name: 'Mathura', slug: 'mathura', lat: 27.4924, lng: 77.6737 },
       { name: 'Prayagraj', slug: 'prayagraj', lat: 25.4358, lng: 81.8463 },
+      { name: 'Noida', slug: 'noida', lat: 28.5355, lng: 77.3910 },
+      { name: 'Ayodhya', slug: 'ayodhya', lat: 26.7930, lng: 82.1750 },
+      { name: 'Jhansi', slug: 'jhansi', lat: 25.4484, lng: 78.5685 },
+      { name: 'Vrindavan', slug: 'vrindavan', lat: 27.5830, lng: 77.6737 },
+      { name: 'Meerut', slug: 'meerut', lat: 28.9845, lng: 77.7064 },
+      { name: 'Kanpur', slug: 'kanpur', lat: 26.4499, lng: 80.3319 },
+      { name: 'Sarnath', slug: 'sarnath', lat: 25.3820, lng: 83.0220 },
+      { name: 'Kushinagar', slug: 'kushinagar', lat: 26.7400, lng: 83.8900 },
+      { name: 'Fatehpur Sikri', slug: 'fatehpur-sikri', lat: 27.0911, lng: 77.6611 },
+      { name: 'Shravasti', slug: 'shravasti', lat: 27.5200, lng: 82.0300 },
+      { name: 'Bareilly', slug: 'bareilly', lat: 28.3670, lng: 79.4304 },
     ],
   },
   {
@@ -171,6 +244,16 @@ const STATES_DATA = [
       { name: 'Dharamshala', slug: 'dharamshala', lat: 32.2190, lng: 76.3234 },
       { name: 'Kullu', slug: 'kullu', lat: 31.9582, lng: 77.1085 },
       { name: 'Kasol', slug: 'kasol', lat: 31.9900, lng: 77.3200 },
+      { name: 'Dalhousie', slug: 'dalhousie', lat: 32.5400, lng: 75.9600 },
+      { name: 'McLeod Ganj', slug: 'mcleod-ganj', lat: 32.2430, lng: 76.3200 },
+      { name: 'Solan', slug: 'solan', lat: 30.9200, lng: 77.1200 },
+      { name: 'Chamba', slug: 'chamba', lat: 32.5600, lng: 76.1300 },
+      { name: 'Kinnaur', slug: 'kinnaur', lat: 31.5800, lng: 78.4200 },
+      { name: 'Spiti', slug: 'spiti', lat: 32.2400, lng: 78.0300 },
+      { name: 'Kufri', slug: 'kufri', lat: 31.0970, lng: 77.2660 },
+      { name: 'Narkanda', slug: 'narkanda', lat: 31.2500, lng: 77.4500 },
+      { name: 'Palampur', slug: 'palampur', lat: 32.1100, lng: 76.5300 },
+      { name: 'Bir Billing', slug: 'bir-billing', lat: 32.1800, lng: 76.4700 },
     ],
   },
   {
@@ -191,6 +274,16 @@ const STATES_DATA = [
       { name: 'Pahalgam', slug: 'pahalgam', lat: 34.0150, lng: 75.3200 },
       { name: 'Leh', slug: 'leh', lat: 34.1526, lng: 77.5771 },
       { name: 'Jammu', slug: 'jammu', lat: 32.7266, lng: 74.8570 },
+      { name: 'Sonamarg', slug: 'sonamarg', lat: 34.3100, lng: 75.2900 },
+      { name: 'Patnitop', slug: 'patnitop', lat: 33.1500, lng: 75.2300 },
+      { name: 'Kargil', slug: 'kargil', lat: 34.5500, lng: 76.1300 },
+      { name: 'Nubra Valley', slug: 'nubra-valley', lat: 34.6500, lng: 77.5000 },
+      { name: 'Kupwara', slug: 'kupwara', lat: 34.5200, lng: 74.2600 },
+      { name: 'Anantnag', slug: 'anantnag', lat: 33.7300, lng: 75.1500 },
+      { name: 'Baramulla', slug: 'baramulla', lat: 34.2100, lng: 74.3400 },
+      { name: 'Kishtwar', slug: 'kishtwar', lat: 33.3000, lng: 76.5500 },
+      { name: 'Doda', slug: 'doda', lat: 33.1500, lng: 75.5500 },
+      { name: 'Udhampur', slug: 'udhampur', lat: 32.9200, lng: 75.1400 },
     ],
   },
   {
@@ -211,6 +304,16 @@ const STATES_DATA = [
       { name: 'Hampi', slug: 'hampi', lat: 15.3350, lng: 76.4600 },
       { name: 'Coorg', slug: 'coorg', lat: 12.4244, lng: 75.7382 },
       { name: 'Gokarna', slug: 'gokarna', lat: 14.5500, lng: 74.3167 },
+      { name: 'Mangalore', slug: 'mangalore', lat: 12.9141, lng: 74.8560 },
+      { name: 'Belur', slug: 'belur', lat: 13.1600, lng: 75.9000 },
+      { name: 'Halebidu', slug: 'halebidu', lat: 13.1700, lng: 75.9600 },
+      { name: 'Shimoga', slug: 'shimoga', lat: 13.9299, lng: 75.5681 },
+      { name: 'Chikmagalur', slug: 'chikmagalur', lat: 13.3200, lng: 75.7700 },
+      { name: 'Badami', slug: 'badami', lat: 15.9200, lng: 75.6800 },
+      { name: 'Pattadakal', slug: 'pattadakal', lat: 15.9500, lng: 75.8100 },
+      { name: 'Aihole', slug: 'aihole', lat: 16.0000, lng: 75.8500 },
+      { name: 'Murudeshwar', slug: 'murudeshwar', lat: 14.1000, lng: 74.4700 },
+      { name: 'Sravanabelagola', slug: 'sravanabelagola', lat: 12.8600, lng: 76.4800 },
     ],
   },
   {
@@ -231,6 +334,16 @@ const STATES_DATA = [
       { name: 'Ooty', slug: 'ooty', lat: 11.4102, lng: 76.6950 },
       { name: 'Mahabalipuram', slug: 'mahabalipuram', lat: 12.6269, lng: 80.1927 },
       { name: 'Kodaikanal', slug: 'kodaikanal', lat: 10.2381, lng: 77.4892 },
+      { name: 'Rameshwaram', slug: 'rameshwaram', lat: 9.2876, lng: 79.3129 },
+      { name: 'Thanjavur', slug: 'thanjavur', lat: 10.7870, lng: 79.1378 },
+      { name: 'Kanchipuram', slug: 'kanchipuram', lat: 12.8342, lng: 79.7036 },
+      { name: 'Pondicherry', slug: 'pondicherry', lat: 11.9416, lng: 79.8083 },
+      { name: 'Coimbatore', slug: 'coimbatore', lat: 11.0168, lng: 76.9558 },
+      { name: 'Tiruchirappalli', slug: 'tiruchirappalli', lat: 10.7905, lng: 78.7047 },
+      { name: 'Kanyakumari', slug: 'kanyakumari', lat: 8.0883, lng: 77.5385 },
+      { name: 'Chidambaram', slug: 'chidambaram', lat: 11.3990, lng: 79.6940 },
+      { name: 'Yercaud', slug: 'yercaud', lat: 11.7800, lng: 78.2100 },
+      { name: 'Velankanni', slug: 'velankanni', lat: 10.6800, lng: 79.8500 },
     ],
   },
   {
@@ -251,6 +364,16 @@ const STATES_DATA = [
       { name: 'Nashik', slug: 'nashik', lat: 19.9975, lng: 73.7898 },
       { name: 'Aurangabad', slug: 'aurangabad', lat: 19.8762, lng: 75.3433 },
       { name: 'Lonavala', slug: 'lonavala', lat: 18.7540, lng: 73.4060 },
+      { name: 'Mahabaleshwar', slug: 'mahabaleshwar', lat: 17.9250, lng: 73.6570 },
+      { name: 'Shirdi', slug: 'shirdi', lat: 19.7667, lng: 74.4833 },
+      { name: 'Alibaug', slug: 'alibaug', lat: 18.6400, lng: 72.8700 },
+      { name: 'Ratnagiri', slug: 'ratnagiri', lat: 16.9900, lng: 73.3000 },
+      { name: 'Kolhapur', slug: 'kolhapur', lat: 16.7050, lng: 74.2433 },
+      { name: 'Nagpur', slug: 'nagpur', lat: 21.1458, lng: 79.0882 },
+      { name: 'Ajanta', slug: 'ajanta', lat: 20.5500, lng: 75.7000 },
+      { name: 'Ellora', slug: 'ellora', lat: 20.0300, lng: 75.1800 },
+      { name: 'Matheran', slug: 'matheran', lat: 18.9800, lng: 73.2700 },
+      { name: 'Karjat', slug: 'karjat', lat: 18.9100, lng: 73.3300 },
     ],
   },
   {
@@ -271,6 +394,16 @@ const STATES_DATA = [
       { name: 'Vadodara', slug: 'vadodara', lat: 22.3072, lng: 73.1812 },
       { name: 'Diu', slug: 'diu', lat: 20.7143, lng: 70.9870 },
       { name: 'Kutch', slug: 'kutch', lat: 23.2420, lng: 69.6669 },
+      { name: 'Gir', slug: 'gir', lat: 21.1300, lng: 70.8200 },
+      { name: 'Somnath', slug: 'somnath', lat: 20.8880, lng: 70.4000 },
+      { name: 'Dwarka', slug: 'dwarka', lat: 22.2400, lng: 68.9700 },
+      { name: 'Rajkot', slug: 'rajkot', lat: 22.3039, lng: 70.8022 },
+      { name: 'Bhuj', slug: 'bhuj', lat: 23.2420, lng: 69.6669 },
+      { name: 'Gandhinagar', slug: 'gandhinagar', lat: 23.2156, lng: 72.6369 },
+      { name: 'Pavagadh', slug: 'pavagadh', lat: 22.4500, lng: 73.5300 },
+      { name: 'Saputara', slug: 'saputara', lat: 20.5800, lng: 73.7600 },
+      { name: 'Jamnagar', slug: 'jamnagar', lat: 22.4707, lng: 70.0577 },
+      { name: 'Porbandar', slug: 'porbandar', lat: 21.6417, lng: 69.6293 },
     ],
   },
   {
@@ -291,6 +424,16 @@ const STATES_DATA = [
       { name: 'Nainital', slug: 'nainital', lat: 29.3803, lng: 79.4636 },
       { name: 'Mussoorie', slug: 'mussoorie', lat: 30.4598, lng: 78.0644 },
       { name: 'Dehradun', slug: 'dehradun', lat: 30.3165, lng: 78.0322 },
+      { name: 'Ranikhet', slug: 'ranikhet', lat: 29.6200, lng: 79.4000 },
+      { name: 'Almora', slug: 'almora', lat: 29.6000, lng: 79.6600 },
+      { name: 'Kausani', slug: 'kausani', lat: 29.8700, lng: 79.5700 },
+      { name: 'Jim Corbett', slug: 'jim-corbett', lat: 29.5500, lng: 78.7800 },
+      { name: 'Valley of Flowers', slug: 'valley-of-flowers', lat: 30.7200, lng: 79.5800 },
+      { name: 'Auli', slug: 'auli', lat: 30.5200, lng: 79.5700 },
+      { name: 'Chopta', slug: 'chopta', lat: 30.5200, lng: 79.2400 },
+      { name: 'Pithoragarh', slug: 'pithoragarh', lat: 29.5800, lng: 80.2200 },
+      { name: 'Bageshwar', slug: 'bageshwar', lat: 29.8200, lng: 79.8200 },
+      { name: 'Ukhimath', slug: 'ukhimath', lat: 30.4700, lng: 79.2700 },
     ],
   },
   {
@@ -311,6 +454,16 @@ const STATES_DATA = [
       { name: 'Neil Island', slug: 'neil-island', lat: 11.8500, lng: 93.0500 },
       { name: 'Long Island', slug: 'long-island', lat: 12.3500, lng: 92.9500 },
       { name: 'Baratang', slug: 'baratang', lat: 12.1500, lng: 92.7500 },
+      { name: 'Diglipur', slug: 'diglipur', lat: 13.2500, lng: 93.0200 },
+      { name: 'Mayabunder', slug: 'mayabunder', lat: 12.9000, lng: 92.9000 },
+      { name: 'Rangat', slug: 'rangat', lat: 12.5300, lng: 92.9300 },
+      { name: 'Wandoor', slug: 'wandoor', lat: 11.5700, lng: 92.6400 },
+      { name: 'Cinque Island', slug: 'cinque-island', lat: 11.5000, lng: 92.7000 },
+      { name: 'Ross Island', slug: 'ross-island', lat: 11.6000, lng: 92.6800 },
+      { name: 'North Bay', slug: 'north-bay', lat: 11.6500, lng: 92.7500 },
+      { name: 'Jolly Buoy', slug: 'jolly-buoy', lat: 11.9500, lng: 92.8500 },
+      { name: 'Little Andaman', slug: 'little-andaman', lat: 10.7000, lng: 92.5200 },
+      { name: 'Car Nicobar', slug: 'car-nicobar', lat: 9.1500, lng: 92.8200 },
     ],
   },
   {
@@ -331,6 +484,16 @@ const STATES_DATA = [
       { name: 'Namchi', slug: 'namchi', lat: 27.1800, lng: 88.3600 },
       { name: 'Lachung', slug: 'lachung', lat: 27.6800, lng: 88.7500 },
       { name: 'Yuksom', slug: 'yuksom', lat: 27.4500, lng: 88.2500 },
+      { name: 'Ravangla', slug: 'ravangla', lat: 27.3500, lng: 88.3600 },
+      { name: 'Lachen', slug: 'lachen', lat: 27.7700, lng: 88.6500 },
+      { name: 'Zuluk', slug: 'zuluk', lat: 27.3000, lng: 88.8000 },
+      { name: 'Nathula Pass', slug: 'nathula-pass', lat: 27.3700, lng: 88.8200 },
+      { name: 'Rumtek', slug: 'rumtek', lat: 27.3100, lng: 88.5700 },
+      { name: 'Pemayangtse', slug: 'pemayangtse', lat: 27.3000, lng: 88.2600 },
+      { name: 'Tsomgo Lake', slug: 'tsomgo-lake', lat: 27.3800, lng: 88.7500 },
+      { name: 'Gurudongmar', slug: 'gurudongmar', lat: 27.9200, lng: 88.7000 },
+      { name: 'Singalila', slug: 'singalila', lat: 27.1000, lng: 88.1500 },
+      { name: 'Dzongri', slug: 'dzongri', lat: 27.3700, lng: 88.1800 },
     ],
   },
   {
@@ -351,6 +514,16 @@ const STATES_DATA = [
       { name: 'Tura', slug: 'tura', lat: 25.5100, lng: 90.2100 },
       { name: 'Jowai', slug: 'jowai', lat: 25.4500, lng: 92.2000 },
       { name: 'Dawki', slug: 'dawki', lat: 25.2200, lng: 91.9200 },
+      { name: 'Mawsynram', slug: 'mawsynram', lat: 25.3000, lng: 91.5800 },
+      { name: 'Nongriat', slug: 'nongriat', lat: 25.2500, lng: 91.7000 },
+      { name: 'Laitlum', slug: 'laitlum', lat: 25.5500, lng: 91.8000 },
+      { name: 'Mawlynnong', slug: 'mawlynnong', lat: 25.2000, lng: 91.8500 },
+      { name: 'Krang Suri', slug: 'krang-suri', lat: 25.4000, lng: 91.8500 },
+      { name: 'Umiam Lake', slug: 'umiam-lake', lat: 25.6000, lng: 91.8500 },
+      { name: 'Elephant Falls', slug: 'elephant-falls', lat: 25.5600, lng: 91.8700 },
+      { name: 'Balpakram', slug: 'balpakram', lat: 25.1500, lng: 90.7000 },
+      { name: 'Nohkalikai', slug: 'nohkalikai', lat: 25.2700, lng: 91.7100 },
+      { name: 'Sohra', slug: 'sohra', lat: 25.2800, lng: 91.7200 },
     ],
   },
   {
@@ -371,6 +544,16 @@ const STATES_DATA = [
       { name: 'Konark', slug: 'konark', lat: 19.8876, lng: 86.0945 },
       { name: 'Cuttack', slug: 'cuttack', lat: 20.4625, lng: 85.8830 },
       { name: 'Rourkela', slug: 'rourkela', lat: 22.2604, lng: 84.8536 },
+      { name: 'Chilika', slug: 'chilika', lat: 19.4500, lng: 85.4000 },
+      { name: 'Gopalpur', slug: 'gopalpur', lat: 19.2700, lng: 84.9000 },
+      { name: 'Daringbadi', slug: 'daringbadi', lat: 20.1500, lng: 84.8500 },
+      { name: 'Simlipal', slug: 'simlipal', lat: 21.9000, lng: 86.6000 },
+      { name: 'Sambalpur', slug: 'sambalpur', lat: 21.4669, lng: 83.9756 },
+      { name: 'Berhampur', slug: 'berhampur', lat: 19.3149, lng: 84.7930 },
+      { name: 'Balasore', slug: 'balasore', lat: 21.4950, lng: 86.9350 },
+      { name: 'Baripada', slug: 'baripada', lat: 21.9300, lng: 86.7400 },
+      { name: 'Koraput', slug: 'koraput', lat: 18.8100, lng: 82.7100 },
+      { name: 'Rayagada', slug: 'rayagada', lat: 19.1500, lng: 83.4100 },
     ],
   },
   {
@@ -391,6 +574,16 @@ const STATES_DATA = [
       { name: 'Khajuraho', slug: 'khajuraho', lat: 24.8500, lng: 79.9333 },
       { name: 'Gwalior', slug: 'gwalior', lat: 26.2183, lng: 78.1828 },
       { name: 'Jabalpur', slug: 'jabalpur', lat: 23.1815, lng: 79.9864 },
+      { name: 'Ujjain', slug: 'ujjain', lat: 23.1765, lng: 75.7885 },
+      { name: 'Sanchi', slug: 'sanchi', lat: 23.4800, lng: 77.7300 },
+      { name: 'Orchha', slug: 'orchha', lat: 25.3500, lng: 78.6400 },
+      { name: 'Pachmarhi', slug: 'pachmarhi', lat: 22.4700, lng: 78.4300 },
+      { name: 'Mandu', slug: 'mandu', lat: 22.4200, lng: 75.4000 },
+      { name: 'Kanha', slug: 'kanha', lat: 22.3400, lng: 80.6200 },
+      { name: 'Bandhavgarh', slug: 'bandhavgarh', lat: 23.6500, lng: 81.0700 },
+      { name: 'Pench', slug: 'pench', lat: 21.8500, lng: 79.3500 },
+      { name: 'Satpura', slug: 'satpura', lat: 22.0000, lng: 78.5000 },
+      { name: 'Bhedaghat', slug: 'bhedaghat', lat: 23.2200, lng: 80.0500 },
     ],
   },
   {
@@ -411,6 +604,16 @@ const STATES_DATA = [
       { name: 'Vijayawada', slug: 'vijayawada', lat: 16.5062, lng: 80.6480 },
       { name: 'Araku Valley', slug: 'araku-valley', lat: 18.3300, lng: 82.8500 },
       { name: 'Amaravati', slug: 'amaravati', lat: 16.5500, lng: 80.5200 },
+      { name: 'Nellore', slug: 'nellore', lat: 14.4426, lng: 79.9865 },
+      { name: 'Kakinada', slug: 'kakinada', lat: 16.9891, lng: 82.2475 },
+      { name: 'Rajahmundry', slug: 'rajahmundry', lat: 17.0005, lng: 81.8040 },
+      { name: 'Horsley Hills', slug: 'horsley-hills', lat: 13.7800, lng: 78.4500 },
+      { name: 'Lepakshi', slug: 'lepakshi', lat: 14.7000, lng: 77.6000 },
+      { name: 'Srisailam', slug: 'srisailam', lat: 16.0800, lng: 78.8800 },
+      { name: 'Guntur', slug: 'guntur', lat: 16.3060, lng: 80.4365 },
+      { name: 'Ongole', slug: 'ongole', lat: 15.5057, lng: 80.0499 },
+      { name: 'Kadapa', slug: 'kadapa', lat: 14.4673, lng: 78.8242 },
+      { name: 'Anantapur', slug: 'anantapur', lat: 14.6819, lng: 77.6006 },
     ],
   },
   {
@@ -431,6 +634,16 @@ const STATES_DATA = [
       { name: 'Majuli', slug: 'majuli', lat: 27.0500, lng: 94.2500 },
       { name: 'Tezpur', slug: 'tezpur', lat: 26.6333, lng: 92.8000 },
       { name: 'Dibrugarh', slug: 'dibrugarh', lat: 27.4728, lng: 94.9120 },
+      { name: 'Jorhat', slug: 'jorhat', lat: 26.7509, lng: 94.2117 },
+      { name: 'Sivasagar', slug: 'sivasagar', lat: 26.9850, lng: 94.6330 },
+      { name: 'North Lakhimpur', slug: 'north-lakhimpur', lat: 27.2300, lng: 94.1000 },
+      { name: 'Hajo', slug: 'hajo', lat: 26.2500, lng: 91.5500 },
+      { name: 'Manas', slug: 'manas', lat: 26.7500, lng: 91.0500 },
+      { name: 'Haflong', slug: 'haflong', lat: 25.1700, lng: 93.0200 },
+      { name: 'Nagaon', slug: 'nagaon', lat: 26.3500, lng: 92.6800 },
+      { name: 'Tinsukia', slug: 'tinsukia', lat: 27.4900, lng: 95.3600 },
+      { name: 'Goalpara', slug: 'goalpara', lat: 26.1700, lng: 90.6200 },
+      { name: 'Barpeta', slug: 'barpeta', lat: 26.3200, lng: 91.0000 },
     ],
   },
   {
@@ -451,6 +664,16 @@ const STATES_DATA = [
       { name: 'Ludhiana', slug: 'ludhiana', lat: 30.9010, lng: 75.8573 },
       { name: 'Patiala', slug: 'patiala', lat: 30.3398, lng: 76.3869 },
       { name: 'Jalandhar', slug: 'jalandhar', lat: 31.3260, lng: 75.5762 },
+      { name: 'Bathinda', slug: 'bathinda', lat: 30.2110, lng: 74.9455 },
+      { name: 'Anandpur Sahib', slug: 'anandpur-sahib', lat: 31.4500, lng: 76.4800 },
+      { name: 'Fatehgarh Sahib', slug: 'fatehgarh-sahib', lat: 30.6500, lng: 76.3800 },
+      { name: 'Kapurthala', slug: 'kapurthala', lat: 31.3800, lng: 75.3800 },
+      { name: 'Ropar', slug: 'ropar', lat: 30.9700, lng: 76.5300 },
+      { name: 'Hoshiarpur', slug: 'hoshiarpur', lat: 31.5300, lng: 75.9100 },
+      { name: 'Pathankot', slug: 'pathankot', lat: 32.2700, lng: 75.6500 },
+      { name: 'Gurdaspur', slug: 'gurdaspur', lat: 32.0500, lng: 75.4000 },
+      { name: 'Firozpur', slug: 'firozpur', lat: 30.9300, lng: 74.6300 },
+      { name: 'Sangrur', slug: 'sangrur', lat: 30.2500, lng: 75.8500 },
     ],
   },
   {
@@ -471,6 +694,16 @@ const STATES_DATA = [
       { name: 'Nalanda', slug: 'nalanda', lat: 25.1400, lng: 85.4400 },
       { name: 'Rajgir', slug: 'rajgir', lat: 25.0300, lng: 85.4200 },
       { name: 'Vaishali', slug: 'vaishali', lat: 25.9900, lng: 85.1400 },
+      { name: 'Gaya', slug: 'gaya', lat: 24.7914, lng: 85.0002 },
+      { name: 'Muzaffarpur', slug: 'muzaffarpur', lat: 26.1209, lng: 85.3647 },
+      { name: 'Bhagalpur', slug: 'bhagalpur', lat: 25.2425, lng: 86.9842 },
+      { name: 'Darbhanga', slug: 'darbhanga', lat: 26.1500, lng: 85.8900 },
+      { name: 'Pawapuri', slug: 'pawapuri', lat: 25.1700, lng: 85.6300 },
+      { name: 'Kesaria', slug: 'kesaria', lat: 25.7500, lng: 85.0500 },
+      { name: 'Sasaram', slug: 'sasaram', lat: 24.9500, lng: 84.0200 },
+      { name: 'Champaran', slug: 'champaran', lat: 26.5500, lng: 84.6500 },
+      { name: 'Madhubani', slug: 'madhubani', lat: 26.3700, lng: 86.0800 },
+      { name: 'Saran', slug: 'saran', lat: 25.8500, lng: 84.7500 },
     ],
   },
   {
@@ -491,6 +724,16 @@ const STATES_DATA = [
       { name: 'Ziro', slug: 'ziro', lat: 27.6300, lng: 93.8400 },
       { name: 'Bomdila', slug: 'bomdila', lat: 27.2700, lng: 92.4200 },
       { name: 'Dirang', slug: 'dirang', lat: 27.2400, lng: 92.1800 },
+      { name: 'Pasighat', slug: 'pasighat', lat: 28.0700, lng: 95.3300 },
+      { name: 'Roing', slug: 'roing', lat: 28.1300, lng: 95.8300 },
+      { name: 'Tezu', slug: 'tezu', lat: 27.9200, lng: 96.1500 },
+      { name: 'Along', slug: 'along', lat: 28.1700, lng: 94.7700 },
+      { name: 'Mechuka', slug: 'mechuka', lat: 28.3000, lng: 94.5000 },
+      { name: 'Seppa', slug: 'seppa', lat: 27.1700, lng: 92.6700 },
+      { name: 'Namsai', slug: 'namsai', lat: 27.6800, lng: 95.9000 },
+      { name: 'Changlang', slug: 'changlang', lat: 27.1700, lng: 95.9800 },
+      { name: 'Khonsa', slug: 'khonsa', lat: 27.2700, lng: 95.7300 },
+      { name: 'Anini', slug: 'anini', lat: 28.4500, lng: 95.7000 },
     ],
   },
   {
@@ -511,6 +754,16 @@ const STATES_DATA = [
       { name: 'Ukhrul', slug: 'ukhrul', lat: 25.0700, lng: 94.3700 },
       { name: 'Churachandpur', slug: 'churachandpur', lat: 24.3300, lng: 93.6800 },
       { name: 'Senapati', slug: 'senapati', lat: 25.2500, lng: 94.0200 },
+      { name: 'Kangpokpi', slug: 'kangpokpi', lat: 24.9500, lng: 94.0500 },
+      { name: 'Thoubal', slug: 'thoubal', lat: 24.6300, lng: 93.9800 },
+      { name: 'Bishnupur', slug: 'bishnupur-manipur', lat: 24.6300, lng: 93.7700 },
+      { name: 'Tamenglong', slug: 'tamenglong', lat: 24.8700, lng: 93.5500 },
+      { name: 'Mao', slug: 'mao', lat: 25.3500, lng: 94.1000 },
+      { name: 'Dzuko Valley', slug: 'dzuko-valley', lat: 25.3800, lng: 94.1500 },
+      { name: 'Noney', slug: 'noney', lat: 24.9800, lng: 93.8500 },
+      { name: 'Jiribam', slug: 'jiribam', lat: 24.7500, lng: 93.1000 },
+      { name: 'Tengnoupal', slug: 'tengnoupal', lat: 24.3500, lng: 93.9000 },
+      { name: 'Kamjong', slug: 'kamjong', lat: 25.2000, lng: 94.4000 },
     ],
   },
   {
@@ -531,6 +784,16 @@ const STATES_DATA = [
       { name: 'Champhai', slug: 'champhai', lat: 23.4500, lng: 93.3300 },
       { name: 'Serchhip', slug: 'serchhip', lat: 23.3300, lng: 92.8500 },
       { name: 'Kolasib', slug: 'kolasib', lat: 24.2200, lng: 92.6800 },
+      { name: 'Mamit', slug: 'mamit', lat: 23.9200, lng: 92.5000 },
+      { name: 'Lawngtlai', slug: 'lawngtlai', lat: 22.5300, lng: 92.8800 },
+      { name: 'Saiha', slug: 'saiha', lat: 22.4800, lng: 92.9600 },
+      { name: 'Hnahthial', slug: 'hnahthial', lat: 22.7500, lng: 92.8500 },
+      { name: 'Saitual', slug: 'saitual', lat: 23.8500, lng: 92.7500 },
+      { name: 'Khawzawl', slug: 'khawzawl', lat: 23.6500, lng: 93.1500 },
+      { name: 'Thenzawl', slug: 'thenzawl', lat: 23.4000, lng: 92.6500 },
+      { name: 'Reiek', slug: 'reiek', lat: 23.7500, lng: 92.8500 },
+      { name: 'Vantawng', slug: 'vantawng', lat: 22.7000, lng: 92.9000 },
+      { name: 'Phawngpui', slug: 'phawngpui', lat: 22.3500, lng: 93.0500 },
     ],
   },
   {
@@ -551,6 +814,16 @@ const STATES_DATA = [
       { name: 'Mokokchung', slug: 'mokokchung', lat: 26.3300, lng: 94.5200 },
       { name: 'Wokha', slug: 'wokha', lat: 26.1100, lng: 94.2700 },
       { name: 'Mon', slug: 'mon', lat: 26.7300, lng: 94.7300 },
+      { name: 'Tuensang', slug: 'tuensang', lat: 26.2700, lng: 94.8200 },
+      { name: 'Zunheboto', slug: 'zunheboto', lat: 26.0500, lng: 94.5200 },
+      { name: 'Phek', slug: 'phek', lat: 25.6500, lng: 94.5500 },
+      { name: 'Kiphire', slug: 'kiphire', lat: 26.0000, lng: 94.8500 },
+      { name: 'Longleng', slug: 'longleng', lat: 26.4000, lng: 94.7500 },
+      { name: 'Peren', slug: 'peren', lat: 25.5500, lng: 93.9000 },
+      { name: 'Dzukou Valley', slug: 'dzukou-valley', lat: 25.7000, lng: 94.1500 },
+      { name: 'Intanki', slug: 'intanki', lat: 25.8500, lng: 94.2000 },
+      { name: 'Tseminyu', slug: 'tseminyu', lat: 25.7500, lng: 94.0500 },
+      { name: 'Chumoukedima', slug: 'chumoukedima', lat: 25.8500, lng: 93.8500 },
     ],
   },
   {
@@ -571,6 +844,16 @@ const STATES_DATA = [
       { name: 'Dharmanagar', slug: 'dharmanagar', lat: 24.3700, lng: 92.1700 },
       { name: 'Kailashahar', slug: 'kailashahar', lat: 24.3300, lng: 92.0000 },
       { name: 'Ambassa', slug: 'ambassa', lat: 23.9300, lng: 91.8500 },
+      { name: 'Belonia', slug: 'belonia', lat: 23.2500, lng: 91.4500 },
+      { name: 'Khowai', slug: 'khowai', lat: 24.0500, lng: 91.6000 },
+      { name: 'Sonamura', slug: 'sonamura', lat: 23.5500, lng: 91.3500 },
+      { name: 'Sabroom', slug: 'sabroom', lat: 23.0500, lng: 91.4000 },
+      { name: 'Teliamura', slug: 'teliamura', lat: 24.1000, lng: 91.7500 },
+      { name: 'Unakoti', slug: 'unakoti', lat: 24.1500, lng: 91.9500 },
+      { name: 'Rajnagar', slug: 'rajnagar', lat: 24.0000, lng: 91.8000 },
+      { name: 'Jampui Hills', slug: 'jampui-hills', lat: 23.7000, lng: 91.9500 },
+      { name: 'Pilak', slug: 'pilak', lat: 23.9500, lng: 91.7000 },
+      { name: 'Neermahal', slug: 'neermahal', lat: 23.6500, lng: 91.4500 },
     ],
   },
   {
@@ -591,6 +874,16 @@ const STATES_DATA = [
       { name: 'Dhanbad', slug: 'dhanbad', lat: 23.7957, lng: 86.4304 },
       { name: 'Hazaribagh', slug: 'hazaribagh', lat: 23.9900, lng: 85.3600 },
       { name: 'Deoghar', slug: 'deoghar', lat: 24.4900, lng: 86.7000 },
+      { name: 'Bokaro', slug: 'bokaro', lat: 23.6700, lng: 86.1500 },
+      { name: 'Netarhat', slug: 'netarhat', lat: 23.4500, lng: 84.5500 },
+      { name: 'Betla', slug: 'betla', lat: 23.7500, lng: 84.2500 },
+      { name: 'Giridih', slug: 'giridih', lat: 24.1800, lng: 86.3000 },
+      { name: 'Dumka', slug: 'dumka', lat: 24.2700, lng: 87.2500 },
+      { name: 'Chaibasa', slug: 'chaibasa', lat: 22.5500, lng: 85.8000 },
+      { name: 'Lohardaga', slug: 'lohardaga', lat: 23.4300, lng: 84.7000 },
+      { name: 'Simdega', slug: 'simdega', lat: 22.6200, lng: 84.5000 },
+      { name: 'Pakur', slug: 'pakur', lat: 24.6300, lng: 87.8500 },
+      { name: 'Godda', slug: 'godda', lat: 24.8300, lng: 87.6500 },
     ],
   },
   {
@@ -611,6 +904,16 @@ const STATES_DATA = [
       { name: 'Bilaspur', slug: 'bilaspur', lat: 22.0797, lng: 82.1409 },
       { name: 'Jagdalpur', slug: 'jagdalpur', lat: 19.0800, lng: 82.0300 },
       { name: 'Kanker', slug: 'kanker', lat: 20.2700, lng: 81.4900 },
+      { name: 'Korba', slug: 'korba', lat: 22.3500, lng: 82.7500 },
+      { name: 'Rajnandgaon', slug: 'rajnandgaon', lat: 21.1000, lng: 81.0300 },
+      { name: 'Durg', slug: 'durg', lat: 21.1900, lng: 81.2800 },
+      { name: 'Ambikapur', slug: 'ambikapur', lat: 23.1200, lng: 83.2000 },
+      { name: 'Surguja', slug: 'surguja', lat: 23.3000, lng: 83.4000 },
+      { name: 'Chitrakote', slug: 'chitrakote', lat: 19.0500, lng: 81.4500 },
+      { name: 'Sirpur', slug: 'sirpur', lat: 20.2500, lng: 81.7500 },
+      { name: 'Tirathgarh', slug: 'tirathgarh', lat: 19.1500, lng: 81.8500 },
+      { name: 'Kondagaon', slug: 'kondagaon', lat: 19.5500, lng: 81.6500 },
+      { name: 'Dantewada', slug: 'dantewada', lat: 19.0500, lng: 81.3500 },
     ],
   },
   {
@@ -631,6 +934,16 @@ const STATES_DATA = [
       { name: 'Faridabad', slug: 'faridabad', lat: 28.4089, lng: 77.3178 },
       { name: 'Panipat', slug: 'panipat', lat: 29.3909, lng: 76.9635 },
       { name: 'Karnal', slug: 'karnal', lat: 29.6857, lng: 76.9905 },
+      { name: 'Hisar', slug: 'hisar', lat: 29.1492, lng: 75.7226 },
+      { name: 'Rohtak', slug: 'rohtak', lat: 28.8955, lng: 76.6066 },
+      { name: 'Sonipat', slug: 'sonipat', lat: 28.9931, lng: 77.0151 },
+      { name: 'Pinjore', slug: 'pinjore', lat: 30.7700, lng: 77.0000 },
+      { name: 'Panchkula', slug: 'panchkula', lat: 30.6942, lng: 76.8606 },
+      { name: 'Ambala', slug: 'ambala', lat: 30.3782, lng: 76.7767 },
+      { name: 'Morni Hills', slug: 'morni-hills', lat: 30.7500, lng: 77.1500 },
+      { name: 'Badkhal', slug: 'badkhal', lat: 28.4200, lng: 77.3500 },
+      { name: 'Sultanpur', slug: 'sultanpur-haryana', lat: 28.4700, lng: 77.1000 },
+      { name: 'Thanesar', slug: 'thanesar', lat: 29.9700, lng: 76.8700 },
     ],
   },
   {
@@ -651,6 +964,16 @@ const STATES_DATA = [
       { name: 'Nizamabad', slug: 'nizamabad', lat: 18.6725, lng: 78.0941 },
       { name: 'Karimnagar', slug: 'karimnagar', lat: 18.4386, lng: 79.1288 },
       { name: 'Ramagundam', slug: 'ramagundam', lat: 18.7550, lng: 79.4650 },
+      { name: 'Nalgonda', slug: 'nalgonda', lat: 17.0500, lng: 79.2700 },
+      { name: 'Khammam', slug: 'khammam', lat: 17.2500, lng: 80.1500 },
+      { name: 'Mahbubnagar', slug: 'mahbubnagar', lat: 16.7500, lng: 77.9800 },
+      { name: 'Adilabad', slug: 'adilabad', lat: 19.6700, lng: 78.5300 },
+      { name: 'Siddipet', slug: 'siddipet', lat: 18.1000, lng: 78.8500 },
+      { name: 'Medak', slug: 'medak', lat: 18.0500, lng: 78.2500 },
+      { name: 'Sangareddy', slug: 'sangareddy', lat: 17.6200, lng: 78.0800 },
+      { name: 'Vikarabad', slug: 'vikarabad', lat: 17.3400, lng: 77.9000 },
+      { name: 'Jogulamba', slug: 'jogulamba', lat: 16.3500, lng: 78.1500 },
+      { name: 'Nirmal', slug: 'nirmal', lat: 19.0800, lng: 78.3400 },
     ],
   },
 ];
@@ -676,7 +999,7 @@ function generatePlacesForCity(city: any, stateSlug: string, index: number) {
     bestTimeToVisit: 'October to March',
     openingTime: '6:00 AM',
     closingTime: '6:00 PM',
-    entryFee: ['Free', '₹20', '50', '₹100', '₹200'][Math.floor(Math.random() * 5)],
+    entryFee: ['Free', '₹20', '₹50', '₹100', '₹200'][Math.floor(Math.random() * 5)],
     images: [IMAGE_URLS[(index * 10 + i) % IMAGE_URLS.length]],
     history: `The ${name} has a rich history dating back centuries. It has been a center of culture, trade, and spirituality, attracting visitors from all over the world.`,
     highlights: ['Stunning Architecture', 'Beautiful Views', 'Rich History', 'Photography Spot', 'Cultural Experience'],
@@ -693,7 +1016,7 @@ function generatePlacesForCity(city: any, stateSlug: string, index: number) {
     },
     estimatedCost: {
       budget: { hotel: '₹800', food: '₹400', travel: '₹300', tickets: '₹200', shopping: '₹500', total: '₹2,200' },
-      standard: { hotel: '₹2,500', food: '₹800', travel: '₹600', tickets: '₹500', shopping: '₹1,000', total: '5,400' },
+      standard: { hotel: '₹2,500', food: '₹800', travel: '₹600', tickets: '₹500', shopping: '₹1,000', total: '₹5,400' },
       luxury: { hotel: '₹8,000', food: '₹2,000', travel: '₹1,500', tickets: '₹1,000', shopping: '₹3,000', total: '₹15,500' },
     },
     bestMonths: [
@@ -723,61 +1046,211 @@ function generatePlacesForCity(city: any, stateSlug: string, index: number) {
     },
     _hotelSlugs: [],
     _restaurantSlugs: [],
+    _nearbyPlaceSlugs: [],
   }));
+}
+
+// Helper to generate 50 places for a state
+function generatePlacesForState(stateSlug: string, cities: any[], stateIndex: number) {
+  const extraPlaceTypes = ['Heritage Walk', 'Sunrise Point', 'Sunset Point', 'Nature Trail', 'Botanical Garden', 'Zoo', 'Art Gallery', 'Cultural Center', 'Shopping Complex', 'Food Street', 'Riverside Walk', 'Mountain Trek', 'Valley View', 'Island Tour', 'Coral Reef', 'Mangrove Forest', 'Hot Spring', 'Ancient Ruins', 'Colonial Building', 'Tribal Village', 'Tea Estate', 'Coffee Plantation', 'Spice Garden', 'Silk Factory', 'Pottery Village', 'Handicraft Market', 'Local Bazaar', 'Festival Ground', 'Pilgrimage Route', 'Scenic Drive', 'Water Park', 'Amusement Park', 'National Park', 'Bird Sanctuary', 'Rock Garden', 'Butterfly Park', 'Snake Park', 'Dolphin Point', 'Lighthouse', 'Observatory Hill', 'Cave Temple', 'Step Well', 'Fort Ruins', 'Palace Garden', 'Royal Kitchen', 'War Memorial', 'Freedom Fighter Museum', 'Ethnic Village', 'Tribal Museum', 'State Museum'];
+  const categories = ['Heritage', 'Religious', 'Hill Station', 'Beach', 'Wildlife', 'Adventure', 'Family Trip', 'Honeymoon'];
+  const places = [];
+
+  for (let i = 0; i < 50; i++) {
+    const city = cities[i % cities.length];
+    const type = extraPlaceTypes[i];
+    const name = `${stateSlug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')} ${type}`;
+    places.push({
+      name: name,
+      slug: `${stateSlug}-${type.toLowerCase().replace(/\s+/g, '-')}`,
+      stateSlug,
+      citySlug: city.slug,
+      description: `Discover the enchanting ${name} in ${stateSlug}. A must-visit destination offering unique experiences, stunning landscapes, and rich cultural heritage.`,
+      location: { latitude: city.lat + (Math.random() - 0.5) * 0.15, longitude: city.lng + (Math.random() - 0.5) * 0.15 },
+      category: [categories[Math.floor(Math.random() * categories.length)]],
+      bestTimeToVisit: 'October to March',
+      openingTime: '6:00 AM',
+      closingTime: '6:00 PM',
+      entryFee: ['Free', '₹30', '₹50', '₹100', '₹250'][Math.floor(Math.random() * 5)],
+      images: [IMAGE_URLS[(stateIndex * 10 + i) % IMAGE_URLS.length]],
+      history: `The ${name} has been a significant landmark for generations, attracting visitors with its unique charm and historical significance.`,
+      highlights: ['Scenic Beauty', 'Cultural Experience', 'Photography Spot', 'Local Cuisine', 'Adventure Activities'],
+      thingsToKnow: ['Carry water bottles', 'Wear comfortable shoes', 'Respect local customs', 'Check opening hours'],
+      photography: true,
+      weather: { summer: 'Warm, 28-38°C', winter: 'Cool, 8-22°C', monsoon: 'Moderate to heavy rainfall' },
+      safetyTips: ['Stay hydrated', 'Keep valuables secure', 'Follow local guidelines', 'Use registered guides'],
+      transportation: {
+        byFlight: { nearestAirport: `${city.name} Airport`, distance: '12 km', cabCost: '₹250-450' },
+        byTrain: { nearestStation: `${city.name} Station`, distance: '4 km', taxiFare: '₹80-180' },
+        byBus: { busStand: `${city.name} Bus Stand`, autoFare: '₹25-55' },
+        privateCab: '₹1200/day',
+        bikeRental: '₹400/day',
+      },
+      estimatedCost: {
+        budget: { hotel: '₹700', food: '₹350', travel: '₹250', tickets: '₹150', shopping: '₹400', total: '₹1,850' },
+        standard: { hotel: '₹2,000', food: '₹700', travel: '₹500', tickets: '₹400', shopping: '₹800', total: '₹4,400' },
+        luxury: { hotel: '₹7,000', food: '₹1,800', travel: '₹1,200', tickets: '₹800', shopping: '₹2,500', total: '₹13,300' },
+      },
+      bestMonths: [
+        { month: 'October', temperature: '18-26°C', crowd: 'Moderate', recommendation: 'Pleasant weather' },
+        { month: 'November', temperature: '12-24°C', crowd: 'High', recommendation: 'Ideal season' },
+        { month: 'March', temperature: '15-28°C', crowd: 'Medium', recommendation: 'Spring bloom' },
+      ],
+      localFoods: ['Regional Thali', 'Local Snacks', 'Traditional Desserts', 'Speciality Dish'],
+      travelTips: {
+        dos: ['Arrive early', 'Book in advance', 'Explore on foot', 'Interact with locals'],
+        donts: ['Dont litter', 'Dont trespass', 'Dont ignore weather alerts', 'Dont skip meals'],
+        safety: ['Carry identification', 'Share itinerary', 'Stay in groups', 'Use trusted transport'],
+      },
+      localLanguage: 'Hindi, English',
+      emergencyNumbers: { police: '100', ambulance: '108', fire: '101' },
+      faqs: [
+        { question: 'What are the visiting hours?', answer: 'Open daily from 6 AM to 6 PM.' },
+        { question: 'Is entry free?', answer: 'Entry fees vary; check locally for current rates.' },
+        { question: 'Are guides available?', answer: 'Yes, licensed guides are available at the entrance.' },
+      ],
+      rating: 3.8 + Math.random() * 1.2,
+      published: true,
+      seo: {
+        title: `${name} - Travel Guide`,
+        metaDescription: `Visit ${name} - top tourist attraction`,
+        keywords: [name, stateSlug, 'travel', 'tourism'],
+      },
+      _hotelSlugs: [],
+      _restaurantSlugs: [],
+      _nearbyPlaceSlugs: [],
+    });
+  }
+
+  return places;
 }
 
 // Helper to generate hotels for a city
 function generateHotelsForCity(city: any, index: number) {
-  const hotelNames = [
-    `${city.name} Grand Hotel`, `${city.name} Palace Resort`, `${city.name} Heritage Inn`,
-    `${city.name} Luxury Suites`, `${city.name} Budget Stay`,
-  ];
+  const hotelTypes = ['Grand Hotel', 'Palace Resort', 'Heritage Inn', 'Luxury Suites', 'Budget Stay'];
 
-  return hotelNames.map((name, i) => ({
-    name: name,
-    slug: `${city.slug}-${name.toLowerCase().replace(/\s+/g, '-')}`,
-    description: `Experience comfort and hospitality at ${name}, located in the heart of ${city.name}. Offering modern amenities with traditional charm, this hotel is perfect for both leisure and business travelers.`,
-    address: `${100 + i * 50} Main Road, ${city.name}`,
-    location: { latitude: city.lat + (Math.random() - 0.5) * 0.05, longitude: city.lng + (Math.random() - 0.5) * 0.05 },
-    googleMapLink: `https://maps.google.com/?q=${city.lat},${city.lng}`,
-    phone: `+91 ${90000 + i * 1000}00000`,
-    website: `https://www.${name.toLowerCase().replace(/\s+/g, '')}.com`,
-    starRating: 3 + Math.floor(Math.random() * 3),
-    pricePerNight: [800, 1500, 2500, 4000, 8000][i],
-    amenities: AMENITIES.slice(0, 4 + Math.floor(Math.random() * 4)),
-    images: [HOTEL_IMAGES[i % HOTEL_IMAGES.length]],
-    distance: `${0.5 + i * 0.5} km from city center`,
-    category: ['Luxury', 'Budget', 'Heritage', 'Business', 'Resort'][i] ? ['Luxury', 'Budget', 'Heritage', 'Business', 'Resort'][i] : 'Budget',
-    published: true,
-  }));
+  return hotelTypes.map((type, i) => {
+    const name = `${city.name} ${type}`;
+    return {
+      name: name,
+      slug: `${city.slug}-${name.toLowerCase().replace(/\s+/g, '-')}`,
+      description: `Experience comfort and hospitality at ${name}, located in the heart of ${city.name}. Offering modern amenities with traditional charm, this hotel is perfect for both leisure and business travelers.`,
+      address: `${100 + i * 50} Main Road, ${city.name}`,
+      location: { latitude: city.lat + (Math.random() - 0.5) * 0.05, longitude: city.lng + (Math.random() - 0.5) * 0.05 },
+      googleMapLink: `https://maps.google.com/?q=${encodeURIComponent(name)}+${encodeURIComponent(city.name)}`,
+      phone: `+91 ${90000 + i * 1000}00000`,
+      website: `https://www.${name.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9]/g, '')}.com`,
+      starRating: 3 + Math.floor(Math.random() * 3),
+      pricePerNight: [800, 1500, 2500, 4000, 8000][i],
+      amenities: AMENITIES.slice(0, 4 + Math.floor(Math.random() * 4)),
+      images: [HOTEL_IMAGES[i % HOTEL_IMAGES.length]],
+      distance: `${0.5 + i * 0.5} km from city center`,
+      category: ['Luxury', 'Budget', 'Heritage', 'Business', 'Resort'][i],
+      published: true,
+      _citySlug: city.slug,
+    };
+  });
+}
+
+// Helper to generate 50 hotels for a state
+function generateHotelsForState(stateSlug: string, cities: any[], stateIndex: number) {
+  const hotelTypes = ['Grand Hotel', 'Palace Resort', 'Heritage Inn', 'Luxury Suites', 'Budget Stay', 'Boutique Hotel', 'Business Hotel', 'Beach Resort', 'Hill Station Lodge', 'Eco Resort', 'Spa Retreat', 'Villa', 'Guest House', 'Homestay', 'Hostel', 'Serviced Apartment', 'Camp', 'Treehouse', 'Houseboat', 'Farmhouse'];
+  const hotels = [];
+
+  for (let i = 0; i < 50; i++) {
+    const city = cities[i % cities.length];
+    const type = hotelTypes[i % hotelTypes.length];
+    const num = Math.floor(i / hotelTypes.length) + 1;
+    const name = i < hotelTypes.length ? `${city.name} ${type}` : `${type} ${city.name} ${num}`;
+    const starRating = i < 5 ? 5 : i < 15 ? 4 : i < 30 ? 3 : 2;
+    const pricePerNight = starRating === 5 ? 8000 + Math.floor(Math.random() * 20000) : starRating === 4 ? 3000 + Math.floor(Math.random() * 5000) : starRating === 3 ? 1500 + Math.floor(Math.random() * 2000) : 500 + Math.floor(Math.random() * 1000);
+
+    hotels.push({
+      name: name,
+      slug: `${stateSlug}-${name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`,
+      description: `Experience comfort and hospitality at ${name}, located in ${city.name}. Offering modern amenities with traditional charm, this hotel is perfect for both leisure and business travelers.`,
+      address: `${100 + i * 50} Main Road, ${city.name}`,
+      location: { latitude: city.lat + (Math.random() - 0.5) * 0.05, longitude: city.lng + (Math.random() - 0.5) * 0.05 },
+      googleMapLink: `https://maps.google.com/?q=${encodeURIComponent(name)}+${encodeURIComponent(city.name)}`,
+      phone: `+91 ${90000 + i * 100}00000`,
+      website: `https://www.${name.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9]/g, '')}.com`,
+      starRating: starRating,
+      pricePerNight: pricePerNight,
+      amenities: AMENITIES.slice(0, 4 + Math.floor(Math.random() * (starRating * 2 + 2))),
+      images: [HOTEL_IMAGES[i % HOTEL_IMAGES.length]],
+      distance: `${0.5 + (i * 0.3) % 10} km from city center`,
+      category: [starRating === 5 ? 'Luxury' : starRating === 4 ? 'Standard' : starRating === 3 ? 'Budget' : 'Backpacker'],
+      published: true,
+      _citySlug: city.slug,
+    });
+  }
+
+  return hotels;
 }
 
 // Helper to generate restaurants for a city
 function generateRestaurantsForCity(city: any, index: number) {
-  const restaurantNames = [
-    `${city.name} Kitchen`, `${city.name} Spice House`, `${city.name} Food Court`,
-    `${city.name} Dhaba`, `${city.name} Fine Dining`,
-  ];
+  const restaurantTypes = ['Kitchen', 'Spice House', 'Food Court', 'Dhaba', 'Fine Dining'];
 
-  return restaurantNames.map((name, i) => ({
-    name: name,
-    slug: `${city.slug}-${name.toLowerCase().replace(/\s+/g, '-')}`,
-    description: `Savor authentic flavors at ${name}, a popular dining destination in ${city.name}. Known for its delicious cuisine, warm ambiance, and excellent service.`,
-    cuisine: [CUISINES[Math.floor(Math.random() * CUISINES.length)], CUISINES[Math.floor(Math.random() * CUISINES.length)]],
-    address: `${200 + i * 100} Food Street, ${city.name}`,
-    location: { latitude: city.lat + (Math.random() - 0.5) * 0.05, longitude: city.lng + (Math.random() - 0.5) * 0.05 },
-    googleMapLink: `https://maps.google.com/?q=${city.lat},${city.lng}`,
-    phone: `+91 ${91000 + i * 1000}00000`,
-    website: `https://www.${name.toLowerCase().replace(/\s+/g, '')}.com`,
-    averageCost: [300, 500, 800, 1200, 2000][i],
-    openingTime: ['10:00 AM', '11:00 AM', '12:00 PM', '7:00 AM', '11:30 AM'][i],
-    closingTime: ['10:00 PM', '11:00 PM', '10:30 PM', '9:00 PM', '11:30 PM'][i],
-    images: [RESTAURANT_IMAGES[i % RESTAURANT_IMAGES.length]],
-    vegNonVeg: ['veg', 'non-veg', 'both', 'veg', 'both'][i] as 'veg' | 'non-veg' | 'both',
-    rating: 3.5 + Math.random() * 1.5,
-    distance: `${0.3 + i * 0.3} km from city center`,
-    published: true,
-  }));
+  return restaurantTypes.map((type, i) => {
+    const name = `${city.name} ${type}`;
+    return {
+      name: name,
+      slug: `${city.slug}-${name.toLowerCase().replace(/\s+/g, '-')}`,
+      description: `Savor authentic flavors at ${name}, a popular dining destination in ${city.name}. Known for its delicious cuisine, warm ambiance, and excellent service.`,
+      cuisine: [...CUISINES].sort(() => Math.random() - 0.5).slice(0, 2),
+      address: `${200 + i * 100} Food Street, ${city.name}`,
+      location: { latitude: city.lat + (Math.random() - 0.5) * 0.05, longitude: city.lng + (Math.random() - 0.5) * 0.05 },
+      googleMapLink: `https://maps.google.com/?q=${encodeURIComponent(name)}+${encodeURIComponent(city.name)}`,
+      phone: `+91 ${91000 + i * 1000}00000`,
+      averageCost: [300, 500, 800, 1200, 2000][i],
+      openingTime: ['07:00', '08:00', '10:00', '11:00', '12:00'][i],
+      closingTime: ['21:00', '22:00', '22:30', '23:00', '23:30'][i],
+      images: [RESTAURANT_IMAGES[i % RESTAURANT_IMAGES.length]],
+      vegNonVeg: ['veg', 'non-veg', 'both', 'veg', 'both'][i] as 'veg' | 'non-veg' | 'both',
+      rating: 3.5 + Math.random() * 1.5,
+      distance: `${0.3 + i * 0.3} km from city center`,
+      published: true,
+      _citySlug: city.slug,
+    };
+  });
+}
+
+// Helper to generate 50 restaurants for a state
+function generateRestaurantsForState(stateSlug: string, cities: any[], stateIndex: number) {
+  const restaurantTypes = ['Kitchen', 'Spice House', 'Food Court', 'Dhaba', 'Fine Dining', 'Cafe', 'Bistro', 'Rooftop Restaurant', 'Street Food Hub', 'Thali House', 'Seafood Grill', 'Vegetarian Delight', 'Bakery', 'Pizzeria', 'Sushi Bar', 'BBQ House', 'Brewery', 'Food Truck', 'Cloud Kitchen', 'Banquet Hall'];
+  const restaurants = [];
+
+  for (let i = 0; i < 50; i++) {
+    const city = cities[i % cities.length];
+    const type = restaurantTypes[i % restaurantTypes.length];
+    const num = Math.floor(i / restaurantTypes.length) + 1;
+    const name = i < restaurantTypes.length ? `${city.name} ${type}` : `${type} ${city.name} ${num}`;
+    const avgCost = i < 10 ? 800 + Math.floor(Math.random() * 1200) : i < 25 ? 400 + Math.floor(Math.random() * 600) : 200 + Math.floor(Math.random() * 400);
+    const vegNonVeg = i % 3 === 0 ? 'veg' : i % 3 === 1 ? 'non-veg' : 'both';
+
+    restaurants.push({
+      name: name,
+      slug: `${stateSlug}-${name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`,
+      description: `Savor authentic flavors at ${name}, a popular dining destination in ${city.name}. Known for its delicious cuisine, warm ambiance, and excellent service.`,
+      cuisine: [...CUISINES].sort(() => Math.random() - 0.5).slice(0, 2 + Math.floor(Math.random() * 2)),
+      address: `${200 + i * 100} Food Street, ${city.name}`,
+      location: { latitude: city.lat + (Math.random() - 0.5) * 0.05, longitude: city.lng + (Math.random() - 0.5) * 0.05 },
+      googleMapLink: `https://maps.google.com/?q=${encodeURIComponent(name)}+${encodeURIComponent(city.name)}`,
+      phone: `+91 ${91000 + i * 100}00000`,
+      averageCost: avgCost,
+      openingTime: ['07:00', '08:00', '09:00', '10:00', '11:00', '11:30', '12:00'][Math.floor(Math.random() * 7)],
+      closingTime: ['21:00', '21:30', '22:00', '22:30', '23:00', '23:30', '00:00'][Math.floor(Math.random() * 7)],
+      images: [RESTAURANT_IMAGES[i % RESTAURANT_IMAGES.length]],
+      vegNonVeg: vegNonVeg as 'veg' | 'non-veg' | 'both',
+      rating: 3.5 + Math.random() * 1.5,
+      distance: `${0.3 + (i * 0.2) % 8} km from city center`,
+      published: true,
+      _citySlug: city.slug,
+    });
+  }
+
+  return restaurants;
 }
 
 export function generateAllSeedData() {
@@ -851,21 +1324,21 @@ export function generateAllSeedData() {
       });
 
       // Generate 10 places for this city
-      const cityPlaces = generatePlacesForCity(city, stateSlug, stateIndex * 5 + cityIndex);
+      const cityPlaces = generatePlacesForCity(city, stateSlug, stateIndex * 15 + cityIndex);
       cityPlaces.forEach((place, placeIndex) => {
         allPlaces.push(place);
         allCities[allCities.length - 1]._popularPlaceSlugs.push(place.slug);
       });
 
       // Generate 5 hotels for this city
-      const cityHotels = generateHotelsForCity(city, stateIndex * 5 + cityIndex);
+      const cityHotels = generateHotelsForCity(city, stateIndex * 15 + cityIndex);
       cityHotels.forEach((hotel) => {
         allHotels.push(hotel);
         allCities[allCities.length - 1]._hotelSlugs.push(hotel.slug);
       });
 
       // Generate 5 restaurants for this city
-      const cityRestaurants = generateRestaurantsForCity(city, stateIndex * 5 + cityIndex);
+      const cityRestaurants = generateRestaurantsForCity(city, stateIndex * 15 + cityIndex);
       cityRestaurants.forEach((restaurant) => {
         allRestaurants.push(restaurant);
         allCities[allCities.length - 1]._restaurantSlugs.push(restaurant.slug);
@@ -873,6 +1346,24 @@ export function generateAllSeedData() {
 
       // Update state's popular places
       allStates[allStates.length - 1]._popularPlaceSlugs.push(...cityPlaces.slice(0, 2).map(p => p.slug));
+    });
+
+    // Generate 50 additional places for this state
+    const statePlaces = generatePlacesForState(stateSlug, stateData.cities, stateIndex);
+    statePlaces.forEach((place) => {
+      allPlaces.push(place);
+    });
+
+    // Generate 50 additional hotels for this state
+    const stateHotels = generateHotelsForState(stateSlug, stateData.cities, stateIndex);
+    stateHotels.forEach((hotel) => {
+      allHotels.push(hotel);
+    });
+
+    // Generate 50 additional restaurants for this state
+    const stateRestaurants = generateRestaurantsForState(stateSlug, stateData.cities, stateIndex);
+    stateRestaurants.forEach((restaurant) => {
+      allRestaurants.push(restaurant);
     });
   });
 
