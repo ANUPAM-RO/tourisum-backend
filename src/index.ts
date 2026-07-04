@@ -15,6 +15,7 @@ import hotelRoutes from './routes/hotelRoutes';
 import restaurantRoutes from './routes/restaurantRoutes';
 import uploadRoutes from './routes/uploadRoutes';
 import adminRoutes from './routes/adminRoutes';
+import { errorHandler, notFound } from './middleware/errorHandler';
 
 const app: Application = express();
 
@@ -46,7 +47,6 @@ app.get('/api/health', (req, res) => {
 });
 
 // Error handling
-import { errorHandler, notFound } from './middleware/errorHandler';
 app.use(notFound);
 app.use(errorHandler);
 
@@ -54,15 +54,30 @@ app.use(errorHandler);
 let initialized = false;
 const initConnections = async () => {
   if (initialized) return;
-  await connectDB();
-  await connectRedis();
-  initialized = true;
+  try {
+    await connectDB();
+    await connectRedis();
+    initialized = true;
+    console.log('All connections initialized');
+  } catch (error) {
+    console.error('Connection initialization failed:', error);
+    throw error;
+  }
 };
 
 // Vercel serverless export
 export default async function handler(req: any, res: any) {
-  await initConnections();
-  return app(req, res);
+  try {
+    await initConnections();
+    return app(req, res);
+  } catch (error: any) {
+    console.error('Handler error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined,
+    });
+  }
 }
 
 // Local development server
