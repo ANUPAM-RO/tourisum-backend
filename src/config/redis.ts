@@ -1,25 +1,29 @@
-import { createClient, RedisClientType } from 'redis';
+import { Redis } from '@upstash/redis';
 
-let redisClient!: RedisClientType;
+let redisClient!: Redis;
 
 export const connectRedis = async (): Promise<void> => {
   try {
-    const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
-    redisClient = createClient({
-      url: redisUrl,
-      socket: { reconnectStrategy: false },
+    const upstashUrl = process.env.UPSTASH_REDIS_REST_URL;
+    const upstashToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+    if (!upstashUrl || !upstashToken) {
+      console.warn('Upstash credentials not found. Redis disabled.');
+      return;
+    }
+
+    redisClient = new Redis({
+      url: upstashUrl,
+      token: upstashToken,
     });
 
-    redisClient.on('error', (err) => console.error('Redis Client Error:', err));
-    redisClient.on('connect', () => console.log('Redis Connected'));
-
-    await redisClient.connect();
+    console.log('Upstash Redis Connected');
   } catch (error) {
     console.error('Redis Connection Error:', error);
   }
 };
 
-export const getRedisClient = (): RedisClientType => {
+export const getRedisClient = (): Redis => {
   if (!redisClient) {
     throw new Error('Redis client not initialized');
   }
@@ -32,12 +36,12 @@ export const cacheMiddleware = async (req: any, res: any, next: any) => {
     const cachedResponse = await getRedisClient().get(key);
 
     if (cachedResponse) {
-      return res.json(JSON.parse(cachedResponse));
+      return res.json(JSON.parse(cachedResponse as string));
     }
 
     res.sendResponse = res.json;
     res.json = (body: any) => {
-      getRedisClient().set(key, JSON.stringify(body), { EX: 3600 });
+      getRedisClient().set(key, JSON.stringify(body), { ex: 3600 });
       res.sendResponse(body);
     };
     next();

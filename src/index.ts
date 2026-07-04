@@ -5,7 +5,6 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import connectDB from './config/database';
 import { connectRedis } from './config/redis';
-import { errorHandler, notFound } from './middleware/errorHandler';
 
 // Routes
 import authRoutes from './routes/authRoutes';
@@ -18,7 +17,6 @@ import uploadRoutes from './routes/uploadRoutes';
 import adminRoutes from './routes/adminRoutes';
 
 const app: Application = express();
-const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(helmet());
@@ -48,23 +46,31 @@ app.get('/api/health', (req, res) => {
 });
 
 // Error handling
+import { errorHandler, notFound } from './middleware/errorHandler';
 app.use(notFound);
 app.use(errorHandler);
 
-// Start server
-const startServer = async () => {
-  try {
-    await connectDB();
-    await connectRedis();
+// Initialize connections
+let initialized = false;
+const initConnections = async () => {
+  if (initialized) return;
+  await connectDB();
+  await connectRedis();
+  initialized = true;
+};
+
+// Vercel serverless export
+export default async function handler(req: any, res: any) {
+  await initConnections();
+  return app(req, res);
+}
+
+// Local development server
+const PORT = process.env.PORT || 5000;
+if (process.env.NODE_ENV !== 'production') {
+  initConnections().then(() => {
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
-  } catch (error) {
-    console.error('Failed to start server:', error);
-    process.exit(1);
-  }
-};
-
-startServer();
-
-export default app;
+  });
+}
