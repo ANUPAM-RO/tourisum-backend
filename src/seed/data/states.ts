@@ -412,8 +412,8 @@ export const statesData: StateSeed[] = [
       metaDescription: 'Explore Meghalaya — Cherrapunji, living root bridges, Dawki river, Shillong and Nohkalikai Falls.',
       keywords: ['Meghalaya tourism', 'Shillong travel', 'Cherrapunji', 'living root bridges', 'Meghalaya travel'],
     },
-    _popularCitySlugs: [],
-    _popularPlaceSlugs: [],
+    _popularCitySlugs: ['shillong', 'cherrapunji', 'tura', 'jowai'],
+    _popularPlaceSlugs: ['shillong-peak', 'wards-lake', 'nohkalikai-falls', 'double-decker-root-bridge', 'tura-peak', 'nokrek-national-park', 'nartiang-durga-temple', 'krang-suri-lake'],
   },
   {
     name: 'Odisha',
