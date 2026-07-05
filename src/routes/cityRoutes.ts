@@ -7,11 +7,12 @@ import {
   deleteCity,
 } from '../controllers/cityController';
 import { protect, admin } from '../middleware/auth';
+import { cacheMiddleware } from '../config/redis';
 
 const router = express.Router();
 
-router.get('/', getAllCities);
-router.get('/:slug', getCityBySlug);
+router.get('/', cacheMiddleware, getAllCities);
+router.get('/:slug', cacheMiddleware, getCityBySlug);
 router.post('/', protect, admin, createCity);
 router.put('/:id', protect, admin, updateCity);
 router.delete('/:id', protect, admin, deleteCity);

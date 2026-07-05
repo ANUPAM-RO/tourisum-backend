@@ -53,6 +53,9 @@ app.use(errorHandler);
 // Initialize connections
 let initialized = false;
 const initConnections = async () => {
+  if (process.env.NODE_ENV === 'production' && !process.env.JWT_SECRET) {
+    throw new Error('FATAL: JWT_SECRET is not configured in production mode!');
+  }
   if (initialized) return;
   try {
     await connectDB();

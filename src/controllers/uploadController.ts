@@ -8,24 +8,25 @@ export const uploadImage = async (req: Request, res: Response): Promise<void> =>
       return;
     }
 
-    const result = await cloudinary.uploader.upload_stream(
-      { folder: 'tourism', resource_type: 'image' },
-      (error, result) => {
-        if (error) {
-          res.status(500).json({ success: false, message: error.message });
-          return;
+    const uploadPromise = new Promise((resolve, reject) => {
+      cloudinary.uploader.upload_stream(
+        { folder: 'tourism', resource_type: 'image' },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
         }
-        if (result) {
-          res.json({
-            success: true,
-            data: {
-              url: result.secure_url,
-              publicId: result.public_id,
-            },
-          });
-        }
-      }
-    ).end(req.file.buffer);
+      ).end(req.file!.buffer);
+    });
+
+    const result = (await uploadPromise) as any;
+
+    res.json({
+      success: true,
+      data: {
+        url: result.secure_url,
+        publicId: result.public_id,
+      },
+    });
   } catch (error: any) {
     res.status(500).json({ success: false, message: error.message });
   }
