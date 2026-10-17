@@ -25,7 +25,7 @@ async function seed() {
   ]);
   console.log('Cleared existing data');
 
-  const { statesData, citiesData, placesData, hotelsData, restaurantsData } = generateAllSeedData();
+  const { statesData, citiesData, placesData, hotelsData, restaurantsData } = await generateAllSeedData();
 
   // ─── STATES ───────────────────────────────────────────────────────────────
   const stateMap = new Map<string, any>();
@@ -200,28 +200,6 @@ async function seed() {
     });
   }
 
-  // ─── UPDATE CITY REFERENCES FOR STATE-GENERATED DATA ──────────────────────
-  // Link state-generated hotels to their cities
-  for (const hotel of hotels) {
-    const hotelData = hotelsData.find(h => h.slug === hotel.slug);
-    if (hotelData && hotelData._citySlug) {
-      const city = cityMap.get(hotelData._citySlug);
-      if (city) {
-        await City.findByIdAndUpdate(city._id, { $push: { hotels: hotel._id } });
-      }
-    }
-  }
-
-  // Link state-generated restaurants to their cities
-  for (const restaurant of restaurants) {
-    const restaurantData = restaurantsData.find(r => r.slug === restaurant.slug);
-    if (restaurantData && restaurantData._citySlug) {
-      const city = cityMap.get(restaurantData._citySlug);
-      if (city) {
-        await City.findByIdAndUpdate(city._id, { $push: { restaurants: restaurant._id } });
-      }
-    }
-  }
 
   // ─── UPDATE PLACE REFERENCES ──────────────────────────────────────────────
   for (const placeData of placesData) {
@@ -249,6 +227,7 @@ async function seed() {
   console.log(`   Restaurants: ${restaurants.length}`);
 
   await mongoose.disconnect();
+  process.exit(0);
 }
 
 seed().catch((err) => {

@@ -58,7 +58,7 @@ export const getPlaceBySlug = async (req: Request, res: Response): Promise<void>
       .populate('city', 'name slug')
       .populate('hotels')
       .populate('restaurants')
-      .populate('nearbySpots.place', 'name slug images category')
+      .populate('nearbySpots.place', 'name slug images category location')
       .populate('reviews.user', 'name avatar');
 
     if (place) {

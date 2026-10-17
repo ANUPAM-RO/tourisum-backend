@@ -107,7 +107,7 @@ const placeSchema = new Schema<IPlace>(
       latitude: { type: Number, required: true },
       longitude: { type: Number, required: true },
     },
-    category: [{ type: String, enum: ['Hill Station', 'Beach', 'Heritage', 'Wildlife', 'Religious', 'Adventure', 'Honeymoon', 'Family Trip'] }],
+    category: [{ type: String }],
     bestTimeToVisit: { type: String },
     openingTime: { type: String },
     closingTime: { type: String },

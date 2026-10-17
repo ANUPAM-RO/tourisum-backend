@@ -1,6 +1,79 @@
 // Comprehensive seed data generator for all 28 Indian states
 // Each state: 10 cities, each city: 50 places, 50 hotels, 50 restaurants
 
+import https from 'https';
+import { statesData as realStates } from './data/states';
+import { citiesData as realCities } from './data/cities';
+import { placesData as realPlaces } from './data/places';
+import { hotelsData as realHotels } from './data/hotels';
+import { restaurantsData as realRestaurants } from './data/restaurants';
+
+const STATE_CAPITALS: Record<string, { lat: number; lng: number }> = {
+  'rajasthan': { lat: 26.9124, lng: 75.7873 },
+  'kerala': { lat: 8.5241, lng: 76.9366 },
+  'goa': { lat: 15.4909, lng: 73.8278 },
+  'west-bengal': { lat: 22.5726, lng: 88.3639 },
+  'uttar-pradesh': { lat: 26.8467, lng: 80.9462 },
+  'himachal-pradesh': { lat: 31.1048, lng: 77.1734 },
+  'jammu-and-kashmir': { lat: 34.0837, lng: 74.7973 },
+  'karnataka': { lat: 12.9716, lng: 77.5946 },
+  'tamil-nadu': { lat: 13.0827, lng: 80.2707 },
+  'maharashtra': { lat: 19.0760, lng: 72.8777 },
+  'gujarat': { lat: 23.2156, lng: 72.6369 },
+  'uttarakhand': { lat: 30.3165, lng: 78.0322 },
+  'andaman-and-nicobar-islands': { lat: 11.6234, lng: 92.7265 },
+  'sikkim': { lat: 27.3314, lng: 88.6138 },
+  'meghalaya': { lat: 25.5788, lng: 91.8831 },
+  'odisha': { lat: 20.2961, lng: 85.8245 },
+  'madhya-pradesh': { lat: 23.2599, lng: 77.4126 },
+  'andhra-pradesh': { lat: 16.5449, lng: 80.5165 },
+  'assam': { lat: 26.1445, lng: 91.7905 },
+  'punjab': { lat: 30.7333, lng: 76.7794 },
+  'bihar': { lat: 25.5941, lng: 85.1376 },
+  'arunachal-pradesh': { lat: 27.0844, lng: 93.6053 },
+  'manipur': { lat: 24.8170, lng: 93.9368 },
+  'mizoram': { lat: 23.7307, lng: 92.7173 },
+  'nagaland': { lat: 25.6751, lng: 94.1086 },
+  'tripura': { lat: 23.8315, lng: 91.2868 },
+  'jharkhand': { lat: 23.3441, lng: 85.3096 },
+  'chhattisgarh': { lat: 21.2514, lng: 81.6296 },
+  'haryana': { lat: 30.7333, lng: 76.7794 },
+  'telangana': { lat: 17.3850, lng: 78.4867 }
+};
+
+const STATE_CITIES: Record<string, string[]> = {
+  'rajasthan': ['Jaipur', 'Jodhpur', 'Udaipur', 'Jaisalmer', 'Bikaner', 'Pushkar', 'Ajmer', 'Mount Abu', 'Alwar', 'Chittorgarh', 'Sawai Madhopur', 'Bharatpur', 'Kota', 'Bundi', 'Jhalawar', 'Mandawa', 'Ranakpur', 'Kumbhalgarh', 'Nathdwara', 'Deeg'],
+  'kerala': ['Kochi', 'Munnar', 'Alleppey', 'Kovalam', 'Wayanad', 'Thiruvananthapuram', 'Thekkady', 'Varkala', 'Kumarakom', 'Kozhikode', 'Athirappilly', 'Vagamon', 'Bekal', 'Thrissur', 'Poovar', 'Marari', 'Kollam', 'Ashtamudi', 'Kannur', 'Guruvayur'],
+  'goa': ['Panaji', 'Calangute', 'Margao', 'Anjuna', 'Baga', 'Candolim', 'Colva', 'Vasco da Gama', 'Mapusa', 'Arambol', 'Palolem', 'Morjim', 'Vagator', 'Ponda', 'Dona Paula', 'Old Goa', 'Cavelossim', 'Agonda', 'Sinquerim', 'Mandrem'],
+  'west-bengal': ['Kolkata', 'Darjeeling', 'Kalimpong', 'Digha', 'Siliguri', 'Murshidabad', 'Shantiniketan', 'Kurseong', 'Sundarbans', 'Bishnupur', 'Mirik', 'Mandarmani', 'Bakkhali', 'Dooars', 'Jalpaiguri', 'Cooch Behar', 'Mukutmanipur', 'Purulia', 'Malda', 'Haldia'],
+  'uttar-pradesh': ['Agra', 'Varanasi', 'Lucknow', 'Mathura', 'Vrindavan', 'Prayagraj', 'Ayodhya', 'Jhansi', 'Kanpur', 'Noida', 'Ghaziabad', 'Sarnath', 'Kushinagar', 'Gorakhpur', 'Aligarh', 'Meerut', 'Bareilly', 'Moradabad', 'Firozabad', 'Almora'],
+  'himachal-pradesh': ['Shimla', 'Manali', 'Dharamshala', 'Dalhousie', 'Kasauli', 'Spiti Valley', 'Kasol', 'Bir Billing', 'Khajjiar', 'Solan', 'Chamba', 'Kullu', 'Kangra', 'Palampur', 'McLeod Ganj', 'Kalpa', 'Sangla', 'Mashobra', 'Kufri', 'Narkanda'],
+  'jammu-and-kashmir': ['Srinagar', 'Gulmarg', 'Pahalgam', 'Sonamarg', 'Katra', 'Jammu', 'Patnitop', 'Yousmarg', 'Anantnag', 'Gurez Valley', 'Verinag', 'Lolab Valley', 'Daksum', 'Aru Valley', 'Betaab Valley', 'Vaishno Devi', 'Sanasar', 'Bhaderwah', 'Kishtwar', 'Udhampur'],
+  'karnataka': ['Bangalore', 'Mysuru', 'Hampi', 'Coorg', 'Gokarna', 'Mangalore', 'Badami', 'Chikmagalur', 'Udupi', 'Murudeshwar', 'Kabini', 'Bandipur', 'Pattadakal', 'Dandeli', 'Shimoga', 'Belur', 'Halebidu', 'Jog Falls', 'Karwar', 'Bidar'],
+  'tamil-nadu': ['Chennai', 'Madurai', 'Ooty', 'Mahabalipuram', 'Kanyakumari', 'Kodaikanal', 'Rameswaram', 'Coimbatore', 'Yercaud', 'Thanjavur', 'Pondicherry', 'Tiruchirappalli', 'Salem', 'Vellore', 'Tirunelveli', 'Kanchipuram', 'Chidambaram', 'Kumbakonam', 'Courtallam', 'Hogenakkal'],
+  'maharashtra': ['Mumbai', 'Pune', 'Nashik', 'Aurangabad', 'Lonavala', 'Mahabaleshwar', 'Alibaug', 'Panchgani', 'Matheran', 'Shirdi', 'Kolhapur', 'Nagpur', 'Ganpatipule', 'Khandala', 'Karjat', 'Bhandardara', 'Tadoba', 'Lavasa', 'Harihareshwar', 'Murud Janjira'],
+  'gujarat': ['Ahmedabad', 'Surat', 'Vadodara', 'Rajkot', 'Diu', 'Kutch', 'Somnath', 'Dwarka', 'Junagadh', 'Gir National Park', 'Saputara', 'Bhuj', 'Champaner', 'Porbandar', 'Patan', 'Modhera', 'Anand', 'Jamnagar', 'Bhavnagar', 'Mandvi'],
+  'uttarakhand': ['Dehradun', 'Mussoorie', 'Rishikesh', 'Haridwar', 'Nainital', 'Jim Corbett', 'Auli', 'Valley of Flowers', 'Almora', 'Ranikhet', 'Kausani', 'Lansdowne', 'Mukteshwar', 'Badrinath', 'Kedarnath', 'Gangotri', 'Yamunotri', 'Dhanaulti', 'Bhimtal', 'Sattal'],
+  'andaman-and-nicobar-islands': ['Port Blair', 'Havelock Island', 'Neil Island', 'Baratang Island', 'Ross Island', 'Viper Island', 'Diglipur', 'Mayabunder', 'Rangat', 'Long Island', 'Jolly Buoy Island', 'Red Skin Island', 'Wandoor', 'Chidiya Tapu', 'Mount Harriet', 'Cinque Island', 'Barren Island', 'Campbell Bay', 'Little Andaman', 'Hut Bay'],
+  'sikkim': ['Gangtok', 'Pelling', 'Lachung', 'Lachen', 'Namchi', 'Ravangla', 'Yumthang Valley', 'Zero Point', 'Gurudongmar Lake', 'Tsomgo Lake', 'Nathula Pass', 'Zuluk', 'Yuksom', 'Geyzing', 'Singtam', 'Mangan', 'Jorethang', 'Pakyong', 'Rongli', 'Aritar'],
+  'meghalaya': ['Shillong', 'Cherrapunji', 'Dawki', 'Mawlynnong', 'Tura', 'Jowai', 'Nongpoh', 'Williamnagar', 'Baghmara', 'Resubelpara', 'Mawsynram', 'Mawphlang', 'Laitlum Canyons', 'Jakrem', 'Ranikor', 'Balpakram', 'Nartiang', 'Jaintia Hills', 'Garo Hills', 'Khasi Hills'],
+  'odisha': ['Bhubaneswar', 'Puri', 'Konark', 'Cuttack', 'Chilika Lake', 'Gopalpur', 'Sambalpur', 'Rourkela', 'Balasore', 'Baripada', 'Koraput', 'Jeypore', 'Rayagada', 'Bhitarkanika', 'Simlipal', 'Daringbadi', 'Hirakud', 'Keonjhar', 'Lalitgiri', 'Ratnagiri'],
+  'madhya-pradesh': ['Bhopal', 'Indore', 'Gwalior', 'Jabalpur', 'Ujjain', 'Khajuraho', 'Kanha', 'Bandhavgarh', 'Pachmarhi', 'Orchha', 'Mandu', 'Sanchi', 'Bhimbetka', 'Amarkantak', 'Maheshwar', 'Omkareshwar', 'Pench National Park', 'Panna', 'Shivpuri', 'Chanderi'],
+  'andhra-pradesh': ['Visakhapatnam', 'Vijayawada', 'Tirupati', 'Guntur', 'Nellore', 'Kurnool', 'Kakinada', 'Rajahmundry', 'Kadapa', 'Anantapur', 'Araku Valley', 'Lepakshi', 'Srisailam', 'Horsley Hills', 'Amaravati', 'Vizianagaram', 'Eluru', 'Ongole', 'Chittoor', 'Machilipatnam'],
+  'assam': ['Guwahati', 'Dibrugarh', 'Jorhat', 'Tezpur', 'Silchar', 'Nagaon', 'Tinsukia', 'Kaziranga', 'Majuli', 'Sivasagar', 'Haflong', 'Bongaigaon', 'Goalpara', 'Karimganj', 'Barpeta', 'North Lakhimpur', 'Dhubri', 'Diphu', 'Kokrajhar', 'Digboi'],
+  'punjab': ['Amritsar', 'Ludhiana', 'Jalandhar', 'Patiala', 'Bathinda', 'Mohali', 'Pathankot', 'Hoshiarpur', 'Moga', 'Kapurthala', 'Firozpur', 'Khanna', 'Phagwara', 'Muktsar', 'Barnala', 'Rajpura', 'Sangrur', 'Batala', 'Zirakpur', 'Faridkot'],
+  'bihar': ['Patna', 'Bodh Gaya', 'Nalanda', 'Rajgir', 'Vaishali', 'Bhagalpur', 'Muzaffarpur', 'Gaya', 'Darbhanga', 'Arrah', 'Bihar Sharif', 'Munger', 'Purnia', 'Begusarai', 'Katihar', 'Motihari', 'Bettiah', 'Sasaram', 'Madhubani', 'Buxar'],
+  'arunachal-pradesh': ['Itanagar', 'Tawang', 'Ziro', 'Pasighat', 'Bomdila', 'Bhalukpong', 'Along', 'Roing', 'Tezu', 'Namdapha', 'Dirang', 'Khonsa', 'Changlang', 'Yingkiong', 'Seppa', 'Anini', 'Daporijo', 'Namsai', 'Mechuka', 'Aalo'],
+  'manipur': ['Imphal', 'Ukhrul', 'Churachandpur', 'Senapati', 'Thoubal', 'Bishnupur', 'Chandel', 'Tamenglong', 'Jiribam', 'Kakching', 'Moreh', 'Mao', 'Sendra Island', 'Keibul Lamjao', 'Loktak', 'Andro', 'Nambol', 'Tengnoupal', 'Noney', 'Kamjong'],
+  'mizoram': ['Aizawl', 'Lunglei', 'Champhai', 'Serchhip', 'Kolasib', 'Lawngtlai', 'Siaha', 'Mamit', 'Saiha', 'Thenzawl', 'Hmuifang', 'Reiek', 'Vantawng', 'Champhai Hills', 'Khawzawl', 'Saitual', 'Sangau', 'Phawngpui', 'Lengpui', 'Darlawn'],
+  'nagaland': ['Kohima', 'Dimapur', 'Mokokchung', 'Wokha', 'Mon', 'Tuensang', 'Zunheboto', 'Phek', 'Kiphire', 'Longleng', 'Peren', 'Chumoukedima', 'Tseminyu', 'Pfutsero', 'Dzukou Valley', 'Khonoma', 'Meluri', 'Noklak', 'Shamator', 'Niuland'],
+  'tripura': ['Agartala', 'Udaipur', 'Dharmanagar', 'Kailashahar', 'Ambassa', 'Belonia', 'Khowai', 'Sonamura', 'Sabroom', 'Teliamura', 'Unakoti', 'Jampui Hills', 'Neermahal', 'Pilak', 'Melaghar', 'Kamalpur', 'Kumarghat', 'Amarpur', 'Gandacherra', 'Bishalgarh'],
+  'jharkhand': ['Ranchi', 'Jamshedpur', 'Dhanbad', 'Hazaribagh', 'Deoghar', 'Bokaro', 'Netarhat', 'Betla', 'Giridih', 'Dumka', 'Chaibasa', 'Lohardaga', 'Simdega', 'Pakur', 'Godda', 'Sahibganj', 'Latehar', 'Chatra', 'Koderma', 'Garhwa'],
+  'chhattisgarh': ['Raipur', 'Bastar', 'Bilaspur', 'Jagdalpur', 'Kanker', 'Korba', 'Rajnandgaon', 'Durg', 'Ambikapur', 'Surguja', 'Sirpur', 'Kondagaon', 'Dantewada', 'Bhilai', 'Champa', 'Dhamtari', 'Raigarh', 'Kawardha', 'Mainpat', 'Dongargarh'],
+  'haryana': ['Gurugram', 'Kurukshetra', 'Faridabad', 'Panipat', 'Karnal', 'Hisar', 'Rohtak', 'Sonipat', 'Pinjore', 'Panchkula', 'Ambala', 'Morni Hills', 'Badkhal', 'Sultanpur', 'Thanesar', 'Yamunanagar', 'Sirsa', 'Jind', 'Kaithal', 'Rewari'],
+  'telangana': ['Hyderabad', 'Warangal', 'Nizamabad', 'Karimnagar', 'Ramagundam', 'Nalgonda', 'Khammam', 'Mahbubnagar', 'Adilabad', 'Siddipet', 'Medak', 'Sangareddy', 'Vikarabad', 'Jogulamba', 'Nirmal', 'Bhadrachalam', 'Nagarjunasagar', 'Basar', 'Yadagirigutta', 'Vemulawada']
+};
+
 const IMAGE_URLS = [
   'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800',
   'https://images.unsplash.com/photo-1567157577867-05ccb1388e66?w=800',
@@ -978,335 +1051,292 @@ const STATES_DATA = [
   },
 ];
 
+
+
+// Helper to generate hotels for a city
+function generateHotelsForCity(city: any, index: number, count: number) {
+  const hotelTypes = [
+    'Boutique Hotel', 'Business Inn', 'Beach Resort', 'Mountain Lodge', 'Eco Resort',
+    'Spa Retreat', 'Royal Palace', 'Garden Villa', 'Comfort Suites', 'Sunset Inn',
+    'Riverview Hotel', 'City Center Suites', 'Classic Lodge', 'Presidential Resort', 'Backpackers Haven',
+    'Golden Inn', 'Signature Hotel', 'Plaza Suites', 'Hills Lodge', 'Lakeview Inn',
+    'Elite Resort', 'Park View Hotel', 'Vista Suites', 'Metropolitan Inn', 'Haven Resort',
+    'Grand Villa Resort', 'Comfort Inn', 'Ocean Breeze Resort', 'Highland Castle', 'Urban Stay'
+  ];
+
+  const lat = city.location ? city.location.latitude : city.lat;
+  const lng = city.location ? city.location.longitude : city.lng;
+
+  const hotels = [];
+  for (let i = 0; i < count; i++) {
+    const type = hotelTypes[i % hotelTypes.length];
+    const num = Math.floor(i / hotelTypes.length) + 1;
+    const name = i < hotelTypes.length ? `${city.name} ${type}` : `${city.name} ${type} ${num}`;
+    const starRating = 2 + (i % 4); // 2 to 5 stars
+    const pricePerNight = [800, 1500, 2500, 4500, 8000, 12000][i % 6];
+    const category = ['Luxury', 'Budget', 'Heritage', 'Business', 'Resort', 'Standard'][i % 6];
+    
+    hotels.push({
+      name: name,
+      slug: `${city.slug}-${name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`,
+      description: `Experience comfort and hospitality at ${name}, located in the heart of ${city.name}. Offering modern amenities with traditional charm, this hotel is perfect for both leisure and business travelers.`,
+      address: `${100 + i * 15} Main Road, ${city.name}`,
+      location: { latitude: lat + (Math.random() - 0.5) * 0.05, longitude: lng + (Math.random() - 0.5) * 0.05 },
+      googleMapLink: `https://maps.google.com/?q=${encodeURIComponent(name)}+${encodeURIComponent(city.name)}`,
+      phone: `+91 ${90000 + index * 30 + i}00000`,
+      website: `https://www.${name.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9]/g, '')}.com`,
+      starRating: starRating,
+      pricePerNight: pricePerNight,
+      amenities: AMENITIES.slice(0, 4 + (i % 6)),
+      images: [HOTEL_IMAGES[i % HOTEL_IMAGES.length]],
+      distance: `${0.5 + (i * 0.4) % 8} km from city center`,
+      category: category,
+      published: true,
+      _citySlug: city.slug,
+    });
+  }
+  return hotels;
+}
+
+// Helper to generate restaurants for a city
+function generateRestaurantsForCity(city: any, index: number, count: number) {
+  const restaurantTypes = [
+    'Cafe', 'Bistro', 'Rooftop Grill', 'Street Food Hub', 'Thali House',
+    'Seafood Tavern', 'Vegetarian Garden', 'Bakery & Cafe', 'Pizzeria', 'Sushi Lounge',
+    'BBQ Bistro', 'Brewery', 'Food Junction', 'Cloud Kitchen', 'Banquet Diner',
+    'Flavors Kitchen', 'Curry House', 'Gourmet Restaurant', 'Highway Dhaba', 'Deluxe Dining',
+    'Tea Room', 'Waffle House', 'Sizzler Grill', 'Urban Cafe', 'Grand Bistro',
+    'Royal Food Court', 'Tandoor Grill', 'Bistro Royale', 'Spice Kitchen', 'The Grill Room'
+  ];
+
+  const lat = city.location ? city.location.latitude : city.lat;
+  const lng = city.location ? city.location.longitude : city.lng;
+
+  const restaurants = [];
+  for (let i = 0; i < count; i++) {
+    const type = restaurantTypes[i % restaurantTypes.length];
+    const num = Math.floor(i / restaurantTypes.length) + 1;
+    const name = i < restaurantTypes.length ? `${city.name} ${type}` : `${city.name} ${type} ${num}`;
+    const averageCost = [200, 450, 750, 1200, 2000, 3500][i % 6];
+    const vegNonVeg = ['veg', 'non-veg', 'both'][i % 3] as 'veg' | 'non-veg' | 'both';
+    
+    restaurants.push({
+      name: name,
+      slug: `${city.slug}-${name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`,
+      description: `Savor authentic flavors at ${name}, a popular dining destination in ${city.name}. Known for its delicious cuisine, warm ambiance, and excellent service.`,
+      cuisine: [...CUISINES].sort(() => Math.random() - 0.5).slice(0, 2),
+      address: `${200 + i * 20} Food Street, ${city.name}`,
+      location: { latitude: lat + (Math.random() - 0.5) * 0.05, longitude: lng + (Math.random() - 0.5) * 0.05 },
+      googleMapLink: `https://maps.google.com/?q=${encodeURIComponent(name)}+${encodeURIComponent(city.name)}`,
+      phone: `+91 ${91000 + index * 30 + i}00000`,
+      averageCost: averageCost,
+      openingTime: ['07:00', '08:00', '10:00', '11:00', '12:00'][i % 5],
+      closingTime: ['21:00', '22:00', '22:30', '23:00', '23:30'][i % 5],
+      images: [RESTAURANT_IMAGES[i % RESTAURANT_IMAGES.length]],
+      vegNonVeg: vegNonVeg,
+      rating: 3.5 + (i % 15) * 0.1,
+      distance: `${0.3 + (i * 0.3) % 6} km from city center`,
+      published: true,
+      _citySlug: city.slug,
+    });
+  }
+  return restaurants;
+}
+
 // Helper to generate places for a city
-function generatePlacesForCity(city: any, stateSlug: string, index: number) {
-  const placeNames = [
-    `${city.name} Fort`, `${city.name} Palace`, `${city.name} Temple`,
-    `${city.name} Lake`, `${city.name} Garden`, `${city.name} Museum`,
-    `${city.name} Market`, `${city.name} Hill`, `${city.name} Beach`,
-    `${city.name} Wildlife Sanctuary`,
+function generatePlacesForCity(city: any, stateSlug: string, index: number, count: number) {
+  const extraPlaceTypes = [
+    'Waterfall', 'Viewpoint', 'Cathedral', 'Valley', 'Caves',
+    'National Park', 'Bridge', 'Clock Tower', 'Ashram', 'Monument',
+    'Botanical Garden', 'Art Gallery', 'Nature Trail', 'Riverside Walk', 'Lake Park'
   ];
   const categories = ['Heritage', 'Religious', 'Hill Station', 'Beach', 'Wildlife', 'Adventure', 'Family Trip', 'Honeymoon'];
 
-  return placeNames.map((name, i) => ({
-    name: name,
-    slug: `${city.slug}-${name.toLowerCase().replace(/\s+/g, '-')}`,
-    stateSlug,
-    citySlug: city.slug,
-    description: `Explore the magnificent ${name}, one of the most popular attractions in ${city.name}. This stunning destination offers breathtaking views, rich history, and unforgettable experiences for visitors from around the world.`,
-    location: { latitude: city.lat + (Math.random() - 0.5) * 0.1, longitude: city.lng + (Math.random() - 0.5) * 0.1 },
-    category: [categories[Math.floor(Math.random() * categories.length)]],
-    bestTimeToVisit: 'October to March',
-    openingTime: '6:00 AM',
-    closingTime: '6:00 PM',
-    entryFee: ['Free', '₹20', '₹50', '₹100', '₹200'][Math.floor(Math.random() * 5)],
-    images: [IMAGE_URLS[(index * 10 + i) % IMAGE_URLS.length]],
-    history: `The ${name} has a rich history dating back centuries. It has been a center of culture, trade, and spirituality, attracting visitors from all over the world.`,
-    highlights: ['Stunning Architecture', 'Beautiful Views', 'Rich History', 'Photography Spot', 'Cultural Experience'],
-    thingsToKnow: ['Carry water bottles', 'Wear comfortable shoes', 'Respect local customs', 'No photography inside temple areas'],
-    photography: true,
-    weather: { summer: 'Hot, 30-40°C', winter: 'Pleasant, 10-25°C', monsoon: 'Moderate rainfall' },
-    safetyTips: ['Stay hydrated', 'Keep valuables safe', 'Follow guide instructions', 'Respect wildlife'],
-    transportation: {
-      byFlight: { nearestAirport: `${city.name} Airport`, distance: '15 km', cabCost: '₹300-500' },
-      byTrain: { nearestStation: `${city.name} Junction`, distance: '5 km', taxiFare: '₹100-200' },
-      byBus: { busStand: `${city.name} Bus Stand`, autoFare: '₹30-60' },
-      privateCab: '₹1500/day',
-      bikeRental: '₹500/day',
-    },
-    estimatedCost: {
-      budget: { hotel: '₹800', food: '₹400', travel: '₹300', tickets: '₹200', shopping: '₹500', total: '₹2,200' },
-      standard: { hotel: '₹2,500', food: '₹800', travel: '₹600', tickets: '₹500', shopping: '₹1,000', total: '₹5,400' },
-      luxury: { hotel: '₹8,000', food: '₹2,000', travel: '₹1,500', tickets: '₹1,000', shopping: '₹3,000', total: '₹15,500' },
-    },
-    bestMonths: [
-      { month: 'October', temperature: '20-28°C', crowd: 'Moderate', recommendation: 'Great weather' },
-      { month: 'November', temperature: '15-25°C', crowd: 'High', recommendation: 'Best time' },
-      { month: 'December', temperature: '10-22°C', crowd: 'High', recommendation: 'Peak season' },
-    ],
-    localFoods: ['Local Thali', 'Street Food', 'Traditional Sweets', 'Regional Speciality'],
-    travelTips: {
-      dos: ['Book tickets online', 'Visit early morning', 'Hire a local guide', 'Try local food'],
-      donts: ['Dont litter', 'Dont touch artifacts', 'Dont feed animals', 'Dont skip sunscreen'],
-      safety: ['Carry ID proof', 'Keep emergency contacts', 'Stay on marked paths', 'Drink bottled water'],
-    },
-    localLanguage: 'Hindi, English',
-    emergencyNumbers: { police: '100', ambulance: '108', fire: '101' },
-    faqs: [
-      { question: 'What is the best time to visit?', answer: 'October to March is the best time with pleasant weather.' },
-      { question: 'How much time is needed?', answer: 'Plan for 2-3 hours to explore properly.' },
-      { question: 'Is parking available?', answer: 'Yes, paid parking is available near the entrance.' },
-    ],
-    rating: 4.0 + Math.random() * 1,
-    published: true,
-    seo: {
-      title: `${name} - ${city.name} Tourism`,
-      metaDescription: `Visit ${name} in ${city.name} - one of the top attractions`,
-      keywords: [name, city.name, stateSlug, 'tourism', 'travel'],
-    },
-    _hotelSlugs: [],
-    _restaurantSlugs: [],
-    _nearbyPlaceSlugs: [],
-  }));
-}
+  const lat = city.location ? city.location.latitude : city.lat;
+  const lng = city.location ? city.location.longitude : city.lng;
 
-// Helper to generate 50 places for a state
-function generatePlacesForState(stateSlug: string, cities: any[], stateIndex: number) {
-  const extraPlaceTypes = ['Heritage Walk', 'Sunrise Point', 'Sunset Point', 'Nature Trail', 'Botanical Garden', 'Zoo', 'Art Gallery', 'Cultural Center', 'Shopping Complex', 'Food Street', 'Riverside Walk', 'Mountain Trek', 'Valley View', 'Island Tour', 'Coral Reef', 'Mangrove Forest', 'Hot Spring', 'Ancient Ruins', 'Colonial Building', 'Tribal Village', 'Tea Estate', 'Coffee Plantation', 'Spice Garden', 'Silk Factory', 'Pottery Village', 'Handicraft Market', 'Local Bazaar', 'Festival Ground', 'Pilgrimage Route', 'Scenic Drive', 'Water Park', 'Amusement Park', 'National Park', 'Bird Sanctuary', 'Rock Garden', 'Butterfly Park', 'Snake Park', 'Dolphin Point', 'Lighthouse', 'Observatory Hill', 'Cave Temple', 'Step Well', 'Fort Ruins', 'Palace Garden', 'Royal Kitchen', 'War Memorial', 'Freedom Fighter Museum', 'Ethnic Village', 'Tribal Museum', 'State Museum'];
-  const categories = ['Heritage', 'Religious', 'Hill Station', 'Beach', 'Wildlife', 'Adventure', 'Family Trip', 'Honeymoon'];
   const places = [];
+  for (let i = 0; i < count; i++) {
+    const type = extraPlaceTypes[i % extraPlaceTypes.length];
+    const num = Math.floor(i / extraPlaceTypes.length) + 1;
+    const name = i < extraPlaceTypes.length ? `${city.name} ${type}` : `${city.name} ${type} ${num}`;
 
-  for (let i = 0; i < 50; i++) {
-    const city = cities[i % cities.length];
-    const type = extraPlaceTypes[i];
-    const name = `${stateSlug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')} ${type}`;
     places.push({
       name: name,
-      slug: `${stateSlug}-${type.toLowerCase().replace(/\s+/g, '-')}`,
+      slug: `${city.slug}-${name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`,
       stateSlug,
       citySlug: city.slug,
-      description: `Discover the enchanting ${name} in ${stateSlug}. A must-visit destination offering unique experiences, stunning landscapes, and rich cultural heritage.`,
-      location: { latitude: city.lat + (Math.random() - 0.5) * 0.15, longitude: city.lng + (Math.random() - 0.5) * 0.15 },
+      description: `Explore the magnificent ${name}, one of the most popular attractions in ${city.name}. This stunning destination offers breathtaking views, rich history, and unforgettable experiences for visitors from around the world.`,
+      location: { latitude: lat + (Math.random() - 0.5) * 0.1, longitude: lng + (Math.random() - 0.5) * 0.1 },
       category: [categories[Math.floor(Math.random() * categories.length)]],
       bestTimeToVisit: 'October to March',
       openingTime: '6:00 AM',
       closingTime: '6:00 PM',
-      entryFee: ['Free', '₹30', '₹50', '₹100', '₹250'][Math.floor(Math.random() * 5)],
-      images: [IMAGE_URLS[(stateIndex * 10 + i) % IMAGE_URLS.length]],
-      history: `The ${name} has been a significant landmark for generations, attracting visitors with its unique charm and historical significance.`,
-      highlights: ['Scenic Beauty', 'Cultural Experience', 'Photography Spot', 'Local Cuisine', 'Adventure Activities'],
-      thingsToKnow: ['Carry water bottles', 'Wear comfortable shoes', 'Respect local customs', 'Check opening hours'],
+      entryFee: ['Free', '₹20', '₹50', '₹100', '₹200'][Math.floor(Math.random() * 5)],
+      images: [IMAGE_URLS[(index * 15 + i) % IMAGE_URLS.length]],
+      history: `The ${name} has a rich history dating back centuries. It has been a center of culture, trade, and spirituality, attracting visitors from all over the world.`,
+      highlights: ['Stunning Architecture', 'Beautiful Views', 'Rich History', 'Photography Spot', 'Cultural Experience'],
+      thingsToKnow: ['Carry water bottles', 'Wear comfortable shoes', 'Respect local customs', 'No photography inside temple areas'],
       photography: true,
-      weather: { summer: 'Warm, 28-38°C', winter: 'Cool, 8-22°C', monsoon: 'Moderate to heavy rainfall' },
-      safetyTips: ['Stay hydrated', 'Keep valuables secure', 'Follow local guidelines', 'Use registered guides'],
+      weather: { summer: 'Hot, 30-40°C', winter: 'Pleasant, 10-25°C', monsoon: 'Moderate rainfall' },
+      safetyTips: ['Stay hydrated', 'Keep valuables safe', 'Follow guide instructions', 'Respect wildlife'],
       transportation: {
-        byFlight: { nearestAirport: `${city.name} Airport`, distance: '12 km', cabCost: '₹250-450' },
-        byTrain: { nearestStation: `${city.name} Station`, distance: '4 km', taxiFare: '₹80-180' },
-        byBus: { busStand: `${city.name} Bus Stand`, autoFare: '₹25-55' },
-        privateCab: '₹1200/day',
-        bikeRental: '₹400/day',
+        byFlight: { nearestAirport: `${city.name} Airport`, distance: '15 km', cabCost: '₹300-500' },
+        byTrain: { nearestStation: `${city.name} Junction`, distance: '5 km', taxiFare: '₹100-200' },
+        byBus: { busStand: `${city.name} Bus Stand`, autoFare: '₹30-60' },
+        privateCab: '₹1500/day',
+        bikeRental: '₹500/day',
       },
       estimatedCost: {
-        budget: { hotel: '₹700', food: '₹350', travel: '₹250', tickets: '₹150', shopping: '₹400', total: '₹1,850' },
-        standard: { hotel: '₹2,000', food: '₹700', travel: '₹500', tickets: '₹400', shopping: '₹800', total: '₹4,400' },
-        luxury: { hotel: '₹7,000', food: '₹1,800', travel: '₹1,200', tickets: '₹800', shopping: '₹2,500', total: '₹13,300' },
+        budget: { hotel: '₹800', food: '₹400', travel: '₹300', tickets: '₹200', shopping: '₹500', total: '₹2,200' },
+        standard: { hotel: '₹2,500', food: '₹800', travel: '₹600', tickets: '₹500', shopping: '₹1,000', total: '₹5,400' },
+        luxury: { hotel: '₹8,000', food: '₹2,000', travel: '₹1,500', tickets: '₹1,000', shopping: '₹3,000', total: '₹15,500' },
       },
       bestMonths: [
-        { month: 'October', temperature: '18-26°C', crowd: 'Moderate', recommendation: 'Pleasant weather' },
-        { month: 'November', temperature: '12-24°C', crowd: 'High', recommendation: 'Ideal season' },
-        { month: 'March', temperature: '15-28°C', crowd: 'Medium', recommendation: 'Spring bloom' },
+        { month: 'October', temperature: '20-28°C', crowd: 'Moderate', recommendation: 'Great weather' },
+        { month: 'November', temperature: '15-25°C', crowd: 'High', recommendation: 'Best time' },
+        { month: 'December', temperature: '10-22°C', crowd: 'High', recommendation: 'Peak season' },
       ],
-      localFoods: ['Regional Thali', 'Local Snacks', 'Traditional Desserts', 'Speciality Dish'],
+      localFoods: ['Local Thali', 'Street Food', 'Traditional Sweets', 'Regional Speciality'],
       travelTips: {
-        dos: ['Arrive early', 'Book in advance', 'Explore on foot', 'Interact with locals'],
-        donts: ['Dont litter', 'Dont trespass', 'Dont ignore weather alerts', 'Dont skip meals'],
-        safety: ['Carry identification', 'Share itinerary', 'Stay in groups', 'Use trusted transport'],
+        dos: ['Book tickets online', 'Visit early morning', 'Hire a local guide', 'Try local food'],
+        donts: ['Dont litter', 'Dont touch artifacts', 'Dont feed animals', 'Dont skip sunscreen'],
+        safety: ['Carry ID proof', 'Keep emergency contacts', 'Stay on marked paths', 'Drink bottled water'],
       },
       localLanguage: 'Hindi, English',
       emergencyNumbers: { police: '100', ambulance: '108', fire: '101' },
       faqs: [
-        { question: 'What are the visiting hours?', answer: 'Open daily from 6 AM to 6 PM.' },
-        { question: 'Is entry free?', answer: 'Entry fees vary; check locally for current rates.' },
-        { question: 'Are guides available?', answer: 'Yes, licensed guides are available at the entrance.' },
+        { question: 'What is the best time to visit?', answer: 'October to March is the best time with pleasant weather.' },
+        { question: 'How much time is needed?', answer: 'Plan for 2-3 hours to explore properly.' },
+        { question: 'Is parking available?', answer: 'Yes, paid parking is available near the entrance.' },
       ],
-      rating: 3.8 + Math.random() * 1.2,
+      rating: 4.0 + Math.random() * 1,
       published: true,
       seo: {
-        title: `${name} - Travel Guide`,
-        metaDescription: `Visit ${name} - top tourist attraction`,
-        keywords: [name, stateSlug, 'travel', 'tourism'],
+        title: `${name} - ${city.name} Tourism`,
+        metaDescription: `Visit ${name} in ${city.name} - one of the top attractions`,
+        keywords: [name, city.name, stateSlug, 'tourism', 'travel'],
       },
       _hotelSlugs: [],
       _restaurantSlugs: [],
       _nearbyPlaceSlugs: [],
     });
   }
-
   return places;
 }
 
-// Helper to generate hotels for a city
-function generateHotelsForCity(city: any, index: number) {
-  const hotelTypes = ['Grand Hotel', 'Palace Resort', 'Heritage Inn', 'Luxury Suites', 'Budget Stay'];
+async function fetchOSMData(stateName: string): Promise<any[]> {
+  const query = `
+    [out:json][timeout:15];
+    area["name"="${stateName}"]->.state;
+    (
+      nwr["tourism"="hotel"](area.state);
+      nwr["amenity"="restaurant"](area.state);
+      nwr["amenity"="cafe"](area.state);
+    );
+    out center 400;
+  `;
+  
+  const postData = 'data=' + encodeURIComponent(query);
+  
+  const options = {
+    hostname: 'overpass-api.de',
+    path: '/api/interpreter',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Length': Buffer.byteLength(postData),
+      'User-Agent': 'TourismManagementSeedingScript/1.0 (admin@indiatourism.com)',
+      'Accept': 'application/json'
+    }
+  };
 
-  return hotelTypes.map((type, i) => {
-    const name = `${city.name} ${type}`;
-    return {
-      name: name,
-      slug: `${city.slug}-${name.toLowerCase().replace(/\s+/g, '-')}`,
-      description: `Experience comfort and hospitality at ${name}, located in the heart of ${city.name}. Offering modern amenities with traditional charm, this hotel is perfect for both leisure and business travelers.`,
-      address: `${100 + i * 50} Main Road, ${city.name}`,
-      location: { latitude: city.lat + (Math.random() - 0.5) * 0.05, longitude: city.lng + (Math.random() - 0.5) * 0.05 },
-      googleMapLink: `https://maps.google.com/?q=${encodeURIComponent(name)}+${encodeURIComponent(city.name)}`,
-      phone: `+91 ${90000 + i * 1000}00000`,
-      website: `https://www.${name.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9]/g, '')}.com`,
-      starRating: 3 + Math.floor(Math.random() * 3),
-      pricePerNight: [800, 1500, 2500, 4000, 8000][i],
-      amenities: AMENITIES.slice(0, 4 + Math.floor(Math.random() * 4)),
-      images: [HOTEL_IMAGES[i % HOTEL_IMAGES.length]],
-      distance: `${0.5 + i * 0.5} km from city center`,
-      category: ['Luxury', 'Budget', 'Heritage', 'Business', 'Resort'][i],
-      published: true,
-      _citySlug: city.slug,
-    };
+  return new Promise((resolve) => {
+    const req = https.request(options, (res) => {
+      let data = '';
+      res.on('data', (chunk) => { data += chunk; });
+      res.on('end', () => {
+        try {
+          const parsed = JSON.parse(data);
+          resolve(parsed.elements || []);
+        } catch (e) {
+          resolve([]);
+        }
+      });
+    });
+    req.on('error', () => resolve([]));
+    req.setTimeout(15000, () => {
+      req.destroy();
+      resolve([]);
+    });
+    req.write(postData);
+    req.end();
   });
 }
 
-// Helper to generate 50 hotels for a state
-function generateHotelsForState(stateSlug: string, cities: any[], stateIndex: number) {
-  const hotelTypes = ['Grand Hotel', 'Palace Resort', 'Heritage Inn', 'Luxury Suites', 'Budget Stay', 'Boutique Hotel', 'Business Hotel', 'Beach Resort', 'Hill Station Lodge', 'Eco Resort', 'Spa Retreat', 'Villa', 'Guest House', 'Homestay', 'Hostel', 'Serviced Apartment', 'Camp', 'Treehouse', 'Houseboat', 'Farmhouse'];
-  const hotels = [];
-
-  for (let i = 0; i < 50; i++) {
-    const city = cities[i % cities.length];
-    const type = hotelTypes[i % hotelTypes.length];
-    const num = Math.floor(i / hotelTypes.length) + 1;
-    const name = i < hotelTypes.length ? `${city.name} ${type}` : `${type} ${city.name} ${num}`;
-    const starRating = i < 5 ? 5 : i < 15 ? 4 : i < 30 ? 3 : 2;
-    const pricePerNight = starRating === 5 ? 8000 + Math.floor(Math.random() * 20000) : starRating === 4 ? 3000 + Math.floor(Math.random() * 5000) : starRating === 3 ? 1500 + Math.floor(Math.random() * 2000) : 500 + Math.floor(Math.random() * 1000);
-
-    hotels.push({
-      name: name,
-      slug: `${stateSlug}-${name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`,
-      description: `Experience comfort and hospitality at ${name}, located in ${city.name}. Offering modern amenities with traditional charm, this hotel is perfect for both leisure and business travelers.`,
-      address: `${100 + i * 50} Main Road, ${city.name}`,
-      location: { latitude: city.lat + (Math.random() - 0.5) * 0.05, longitude: city.lng + (Math.random() - 0.5) * 0.05 },
-      googleMapLink: `https://maps.google.com/?q=${encodeURIComponent(name)}+${encodeURIComponent(city.name)}`,
-      phone: `+91 ${90000 + i * 100}00000`,
-      website: `https://www.${name.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9]/g, '')}.com`,
-      starRating: starRating,
-      pricePerNight: pricePerNight,
-      amenities: AMENITIES.slice(0, 4 + Math.floor(Math.random() * (starRating * 2 + 2))),
-      images: [HOTEL_IMAGES[i % HOTEL_IMAGES.length]],
-      distance: `${0.5 + (i * 0.3) % 10} km from city center`,
-      category: [starRating === 5 ? 'Luxury' : starRating === 4 ? 'Standard' : starRating === 3 ? 'Budget' : 'Backpacker'],
-      published: true,
-      _citySlug: city.slug,
-    });
-  }
-
-  return hotels;
-}
-
-// Helper to generate restaurants for a city
-function generateRestaurantsForCity(city: any, index: number) {
-  const restaurantTypes = ['Kitchen', 'Spice House', 'Food Court', 'Dhaba', 'Fine Dining'];
-
-  return restaurantTypes.map((type, i) => {
-    const name = `${city.name} ${type}`;
-    return {
-      name: name,
-      slug: `${city.slug}-${name.toLowerCase().replace(/\s+/g, '-')}`,
-      description: `Savor authentic flavors at ${name}, a popular dining destination in ${city.name}. Known for its delicious cuisine, warm ambiance, and excellent service.`,
-      cuisine: [...CUISINES].sort(() => Math.random() - 0.5).slice(0, 2),
-      address: `${200 + i * 100} Food Street, ${city.name}`,
-      location: { latitude: city.lat + (Math.random() - 0.5) * 0.05, longitude: city.lng + (Math.random() - 0.5) * 0.05 },
-      googleMapLink: `https://maps.google.com/?q=${encodeURIComponent(name)}+${encodeURIComponent(city.name)}`,
-      phone: `+91 ${91000 + i * 1000}00000`,
-      averageCost: [300, 500, 800, 1200, 2000][i],
-      openingTime: ['07:00', '08:00', '10:00', '11:00', '12:00'][i],
-      closingTime: ['21:00', '22:00', '22:30', '23:00', '23:30'][i],
-      images: [RESTAURANT_IMAGES[i % RESTAURANT_IMAGES.length]],
-      vegNonVeg: ['veg', 'non-veg', 'both', 'veg', 'both'][i] as 'veg' | 'non-veg' | 'both',
-      rating: 3.5 + Math.random() * 1.5,
-      distance: `${0.3 + i * 0.3} km from city center`,
-      published: true,
-      _citySlug: city.slug,
-    };
-  });
-}
-
-// Helper to generate 50 restaurants for a state
-function generateRestaurantsForState(stateSlug: string, cities: any[], stateIndex: number) {
-  const restaurantTypes = ['Kitchen', 'Spice House', 'Food Court', 'Dhaba', 'Fine Dining', 'Cafe', 'Bistro', 'Rooftop Restaurant', 'Street Food Hub', 'Thali House', 'Seafood Grill', 'Vegetarian Delight', 'Bakery', 'Pizzeria', 'Sushi Bar', 'BBQ House', 'Brewery', 'Food Truck', 'Cloud Kitchen', 'Banquet Hall'];
-  const restaurants = [];
-
-  for (let i = 0; i < 50; i++) {
-    const city = cities[i % cities.length];
-    const type = restaurantTypes[i % restaurantTypes.length];
-    const num = Math.floor(i / restaurantTypes.length) + 1;
-    const name = i < restaurantTypes.length ? `${city.name} ${type}` : `${type} ${city.name} ${num}`;
-    const avgCost = i < 10 ? 800 + Math.floor(Math.random() * 1200) : i < 25 ? 400 + Math.floor(Math.random() * 600) : 200 + Math.floor(Math.random() * 400);
-    const vegNonVeg = i % 3 === 0 ? 'veg' : i % 3 === 1 ? 'non-veg' : 'both';
-
-    restaurants.push({
-      name: name,
-      slug: `${stateSlug}-${name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`,
-      description: `Savor authentic flavors at ${name}, a popular dining destination in ${city.name}. Known for its delicious cuisine, warm ambiance, and excellent service.`,
-      cuisine: [...CUISINES].sort(() => Math.random() - 0.5).slice(0, 2 + Math.floor(Math.random() * 2)),
-      address: `${200 + i * 100} Food Street, ${city.name}`,
-      location: { latitude: city.lat + (Math.random() - 0.5) * 0.05, longitude: city.lng + (Math.random() - 0.5) * 0.05 },
-      googleMapLink: `https://maps.google.com/?q=${encodeURIComponent(name)}+${encodeURIComponent(city.name)}`,
-      phone: `+91 ${91000 + i * 100}00000`,
-      averageCost: avgCost,
-      openingTime: ['07:00', '08:00', '09:00', '10:00', '11:00', '11:30', '12:00'][Math.floor(Math.random() * 7)],
-      closingTime: ['21:00', '21:30', '22:00', '22:30', '23:00', '23:30', '00:00'][Math.floor(Math.random() * 7)],
-      images: [RESTAURANT_IMAGES[i % RESTAURANT_IMAGES.length]],
-      vegNonVeg: vegNonVeg as 'veg' | 'non-veg' | 'both',
-      rating: 3.5 + Math.random() * 1.5,
-      distance: `${0.3 + (i * 0.2) % 8} km from city center`,
-      published: true,
-      _citySlug: city.slug,
-    });
-  }
-
-  return restaurants;
-}
-
-export function generateAllSeedData() {
-  const allStates: any[] = [];
+export async function generateAllSeedData() {
+  const allStates: any[] = JSON.parse(JSON.stringify(realStates));
   const allCities: any[] = [];
   const allPlaces: any[] = [];
   const allHotels: any[] = [];
   const allRestaurants: any[] = [];
 
-  STATES_DATA.forEach((stateData, stateIndex) => {
-    const stateSlug = stateData.slug;
+  let overallCityIndex = 0;
 
-    // Add state
-    allStates.push({
-      name: stateData.name,
-      slug: stateData.slug,
-      description: stateData.description,
-      capital: stateData.capital,
-      image: stateData.image,
-      gallery: stateData.gallery,
-      weather: stateData.weather,
-      bestTimeToVisit: stateData.bestTimeToVisit,
-      localLanguage: stateData.localLanguage,
-      emergencyNumbers: stateData.emergencyNumbers,
-      published: true,
-      seo: stateData.seo,
-      _popularCitySlugs: stateData.cities.map(c => c.slug),
-      _popularPlaceSlugs: [],
-    });
+  for (let stateIndex = 0; stateIndex < allStates.length; stateIndex++) {
+    const state = allStates[stateIndex];
+    console.log(`Fetching real hotels/restaurants for state: ${state.name}...`);
+    const osmElements = await fetchOSMData(state.name);
+    console.log(`Found ${osmElements.length} real amenities in ${state.name}`);
 
-    // Generate cities, places, hotels, restaurants for each city
-    stateData.cities.forEach((city: any, cityIndex) => {
-      const citySlug = city.slug;
+    // Separate hotels and restaurants
+    const realHotelsForState = osmElements.filter(el => 
+      el.tags && 
+      (el.tags.tourism === 'hotel' || el.tags.accommodation === 'hotel') && 
+      el.tags.name
+    );
+    const realRestaurantsForState = osmElements.filter(el => 
+      el.tags && 
+      (el.tags.amenity === 'restaurant' || el.tags.amenity === 'cafe') && 
+      el.tags.name
+    );
 
-      // Add city
-      allCities.push({
-        name: city.name,
+    const cityNames = STATE_CITIES[state.slug] || [];
+    const capitalCoords = STATE_CAPITALS[state.slug] || { lat: 20, lng: 77 };
+
+    state._popularCitySlugs = [];
+    state._popularPlaceSlugs = [];
+
+    for (let cityIndex = 0; cityIndex < cityNames.length; cityIndex++) {
+      const cityName = cityNames[cityIndex];
+      const citySlug = `${state.slug}-${cityName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`;
+      state._popularCitySlugs.push(citySlug);
+
+      // Generate coordinates offset from state capital/center
+      const lat = capitalCoords.lat + (Math.random() - 0.5) * 1.5;
+      const lng = capitalCoords.lng + (Math.random() - 0.5) * 1.5;
+
+      const cityObj = {
+        name: cityName,
         slug: citySlug,
-        stateSlug,
-        description: `${city.name} is a vibrant city in ${stateData.name}, known for its rich culture, beautiful landscapes, and warm hospitality. A must-visit destination for travelers exploring ${stateData.name}.`,
+        stateSlug: state.slug,
+        description: `${cityName} is a beautiful and historic tourist city in the state of ${state.name}, renowned for its unique local culture, scenic attractions, and rich heritage.`,
         image: IMAGE_URLS[(stateIndex * 5 + cityIndex) % IMAGE_URLS.length],
         gallery: IMAGE_URLS.slice((stateIndex * 5 + cityIndex) % IMAGE_URLS.length, ((stateIndex * 5 + cityIndex) % IMAGE_URLS.length) + 3),
-        location: { latitude: city.lat, longitude: city.lng },
-        weather: stateData.weather,
-        bestTimeToVisit: stateData.bestTimeToVisit,
+        location: { latitude: lat, longitude: lng },
+        weather: state.weather,
+        bestTimeToVisit: state.bestTimeToVisit,
         transportation: {
-          nearestAirport: { name: `${city.name} Airport`, distance: '15 km', cabCost: '₹300-500' },
-          nearestStation: { name: `${city.name} Junction`, distance: '5 km', taxiFare: '₹100-200' },
-          busStand: { name: `${city.name} Bus Stand`, autoFare: '30-60' },
+          nearestAirport: { name: `${cityName} Airport`, distance: '12 km', cabCost: '₹350-550' },
+          nearestStation: { name: `${cityName} Junction`, distance: '4 km', taxiFare: '₹80-180' },
+          busStand: { name: `${cityName} Bus Stand`, autoFare: '₹30-60' },
         },
         estimatedBudget: {
           budget: { hotel: '₹800', food: '₹400', travel: '₹300', tickets: '₹200', shopping: '₹500', total: '₹2,200' },
-          standard: { hotel: '₹2,500', food: '₹800', travel: '600', tickets: '₹500', shopping: '₹1,000', total: '₹5,400' },
-          luxury: { hotel: '8,000', food: '₹2,000', travel: '₹1,500', tickets: '₹1,000', shopping: '₹3,000', total: '₹15,500' },
+          standard: { hotel: '₹2,500', food: '₹800', travel: '₹600', tickets: '₹500', shopping: '₹1,000', total: '₹5,400' },
+          luxury: { hotel: '₹8,000', food: '₹2,000', travel: '₹1,500', tickets: '₹1,000', shopping: '₹3,000', total: '₹15,500' },
         },
-        localFoods: ['Local Thali', 'Street Food', 'Traditional Sweets', 'Regional Speciality', 'Famous Snack'],
+        localFoods: ['Local Speciality', 'Street Food', 'Traditional Sweets', 'Famous Dish'],
         travelTips: {
           dos: ['Book in advance', 'Try local food', 'Visit early morning', 'Hire local guide'],
           donts: ['Dont litter', 'Dont skip sunscreen', 'Dont ignore local customs', 'Dont travel late night'],
@@ -1314,57 +1344,172 @@ export function generateAllSeedData() {
         },
         published: true,
         seo: {
-          title: `${city.name} Tourism - ${stateData.name}`,
-          metaDescription: `Explore ${city.name} in ${stateData.name} - top attractions, hotels and restaurants`,
-          keywords: [city.name, stateData.name, 'tourism', 'travel', 'hotels'],
+          title: `${cityName} Tourism - ${state.name}`,
+          metaDescription: `Explore ${cityName} in ${state.name} - top attractions, hotels and restaurants`,
+          keywords: [cityName, state.name, 'tourism', 'travel', 'hotels'],
         },
-        _hotelSlugs: [],
-        _restaurantSlugs: [],
-        _popularPlaceSlugs: [],
-      });
+        _hotelSlugs: [] as string[],
+        _restaurantSlugs: [] as string[],
+        _popularPlaceSlugs: [] as string[],
+      };
 
-      // Generate 10 places for this city
-      const cityPlaces = generatePlacesForCity(city, stateSlug, stateIndex * 15 + cityIndex);
-      cityPlaces.forEach((place, placeIndex) => {
-        allPlaces.push(place);
-        allCities[allCities.length - 1]._popularPlaceSlugs.push(place.slug);
-      });
+      allCities.push(cityObj);
 
-      // Generate 5 hotels for this city
-      const cityHotels = generateHotelsForCity(city, stateIndex * 15 + cityIndex);
-      cityHotels.forEach((hotel) => {
-        allHotels.push(hotel);
-        allCities[allCities.length - 1]._hotelSlugs.push(hotel.slug);
-      });
+      // Find OSM hotels nearest to this city
+      const nearestOSMHotels = realHotelsForState
+        .map(h => ({
+          name: h.tags.name,
+          lat: h.lat || (h.center && h.center.lat),
+          lon: h.lon || (h.center && h.center.lon),
+          addr: h.tags['addr:street'] || h.tags['addr:full'] || `Main Road, ${cityName}`
+        }))
+        .filter(h => h.lat && h.lon)
+        .map(h => ({
+          ...h,
+          dist: Math.pow(h.lat - lat, 2) + Math.pow(h.lon - lng, 2)
+        }))
+        .sort((a, b) => a.dist - b.dist)
+        .slice(0, 20);
 
-      // Generate 5 restaurants for this city
-      const cityRestaurants = generateRestaurantsForCity(city, stateIndex * 15 + cityIndex);
-      cityRestaurants.forEach((restaurant) => {
-        allRestaurants.push(restaurant);
-        allCities[allCities.length - 1]._restaurantSlugs.push(restaurant.slug);
-      });
+      // Find OSM restaurants nearest to this city
+      const nearestOSMRestaurants = realRestaurantsForState
+        .map(r => ({
+          name: r.tags.name,
+          lat: r.lat || (r.center && r.center.lat),
+          lon: r.lon || (r.center && r.center.lon),
+          addr: r.tags['addr:street'] || r.tags['addr:full'] || `Food Street, ${cityName}`
+        }))
+        .filter(r => r.lat && r.lon)
+        .map(r => ({
+          ...r,
+          dist: Math.pow(r.lat - lat, 2) + Math.pow(r.lon - lng, 2)
+        }))
+        .sort((a, b) => a.dist - b.dist)
+        .slice(0, 20);
 
-      // Update state's popular places
-      allStates[allStates.length - 1]._popularPlaceSlugs.push(...cityPlaces.slice(0, 2).map(p => p.slug));
-    });
+      // Generate 20 hotels (using real OSM ones if available, fallback otherwise)
+      const hotelsForCity = [];
+      for (let i = 0; i < 20; i++) {
+        const osmHotel = nearestOSMHotels[i];
+        let hotelName = '';
+        let hotelLat = lat + (Math.random() - 0.5) * 0.005; // tiny offset (within 500m)
+        let hotelLng = lng + (Math.random() - 0.5) * 0.005;
+        let hotelAddr = `${100 + i * 15} Main Road, ${cityName}`;
 
-    // Generate 50 additional places for this state
-    const statePlaces = generatePlacesForState(stateSlug, stateData.cities, stateIndex);
-    statePlaces.forEach((place) => {
-      allPlaces.push(place);
-    });
+        if (osmHotel) {
+          hotelName = osmHotel.name;
+          hotelLat = osmHotel.lat;
+          hotelLng = osmHotel.lon;
+          hotelAddr = osmHotel.addr;
+        } else {
+          // Fallback with real brand name patterns
+          const hotelTypes = [
+            'Boutique Hotel', 'Business Inn', 'Beach Resort', 'Mountain Lodge', 'Eco Resort',
+            'Spa Retreat', 'Royal Palace', 'Garden Villa', 'Comfort Suites', 'Sunset Inn',
+            'Riverview Hotel', 'City Center Suites', 'Classic Lodge', 'Presidential Resort', 'Backpackers Haven',
+            'Golden Inn', 'Signature Hotel', 'Plaza Suites', 'Hills Lodge', 'Lakeview Inn'
+          ];
+          hotelName = `${cityName} ${hotelTypes[i % hotelTypes.length]}`;
+        }
 
-    // Generate 50 additional hotels for this state
-    const stateHotels = generateHotelsForState(stateSlug, stateData.cities, stateIndex);
-    stateHotels.forEach((hotel) => {
-      allHotels.push(hotel);
-    });
+        const starRating = 2 + (i % 4);
+        const pricePerNight = [800, 1500, 2500, 4500, 8000, 12000][i % 6];
+        const category = ['Luxury', 'Budget', 'Heritage', 'Business', 'Resort', 'Standard'][i % 6];
 
-    // Generate 50 additional restaurants for this state
-    const stateRestaurants = generateRestaurantsForState(stateSlug, stateData.cities, stateIndex);
-    stateRestaurants.forEach((restaurant) => {
-      allRestaurants.push(restaurant);
-    });
+        hotelsForCity.push({
+          name: hotelName,
+          slug: `${citySlug}-${hotelName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}-${i}`,
+          description: `Experience comfort and hospitality at ${hotelName}, located in the heart of ${cityName}. Offering modern amenities with traditional charm, this hotel is perfect for both leisure and business travelers.`,
+          address: hotelAddr,
+          location: { latitude: hotelLat, longitude: hotelLng },
+          googleMapLink: `https://maps.google.com/?q=${encodeURIComponent(hotelName)}+${encodeURIComponent(cityName)}`,
+          phone: `+91 ${90000 + overallCityIndex * 30 + i}00000`,
+          website: `https://www.${hotelName.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9]/g, '')}.com`,
+          starRating: starRating,
+          pricePerNight: pricePerNight,
+          amenities: AMENITIES.slice(0, 4 + (i % 6)),
+          images: [HOTEL_IMAGES[i % HOTEL_IMAGES.length]],
+          distance: `${0.5 + (i * 0.4) % 8} km from city center`,
+          category: category,
+          published: true,
+          _citySlug: citySlug,
+        });
+      }
+      allHotels.push(...hotelsForCity);
+      cityObj._hotelSlugs.push(...hotelsForCity.map(h => h.slug));
+
+      // Generate 20 restaurants (using real OSM ones if available, fallback otherwise)
+      const restaurantsForCity = [];
+      for (let i = 0; i < 20; i++) {
+        const osmRest = nearestOSMRestaurants[i];
+        let restName = '';
+        let restLat = lat + (Math.random() - 0.5) * 0.005; // tiny offset (within 500m)
+        let restLng = lng + (Math.random() - 0.5) * 0.005;
+        let restAddr = `${200 + i * 20} Food Street, ${cityName}`;
+
+        if (osmRest) {
+          restName = osmRest.name;
+          restLat = osmRest.lat;
+          restLng = osmRest.lon;
+          restAddr = osmRest.addr;
+        } else {
+          // Fallback with real restaurant type patterns
+          const restTypes = [
+            'Cafe', 'Bistro', 'Rooftop Grill', 'Street Food Hub', 'Thali House',
+            'Seafood Tavern', 'Vegetarian Garden', 'Bakery & Cafe', 'Pizzeria', 'Sushi Lounge',
+            'BBQ Bistro', 'Brewery', 'Food Junction', 'Cloud Kitchen', 'Banquet Diner'
+          ];
+          restName = `${cityName} ${restTypes[i % restTypes.length]}`;
+        }
+
+        const averageCost = [200, 450, 750, 1200, 2000, 3500][i % 6];
+        const vegNonVeg = ['veg', 'non-veg', 'both'][i % 3] as 'veg' | 'non-veg' | 'both';
+
+        restaurantsForCity.push({
+          name: restName,
+          slug: `${citySlug}-${restName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}-${i}`,
+          description: `Savor authentic flavors at ${restName}, a popular dining destination in ${cityName}. Known for its delicious cuisine, warm ambiance, and excellent service.`,
+          cuisine: [...CUISINES].sort(() => Math.random() - 0.5).slice(0, 2),
+          address: restAddr,
+          location: { latitude: restLat, longitude: restLng },
+          googleMapLink: `https://maps.google.com/?q=${encodeURIComponent(restName)}+${encodeURIComponent(cityName)}`,
+          phone: `+91 ${91000 + overallCityIndex * 30 + i}00000`,
+          averageCost: averageCost,
+          openingTime: ['07:00', '08:00', '10:00', '11:00', '12:00'][i % 5],
+          closingTime: ['21:00', '22:00', '22:30', '23:00', '23:30'][i % 5],
+          images: [RESTAURANT_IMAGES[i % RESTAURANT_IMAGES.length]],
+          vegNonVeg: vegNonVeg,
+          rating: 3.5 + (i % 15) * 0.1,
+          distance: `${0.3 + (i * 0.3) % 6} km from city center`,
+          published: true,
+          _citySlug: citySlug,
+        });
+      }
+      allRestaurants.push(...restaurantsForCity);
+      cityObj._restaurantSlugs.push(...restaurantsForCity.map(r => r.slug));
+
+      // Generate 5 tourist Places for this city
+      const cityPlaces = generatePlacesForCity(cityObj, state.slug, overallCityIndex, 5);
+      allPlaces.push(...cityPlaces);
+      cityObj._popularPlaceSlugs.push(...cityPlaces.map(p => p.slug));
+
+      overallCityIndex++;
+    }
+  }
+
+  // Ensure all places have links to hotels and restaurants in their city
+  allPlaces.forEach((place) => {
+    const cityHotels = allHotels.filter(h => h._citySlug === place.citySlug);
+    place._hotelSlugs = cityHotels.slice(0, 5).map(h => h.slug);
+
+    const cityRestaurants = allRestaurants.filter(r => r._citySlug === place.citySlug);
+    place._restaurantSlugs = cityRestaurants.slice(0, 5).map(r => r.slug);
+  });
+
+  // Ensure popular place references are linked in states
+  allStates.forEach((state) => {
+    const statePlaces = allPlaces.filter(p => p.stateSlug === state.slug);
+    state._popularPlaceSlugs = statePlaces.slice(0, 5).map(p => p.slug);
   });
 
   return {
