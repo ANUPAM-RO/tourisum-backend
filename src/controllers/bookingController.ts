@@ -4,6 +4,7 @@ import Booking, { BookingStatus } from '../models/Booking';
 import Tour from '../models/Tour';
 import { IUser } from '../models/User';
 import { adjustSeats } from './tourController';
+import { MAX_TRAVELLERS, quoteRooms, suggestRooms, type RoomPlan } from '../utils/roomPricing';
 
 interface AuthRequest extends Request {
   user?: IUser;
@@ -18,6 +19,13 @@ export const createBooking = async (req: AuthRequest, res: Response): Promise<vo
   try {
     const { tourId, departureId, name, email, phone, adults, children = 0, message = '' } = req.body;
     const travellers = Number(adults) + Number(children);
+    if (travellers > MAX_TRAVELLERS) {
+      res.status(400).json({ success: false, message: `A booking can have at most ${MAX_TRAVELLERS} travellers.` });
+      return;
+    }
+    const rooms: RoomPlan = req.body.rooms
+      ? { double: Number(req.body.rooms.double) || 0, triple: Number(req.body.rooms.triple) || 0, quad: Number(req.body.rooms.quad) || 0 }
+      : suggestRooms(travellers);
 
     const tour = await Tour.findOne({ _id: tourId, published: true }).lean();
     const departure = tour?.departures.find((d) => String(d._id) === String(departureId));
@@ -29,6 +37,12 @@ export const createBooking = async (req: AuthRequest, res: Response): Promise<vo
     today.setHours(0, 0, 0, 0);
     if (new Date(departure.startDate) < today) {
       res.status(400).json({ success: false, message: 'This departure date has already passed.' });
+      return;
+    }
+
+    const quote = quoteRooms(tour, travellers, rooms);
+    if (quote.error) {
+      res.status(400).json({ success: false, message: quote.error });
       return;
     }
 
@@ -55,8 +69,10 @@ export const createBooking = async (req: AuthRequest, res: Response): Promise<vo
         adults: Number(adults),
         children: Number(children),
         message,
+        rooms,
         pricePerPerson: tour.price,
-        totalPrice: tour.price * travellers,
+        priceQuad: tour.priceQuad ?? null,
+        totalPrice: quote.total,
       });
       res.status(201).json({ success: true, data: booking });
     } catch (error) {

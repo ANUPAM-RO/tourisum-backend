@@ -10,7 +10,10 @@
     "seed:admin": "ts-node src/scripts/seedAdmin.ts",
     "seed:run": "ts-node src/seed.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "seed:tours": "ts-node src/scripts/seedTours.ts"
+    "seed:tours": "ts-node src/scripts/seedTours.ts",
+    "seed:tour-hotels": "ts-node src/scripts/seedTourHotels.ts",
+    "seed:tour-room-prices": "ts-node src/scripts/seedTourRoomPrices.ts",
+    "seed:new-tours": "ts-node src/scripts/seedNewTours.ts"
   },
   "keywords": [
     "tourism",

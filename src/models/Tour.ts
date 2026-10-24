@@ -15,6 +15,15 @@ export interface ITourDay {
   stay: string;
 }
 
+export interface ITourHotel {
+  name: string;
+  image: string;
+  location: string;
+  googleMapLink: string;
+  starRating: number;
+  pricePerNight: number;
+}
+
 export interface ITour extends Document {
   title: string;
   slug: string;
@@ -27,7 +36,10 @@ export interface ITour extends Document {
   endCity: string;
   durationDays: number;
   durationNights: number;
+  /** Per person, 2 in a room (twin sharing). */
   price: number;
+  /** Per person, 3–4 in a room. Not offered when empty. */
+  priceQuad?: number | null;
   originalPrice?: number;
   difficulty: 'Easy' | 'Moderate' | 'Challenging';
   groupSize: number;
@@ -35,6 +47,7 @@ export interface ITour extends Document {
   departures: ITourDeparture[];
   highlights: string[];
   itinerary: ITourDay[];
+  hotels: ITourHotel[];
   inclusions: string[];
   exclusions: string[];
   thingsToCarry: string[];
@@ -61,6 +74,18 @@ const daySchema = new Schema<ITourDay>(
   { _id: false }
 );
 
+const hotelSchema = new Schema<ITourHotel>(
+  {
+    name: { type: String, required: true, trim: true },
+    image: { type: String, default: '' },
+    location: { type: String, default: '' },
+    googleMapLink: { type: String, default: '' },
+    starRating: { type: Number, min: 0, max: 5, default: 0 },
+    pricePerNight: { type: Number, min: 0, default: 0 },
+  },
+  { _id: false }
+);
+
 const tourSchema = new Schema<ITour>(
   {
     title: { type: String, required: true, trim: true },
@@ -75,6 +100,7 @@ const tourSchema = new Schema<ITour>(
     durationDays: { type: Number, required: true, min: 1 },
     durationNights: { type: Number, required: true, min: 0 },
     price: { type: Number, required: true, min: 0 },
+    priceQuad: { type: Number, min: 0, default: null },
     originalPrice: { type: Number, min: 0 },
     difficulty: { type: String, enum: ['Easy', 'Moderate', 'Challenging'], default: 'Easy' },
     groupSize: { type: Number, default: 15 },
@@ -82,6 +108,7 @@ const tourSchema = new Schema<ITour>(
     departures: [departureSchema],
     highlights: [{ type: String }],
     itinerary: [daySchema],
+    hotels: [hotelSchema],
     inclusions: [{ type: String }],
     exclusions: [{ type: String }],
     thingsToCarry: [{ type: String }],

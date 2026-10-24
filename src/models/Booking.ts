@@ -1,4 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
+import type { RoomPlan } from '../utils/roomPricing';
 
 export type BookingStatus = 'pending' | 'confirmed' | 'cancelled';
 
@@ -15,7 +16,12 @@ export interface IBooking extends Document {
   adults: number;
   children: number;
   message: string;
+  /** Rooms booked by size (2, 3 or 4 per room). */
+  rooms: RoomPlan;
+  /** Per person, 2 in a room, at booking time. */
   pricePerPerson: number;
+  /** Per person, 3–4 in a room, at booking time. */
+  priceQuad?: number | null;
   totalPrice: number;
   status: BookingStatus;
   adminNote: string;
@@ -38,7 +44,13 @@ const bookingSchema = new Schema<IBooking>(
     adults: { type: Number, required: true, min: 1 },
     children: { type: Number, default: 0, min: 0 },
     message: { type: String, default: '' },
+    rooms: {
+      double: { type: Number, default: 0, min: 0 },
+      triple: { type: Number, default: 0, min: 0 },
+      quad: { type: Number, default: 0, min: 0 },
+    },
     pricePerPerson: { type: Number, required: true },
+    priceQuad: { type: Number, default: null },
     totalPrice: { type: Number, required: true },
     status: { type: String, enum: ['pending', 'confirmed', 'cancelled'], default: 'pending' },
     adminNote: { type: String, default: '' },

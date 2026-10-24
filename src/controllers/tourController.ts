@@ -32,7 +32,7 @@ export const getTours = async (req: Request, res: Response): Promise<void> => {
     if (featured === 'true') query.featured = true;
 
     const tours = await Tour.find(query)
-      .select('-itinerary -thingsToCarry -exclusions')
+      .select('-itinerary -hotels -thingsToCarry -exclusions')
       .populate('places', 'name slug')
       .lean();
 
@@ -101,8 +101,8 @@ function mergeDepartures(incoming: any[] = [], existing: ITour['departures'] = [
 
 const EDITABLE = [
   'title', 'tagline', 'description', 'coverImage', 'gallery', 'places', 'startCity', 'endCity',
-  'durationDays', 'durationNights', 'price', 'originalPrice', 'difficulty', 'groupSize', 'tags',
-  'highlights', 'itinerary', 'inclusions', 'exclusions', 'thingsToCarry', 'featured', 'published',
+  'durationDays', 'durationNights', 'price', 'priceQuad', 'originalPrice', 'difficulty', 'groupSize', 'tags',
+  'highlights', 'itinerary', 'hotels', 'inclusions', 'exclusions', 'thingsToCarry', 'featured', 'published',
 ] as const;
 
 const pickEditable = (body: any) =>
