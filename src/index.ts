@@ -18,6 +18,7 @@ import adminRoutes from './routes/adminRoutes';
 import settingsRoutes from './routes/settingsRoutes';
 import tourRoutes from './routes/tourRoutes';
 import bookingRoutes from './routes/bookingRoutes';
+import testimonialRoutes from './routes/testimonialRoutes';
 import { errorHandler, notFound } from './middleware/errorHandler';
 
 const app: Application = express();
@@ -46,6 +47,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/tours', tourRoutes);
 app.use('/api/bookings', bookingRoutes);
+app.use('/api/testimonials', testimonialRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
