@@ -5,7 +5,12 @@ import City from './models/City';
 import Place from './models/Place';
 import Hotel from './models/Hotel';
 import Restaurant from './models/Restaurant';
-import { generateAllSeedData } from './seed/generateData';
+import Attraction from './models/Attraction';
+import Itinerary from './models/Itinerary';
+import { seedTours } from './seed/seedTours';
+import User from './models/User';
+import { statesData } from './seed/data/states';
+import { placesData } from './seed/data/places';
 
 dotenv.config();
 
@@ -15,216 +20,111 @@ async function seed() {
   await mongoose.connect(MONGO_URI);
   console.log('Connected to MongoDB');
 
-  // Clear existing data
+  // ─── CLEAR ALL TOURISM DATA ───────────────────────────────────────────────
+  // User accounts (and blogs) are kept; favourites point at old places, so reset them.
   await Promise.all([
     State.deleteMany({}),
     City.deleteMany({}),
     Place.deleteMany({}),
     Hotel.deleteMany({}),
     Restaurant.deleteMany({}),
+    Attraction.deleteMany({}),
+    Itinerary.deleteMany({}),
+    User.updateMany({}, { $set: { favorites: [] } }),
   ]);
   console.log('Cleared existing data');
 
-  const { statesData, citiesData, placesData, hotelsData, restaurantsData } = await generateAllSeedData();
+  // ─── STATES (only those that have a seeded place) ─────────────────────────
+  const usedStateSlugs = new Set(placesData.map((p) => p.stateSlug));
+  const missing = [...usedStateSlugs].filter((slug) => !statesData.some((s) => s.slug === slug));
+  if (missing.length) throw new Error(`Missing state data for: ${missing.join(', ')}`);
 
-  // ─── STATES ───────────────────────────────────────────────────────────────
-  const stateMap = new Map<string, any>();
   const states = await State.insertMany(
-    statesData.map((s) => ({
-      name: s.name,
-      slug: s.slug,
-      description: s.description,
-      capital: s.capital,
-      image: s.image,
-      gallery: s.gallery,
-      weather: s.weather,
-      bestTimeToVisit: s.bestTimeToVisit,
-      localLanguage: s.localLanguage,
-      emergencyNumbers: s.emergencyNumbers,
-      published: s.published,
-      seo: s.seo,
-    }))
+    statesData
+      .filter((s) => usedStateSlugs.has(s.slug))
+      .map((s) => {
+        const statePlaces = placesData.filter((p) => p.stateSlug === s.slug);
+        return {
+          name: s.name,
+          slug: s.slug,
+          description: s.description,
+          capital: s.capital,
+          image: s.image,
+          gallery: s.gallery.length ? s.gallery : statePlaces.slice(0, 3).map((p) => p.images[0]),
+          weather: s.weather,
+          bestTimeToVisit: s.bestTimeToVisit,
+          localLanguage: s.localLanguage,
+          emergencyNumbers: s.emergencyNumbers,
+          published: s.published,
+          seo: s.seo,
+        };
+      })
   );
-  states.forEach((s) => stateMap.set(s.slug, s));
+  const stateMap = new Map(states.map((s) => [s.slug, s]));
   console.log(`✅ States: ${states.length}`);
 
-  // ─── CITIES ───────────────────────────────────────────────────────────────
-  const cityMap = new Map<string, any>();
+  // ─── CITIES (built from the first place in each city; some places share one) ─
+  const cityPlaces = placesData.filter((p, i) => placesData.findIndex((q) => q.city.slug === p.city.slug) === i);
   const cities = await City.insertMany(
-    citiesData.map((c) => ({
-      name: c.name,
-      slug: c.slug,
-      state: stateMap.get(c.stateSlug)?._id,
-      description: c.description,
-      image: c.image,
-      gallery: c.gallery,
-      location: c.location,
-      weather: c.weather,
-      bestTimeToVisit: c.bestTimeToVisit,
-      transportation: c.transportation,
-      estimatedBudget: c.estimatedBudget,
-      localFoods: c.localFoods,
-      travelTips: c.travelTips,
-      published: c.published,
-      seo: c.seo,
-    }))
-  );
-  cities.forEach((c) => cityMap.set(c.slug, c));
-  console.log(`✅ Cities: ${cities.length}`);
-
-  // ─── HOTELS ───────────────────────────────────────────────────────────────
-  const hotelMap = new Map<string, any>();
-  const hotels = await Hotel.insertMany(
-    hotelsData.map((h) => ({
-      name: h.name,
-      slug: h.slug,
-      description: h.description,
-      address: h.address,
-      location: h.location,
-      googleMapLink: h.googleMapLink,
-      phone: h.phone,
-      website: h.website,
-      starRating: h.starRating,
-      pricePerNight: h.pricePerNight,
-      amenities: h.amenities,
-      images: h.images,
-      distance: h.distance,
-      category: h.category,
-      published: h.published,
-    }))
-  );
-  hotels.forEach((h) => hotelMap.set(h.slug, h));
-  console.log(`✅ Hotels: ${hotels.length}`);
-
-  // ─── RESTAURANTS ──────────────────────────────────────────────────────────
-  const restaurantMap = new Map<string, any>();
-  const restaurants = await Restaurant.insertMany(
-    restaurantsData.map((r) => ({
-      name: r.name,
-      slug: r.slug,
-      description: r.description,
-      cuisine: r.cuisine,
-      address: r.address,
-      location: r.location,
-      googleMapLink: r.googleMapLink,
-      phone: r.phone,
-      website: r.website,
-      averageCost: r.averageCost,
-      openingTime: r.openingTime,
-      closingTime: r.closingTime,
-      images: r.images,
-      vegNonVeg: r.vegNonVeg,
-      rating: r.rating,
-      distance: r.distance,
-      published: r.published,
-    }))
-  );
-  restaurants.forEach((r) => restaurantMap.set(r.slug, r));
-  console.log(`✅ Restaurants: ${restaurants.length}`);
-
-  // ─── PLACES ───────────────────────────────────────────────────────────────
-  const placeMap = new Map<string, any>();
-  const places = await Place.insertMany(
-    placesData.map((p) => ({
-      name: p.name,
-      slug: p.slug,
-      description: p.description,
-      state: stateMap.get(p.stateSlug)?._id,
-      city: cityMap.get(p.citySlug)?._id,
+    cityPlaces.map((p) => ({
+      name: p.city.name,
+      slug: p.city.slug,
+      state: stateMap.get(p.stateSlug)!._id,
+      description: p.city.description,
+      image: p.images[0],
+      gallery: p.images.slice(1),
       location: p.location,
-      category: p.category,
-      bestTimeToVisit: p.bestTimeToVisit,
-      openingTime: p.openingTime,
-      closingTime: p.closingTime,
-      entryFee: p.entryFee,
-      images: p.images,
-      history: p.history,
-      highlights: p.highlights,
-      thingsToKnow: p.thingsToKnow,
-      photography: p.photography,
       weather: p.weather,
-      safetyTips: p.safetyTips,
-      transportation: p.transportation,
-      estimatedCost: p.estimatedCost,
-      bestMonths: p.bestMonths,
+      bestTimeToVisit: p.bestTimeToVisit,
+      transportation: {
+        nearestAirport: { name: p.transportation.byFlight.nearestAirport, distance: p.transportation.byFlight.distance, cabCost: p.transportation.byFlight.cabCost },
+        nearestStation: { name: p.transportation.byTrain.nearestStation, distance: p.transportation.byTrain.distance, taxiFare: p.transportation.byTrain.taxiFare },
+        busStand: { name: p.transportation.byBus.busStand, autoFare: p.transportation.byBus.autoFare },
+      },
+      estimatedBudget: p.estimatedCost,
       localFoods: p.localFoods,
       travelTips: p.travelTips,
-      localLanguage: p.localLanguage,
-      emergencyNumbers: p.emergencyNumbers,
-      faqs: p.faqs,
-      rating: p.rating,
-      published: p.published,
-      seo: p.seo,
+      published: true,
+      seo: {
+        title: `${p.city.name} Tourism — ${p.name}`,
+        metaDescription: p.city.description,
+        keywords: [p.city.name, p.name, ...p.seo.keywords.slice(2)],
+      },
     }))
   );
-  places.forEach((p) => placeMap.set(p.slug, p));
+  const cityMap = new Map(cities.map((c) => [c.slug, c]));
+  console.log(`✅ Cities: ${cities.length}`);
+
+  // ─── PLACES ───────────────────────────────────────────────────────────────
+  const places = await Place.insertMany(
+    placesData.map(({ stateSlug, city, ...p }) => ({
+      ...p,
+      state: stateMap.get(stateSlug)!._id,
+      city: cityMap.get(city.slug)!._id,
+    }))
+  );
   console.log(`✅ Places: ${places.length}`);
 
-  // ─── UPDATE STATE REFERENCES ──────────────────────────────────────────────
-  for (const stateData of statesData) {
-    const state = stateMap.get(stateData.slug);
-    if (!state) continue;
-
-    const popularCityIds = stateData._popularCitySlugs
-      .map((slug: string) => cityMap.get(slug)?._id)
-      .filter(Boolean);
-    const popularPlaceIds = stateData._popularPlaceSlugs
-      .map((slug: string) => placeMap.get(slug)?._id)
-      .filter(Boolean);
-
+  // ─── LINK STATES AND CITIES TO THEIR PLACES ───────────────────────────────
+  for (const state of states) {
+    const statePlaces = places.filter((p) => String(p.state) === String(state._id));
     await State.findByIdAndUpdate(state._id, {
-      popularCities: popularCityIds,
-      popularPlaces: popularPlaceIds,
+      popularPlaces: statePlaces.map((p) => p._id),
+      popularCities: [...new Set(statePlaces.map((p) => String(p.city)))],
     });
   }
-
-  // ─── UPDATE CITY REFERENCES ───────────────────────────────────────────────
-  for (const cityData of citiesData) {
-    const city = cityMap.get(cityData.slug);
-    if (!city) continue;
-
-    const popularPlaceIds = cityData._popularPlaceSlugs
-      .map((slug: string) => placeMap.get(slug)?._id)
-      .filter(Boolean);
-    const hotelIds = cityData._hotelSlugs
-      .map((slug: string) => hotelMap.get(slug)?._id)
-      .filter(Boolean);
-    const restaurantIds = cityData._restaurantSlugs
-      .map((slug: string) => restaurantMap.get(slug)?._id)
-      .filter(Boolean);
-
-    await City.findByIdAndUpdate(city._id, {
-      popularPlaces: popularPlaceIds,
-      hotels: hotelIds,
-      restaurants: restaurantIds,
-    });
+  for (const place of places) {
+    await City.findByIdAndUpdate(place.city, { $addToSet: { popularPlaces: place._id } });
   }
 
-
-  // ─── UPDATE PLACE REFERENCES ──────────────────────────────────────────────
-  for (const placeData of placesData) {
-    const place = placeMap.get(placeData.slug);
-    if (!place) continue;
-
-    const hotelIds = placeData._hotelSlugs
-      .map((slug: string) => hotelMap.get(slug)?._id)
-      .filter(Boolean);
-    const restaurantIds = placeData._restaurantSlugs
-      .map((slug: string) => restaurantMap.get(slug)?._id)
-      .filter(Boolean);
-
-    await Place.findByIdAndUpdate(place._id, {
-      hotels: hotelIds,
-      restaurants: restaurantIds,
-    });
-  }
+  // ─── TOURS & BOOKINGS (sample data, linked to the places above) ───────────
+  const tourCounts = await seedTours();
 
   console.log('\n✅ Seed complete!');
-  console.log(`   States:      ${states.length}`);
-  console.log(`   Cities:      ${cities.length}`);
-  console.log(`   Places:      ${places.length}`);
-  console.log(`   Hotels:      ${hotels.length}`);
-  console.log(`   Restaurants: ${restaurants.length}`);
+  console.log(`   States: ${states.length}`);
+  console.log(`   Cities: ${cities.length}`);
+  console.log(`   Places: ${places.length}`);
+  console.log(`   Tours:  ${tourCounts.tours} (bookings: ${tourCounts.bookings})`);
 
   await mongoose.disconnect();
   process.exit(0);

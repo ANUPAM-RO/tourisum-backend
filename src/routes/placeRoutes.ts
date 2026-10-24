@@ -8,6 +8,7 @@ import {
   addReview,
   getSimilarPlaces,
   getCategoryStats,
+  getMapPlaces,
 } from '../controllers/placeController';
 import { protect, admin } from '../middleware/auth';
 import { cacheMiddleware } from '../config/redis';
@@ -17,6 +18,7 @@ const router = express.Router();
 
 router.get('/', cacheMiddleware, getAllPlaces);
 router.get('/categories', cacheMiddleware, getCategoryStats);
+router.get('/map', cacheMiddleware, getMapPlaces);
 router.get('/similar/:id', cacheMiddleware, getSimilarPlaces);
 router.get('/:slug', cacheMiddleware, getPlaceBySlug);
 router.post('/:id/reviews', protect, reviewValidator, addReview);

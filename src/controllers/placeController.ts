@@ -192,3 +192,20 @@ export default {
   getSimilarPlaces,
   getCategoryStats,
 };
+
+// Minimal fields for every published place, used to plot pins on the home-page map.
+export const getMapPlaces = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const places = await Place.find({ published: true })
+      .select('name slug location category rating images state')
+      .populate('state', 'name slug')
+      .lean();
+
+    res.json({
+      success: true,
+      data: places.map(({ images, ...p }) => ({ ...p, image: images?.[0] ?? null })),
+    });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};

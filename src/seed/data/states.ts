@@ -775,4 +775,28 @@ export const statesData: StateSeed[] = [
     _popularCitySlugs: [],
     _popularPlaceSlugs: [],
   },
+  {
+    name: 'Ladakh',
+    slug: 'ladakh',
+    description: 'The Land of High Passes — a cold desert of stark mountains, turquoise lakes like Pangong Tso, ancient Buddhist monasteries and some of the highest motorable roads in the world.',
+    capital: 'Leh',
+    image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cf/Pangong_Tso_in_eastern_Ladakh%28Changthang%29.jpg/1280px-Pangong_Tso_in_eastern_Ladakh%28Changthang%29.jpg',
+    gallery: [],
+    weather: {
+      summer: 'Pleasant days 15–30°C, cold nights (May–September). Best time to visit.',
+      winter: 'Extremely cold, -20 to 5°C (November–March). Most passes closed.',
+      monsoon: 'Rain-shadow region with very little rain (July–August).',
+    },
+    bestTimeToVisit: 'May to September',
+    localLanguage: 'Ladakhi, Hindi, English',
+    emergencyNumbers: { police: '100', ambulance: '108', fire: '101' },
+    published: true,
+    seo: {
+      title: 'Ladakh Tourism — Pangong Lake, Leh & High Passes',
+      metaDescription: 'Explore Ladakh — Pangong Tso, Leh monasteries, Nubra Valley and Khardung La.',
+      keywords: ['Ladakh tourism', 'Leh', 'Pangong Lake', 'Ladakh travel'],
+    },
+    _popularCitySlugs: [],
+    _popularPlaceSlugs: [],
+  },
 ];

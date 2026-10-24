@@ -86,6 +86,9 @@ export const getDashboardStats = async (req: Request, res: Response): Promise<vo
     const restaurantsCount = await (await import('../models/Restaurant')).default.countDocuments();
     const usersCount = await User.countDocuments();
     const publishedPlaces = await (await import('../models/Place')).default.countDocuments({ published: true });
+    const toursCount = await (await import('../models/Tour')).default.countDocuments();
+    const Booking = (await import('../models/Booking')).default;
+    const [bookingsCount, pendingBookings] = await Promise.all([Booking.countDocuments(), Booking.countDocuments({ status: 'pending' })]);
 
     res.json({
       success: true,
@@ -97,6 +100,9 @@ export const getDashboardStats = async (req: Request, res: Response): Promise<vo
         restaurants: restaurantsCount,
         users: usersCount,
         publishedPlaces,
+        tours: toursCount,
+        bookings: bookingsCount,
+        pendingBookings,
       },
     });
   } catch (error: any) {
